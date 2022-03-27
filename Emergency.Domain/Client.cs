@@ -5,11 +5,12 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmergencyLog.DAL
+namespace EmergencyLog.Domain
 {
     public class Client : IEntity
     {
         public int Id { get; set; }
+        public Guid Guid { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public DateTime? DateOfBirth { get; set; }

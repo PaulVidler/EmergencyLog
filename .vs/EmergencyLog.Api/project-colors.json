@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "e48c2831-1a43-4a50-a4f6-0bdef803905b": {
+      "ProjectGuid": "e48c2831-1a43-4a50-a4f6-0bdef803905b",
+      "DisplayName": "EmergencyLog.Api",
+      "ColorIndex": 0
+    },
+    "8f91e96f-cb71-4a3f-8a8c-ed251dd29ca8": {
+      "ProjectGuid": "8f91e96f-cb71-4a3f-8a8c-ed251dd29ca8",
+      "DisplayName": "EmergencyLog.DAL",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
