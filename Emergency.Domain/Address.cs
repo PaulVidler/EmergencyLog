@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace EmergencyLog.Domain
 {
+
     public interface IAddress
     {
         int Id { get; set; }
+        public Guid Guid { get; set; }
         string StreetNumber { get; set; }
         string Street { get; set; }
         string Suburb { get; set; }
@@ -20,6 +22,7 @@ namespace EmergencyLog.Domain
     public class Address : IAddress
     {
         public int Id { get; set; }
+        public Guid Guid { get; set; }
         public string StreetNumber { get; set; }
         public string Street { get; set; }
         public string Suburb { get; set; }

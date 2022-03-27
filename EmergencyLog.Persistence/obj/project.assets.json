@@ -460,6 +460,16 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "EmergencyLog.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/EmergencyLog.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EmergencyLog.Domain.dll": {}
+        }
       }
     }
   },
@@ -1120,10 +1130,16 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "EmergencyLog.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Emergency.Domain/EmergencyLog.Domain.csproj",
+      "msbuildProject": "../Emergency.Domain/EmergencyLog.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "EmergencyLog.Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.3",
       "Microsoft.EntityFrameworkCore.Sqlite >= 6.0.3"
     ]
@@ -1162,7 +1178,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj": {
+              "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

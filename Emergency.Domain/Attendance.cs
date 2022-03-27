@@ -9,6 +9,7 @@ namespace EmergencyLog.Domain
     public class Attendance
     {
         public int Id { get; set; }
+        public Guid Guid { get; set; }
         public DateTime TimeIn { get; set; }
         public DateTime? TimeOut { get; set; }
         public IEntity Entity { get; set; }
