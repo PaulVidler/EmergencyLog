@@ -36,6 +36,7 @@ C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\D
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\SQLitePCLRaw.batteries_v2.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\SQLitePCLRaw.core.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\SQLitePCLRaw.provider.e_sqlite3.dll

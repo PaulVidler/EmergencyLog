@@ -31,7 +31,7 @@ namespace EmergencyLog.Application.EmergencyContacts
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var emergencyContact = await _context.EmergencyContacts.FindAsync(request.EmergencyContact.Id);
+                var emergencyContact = await _context.EmergencyContacts.FindAsync(request.EmergencyContact.Guid);
 
                 // this line below has been replaced by automapper line _mapper.Map.....
                 // EmergencyContact.Title = request.EmergencyContact.Title ?? EmergencyContact.Title; // if this is null, then just set it existing title

@@ -31,7 +31,7 @@ namespace EmergencyLog.Application.Clients
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var client = await _context.Clients.FindAsync(request.Client.Id);
+                var client = await _context.Clients.FindAsync(request.Client.Guid);
 
                 // this line below has been replaced by automapper line _mapper.Map.....
                 // Client.Title = request.Client.Title ?? Client.Title; // if this is null, then just set it existing title

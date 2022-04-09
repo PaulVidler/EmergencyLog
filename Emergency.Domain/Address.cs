@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace EmergencyLog.Domain
@@ -9,7 +11,6 @@ namespace EmergencyLog.Domain
 
     public interface IAddress
     {
-        int Id { get; set; }
         public Guid Guid { get; set; }
         string StreetNumber { get; set; }
         string Street { get; set; }
@@ -21,7 +22,12 @@ namespace EmergencyLog.Domain
 
     public class Address : IAddress
     {
-        public int Id { get; set; }
+        
+        public Address()
+        {
+        }
+
+        [Key]
         public Guid Guid { get; set; }
         public string StreetNumber { get; set; }
         public string Street { get; set; }

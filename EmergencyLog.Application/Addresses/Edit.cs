@@ -30,7 +30,7 @@ namespace EmergencyLog.Application.Addresses
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var address = await _context.Addresses.FindAsync(request.Address.Id);
+                var address = await _context.Addresses.FindAsync(request.Address.Guid);
 
                 // this line below has been replaced by automapper line _mapper.Map.....
                 // Address.Title = request.Address.Title ?? Address.Title; // if this is null, then just set it existing title

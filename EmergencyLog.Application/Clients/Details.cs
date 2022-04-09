@@ -13,8 +13,7 @@ namespace EmergencyLog.Application.Clients
     {
         public class Query : IRequest<Domain.Client>
         {
-            public Guid Id { get; set; }
-
+            public Guid Guid { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Domain.Client>
@@ -28,7 +27,7 @@ namespace EmergencyLog.Application.Clients
 
             public async Task<Domain.Client> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Clients.FindAsync(request.Id);
+                return await _context.Clients.FindAsync(request.Guid);
             }
         }
     }

@@ -30,7 +30,7 @@ namespace EmergencyLog.Application.Attendance
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var attendance = await _context.Attendances.FindAsync(request.Attendance.Id);
+                var attendance = await _context.Attendances.FindAsync(request.Attendance.Guid);
 
                 // this line below has been replaced by automapper line _mapper.Map.....
                 // Attendance.Title = request.Attendance.Title ?? Attendance.Title; // if this is null, then just set it existing title
