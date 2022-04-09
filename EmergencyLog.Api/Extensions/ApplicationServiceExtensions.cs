@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 namespace EmergencyLog.Api.Extensions
 {
-    public class ApplicationServiceExtensions
+    public static class ApplicationServiceExtensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
@@ -26,7 +29,7 @@ namespace EmergencyLog.Api.Extensions
                 });
             });
 
-            services.AddMediatR(typeof(List<>.Handler).Assembly); // the assembly being referenced in the List.Handler class is the arg here
+            services.AddMediatR(typeof(Application.Addresses.List.Handler).Assembly); // the assembly being referenced in the List.Handler class is the arg here
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             return services;

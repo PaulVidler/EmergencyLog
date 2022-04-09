@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmergencyLog.Application.Clients
+{
     public class List
     {
         public class Query : IRequest<List<Client>> { }

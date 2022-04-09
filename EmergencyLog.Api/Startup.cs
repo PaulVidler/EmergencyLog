@@ -14,26 +14,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmergencyLog.Api.Extensions;
 
 namespace EmergencyLog.Api
 {
     public class Startup
     {
+        public IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+                .AddMicrosoftIdentityWebApi(_configuration.GetSection("AzureAd"));
 
             services.AddControllers();
-            
+            // tidy up into extension method call into "ApplicationExtension.cs"
+            services.AddApplicationServices(_configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

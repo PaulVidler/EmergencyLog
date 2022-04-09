@@ -12,7 +12,7 @@ namespace EmergencyLog.Domain
         public Guid Guid { get; set; }
         public DateTime TimeIn { get; set; }
         public DateTime? TimeOut { get; set; }
-        public IEntity Entity { get; set; }
+        public Entity Entity { get; set; }
         public bool OnSite { get; set; }
         public bool EntryComplete { get; set; }
     }

@@ -10,12 +10,12 @@ using EmergencyLog.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmergencyLog.Application.Attendence
+namespace EmergencyLog.Application.Attendance
 {
     public class List
     {
-        public class Query : IRequest<List<Attendance>> { }
-        public class Handler : IRequestHandler<Query, List<Attendance>>
+        public class Query : IRequest<List<Domain.Attendance>> { }
+        public class Handler : IRequestHandler<Query, List<Domain.Attendance>>
         {
             private DataContext _context;
 
@@ -24,7 +24,7 @@ namespace EmergencyLog.Application.Attendence
                 _context = context;
             }
 
-            public async Task<List<Attendance>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<Domain.Attendance>> Handle(Query request, CancellationToken cancellationToken)
             {
                 return await _context.Attendances.ToListAsync();
             }

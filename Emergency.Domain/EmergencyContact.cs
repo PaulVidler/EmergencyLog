@@ -22,7 +22,7 @@ namespace EmergencyLog.Domain
 
     public interface IEmergencyContact
     {
-        IEntity EntityRelationship { get; set; }
+        Entity EntityRelationship { get; set; }
         RelationshipType RelationshipType { get; set; }
         int Id { get; set; }
         string FirstName { get; set; }
@@ -36,7 +36,7 @@ namespace EmergencyLog.Domain
 
     public class EmergencyContact: Entity, IEmergencyContact
     {
-        public IEntity EntityRelationship { get; set; }
+        public Entity EntityRelationship { get; set; }
         public RelationshipType RelationshipType { get; set; }
     }
 }

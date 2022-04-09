@@ -10,7 +10,8 @@
         "dependencies": {
           "EmergencyLog.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore.Design": "6.0.3",
-          "Microsoft.EntityFrameworkCore.Sqlite": "6.0.3"
+          "Microsoft.EntityFrameworkCore.Sqlite": "6.0.3",
+          "Microsoft.EntityFrameworkCore.Tools": "6.0.3"
         },
         "runtime": {
           "EmergencyLog.Persistence.dll": {}
@@ -102,6 +103,11 @@
             "assemblyVersion": "6.0.3.0",
             "fileVersion": "6.0.322.12306"
           }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/6.0.3": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "6.0.3"
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/6.0.0": {
@@ -435,6 +441,13 @@
       "sha512": "sha512-9h4/Icp2jsrhxo6PPeEV0B5UwT24ZwvV1cbdGW7u2YCwl0e8ToBw+IaADtER8l6vwH9y210+oMHmTGOP/kHfyQ==",
       "path": "microsoft.entityframeworkcore.sqlite.core/6.0.3",
       "hashPath": "microsoft.entityframeworkcore.sqlite.core.6.0.3.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools/6.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s5s19Woo8kFqI9GQrqM6ZT4qS1xLlWuccqfg3ELf8shp93f8btuK6T3iFV//wP1pkRjFB4qbPrQwMO88RKfHXw==",
+      "path": "microsoft.entityframeworkcore.tools/6.0.3",
+      "hashPath": "microsoft.entityframeworkcore.tools.6.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/6.0.0": {
       "type": "package",
