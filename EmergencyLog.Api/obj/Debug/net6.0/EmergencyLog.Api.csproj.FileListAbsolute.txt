@@ -1,0 +1,7 @@
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.csproj.AssemblyReference.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.AssemblyInfoInputs.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.AssemblyInfo.cs
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.csproj.CoreCompileInputs.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.MvcApplicationPartsAssemblyInfo.cache

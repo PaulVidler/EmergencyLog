@@ -1,0 +1,17 @@
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\bin\Debug\net6.0\EmergencyLog.Persistence.deps.json
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\bin\Debug\net6.0\EmergencyLog.Persistence.runtimeconfig.json
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\bin\Debug\net6.0\EmergencyLog.Persistence.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\bin\Debug\net6.0\ref\EmergencyLog.Persistence.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\bin\Debug\net6.0\EmergencyLog.Persistence.pdb
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\bin\Debug\net6.0\EmergencyLog.Domain.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\bin\Debug\net6.0\EmergencyLog.Domain.pdb
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.csproj.AssemblyReference.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.AssemblyInfoInputs.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.AssemblyInfo.cs
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.csproj.CopyComplete
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\ref\EmergencyLog.Persistence.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.pdb
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Persistence\obj\Debug\net6.0\EmergencyLog.Persistence.genruntimeconfig.cache

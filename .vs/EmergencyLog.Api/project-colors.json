@@ -10,7 +10,22 @@
       "ProjectGuid": "8f91e96f-cb71-4a3f-8a8c-ed251dd29ca8",
       "DisplayName": "EmergencyLog.DAL",
       "ColorIndex": 1
+    },
+    "9196f0cb-1444-4107-847f-213d8afea086": {
+      "ProjectGuid": "9196f0cb-1444-4107-847f-213d8afea086",
+      "DisplayName": "EmergencyLog.Domain",
+      "ColorIndex": 2
+    },
+    "966a8221-dabe-4a7b-a729-3d83136d7a97": {
+      "ProjectGuid": "966a8221-dabe-4a7b-a729-3d83136d7a97",
+      "DisplayName": "EmergencyLog.Persistence",
+      "ColorIndex": 3
+    },
+    "2a6c086e-7aef-4c80-9de7-712692206952": {
+      "ProjectGuid": "2a6c086e-7aef-4c80-9de7-712692206952",
+      "DisplayName": "EmergencyLog.Application",
+      "ColorIndex": 4
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 5
 }

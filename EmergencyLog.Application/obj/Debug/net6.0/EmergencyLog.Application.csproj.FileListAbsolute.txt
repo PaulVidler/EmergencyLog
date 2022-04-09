@@ -1,0 +1,17 @@
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\bin\Debug\net6.0\EmergencyLog.Application.deps.json
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\bin\Debug\net6.0\EmergencyLog.Application.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\bin\Debug\net6.0\ref\EmergencyLog.Application.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\bin\Debug\net6.0\EmergencyLog.Application.pdb
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\bin\Debug\net6.0\EmergencyLog.Domain.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\bin\Debug\net6.0\EmergencyLog.Persistence.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\bin\Debug\net6.0\EmergencyLog.Domain.pdb
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\bin\Debug\net6.0\EmergencyLog.Persistence.pdb
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\EmergencyLog.Application.csproj.AssemblyReference.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\EmergencyLog.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\EmergencyLog.Application.AssemblyInfoInputs.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\EmergencyLog.Application.AssemblyInfo.cs
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\EmergencyLog.Application.csproj.CoreCompileInputs.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\EmergencyLog.Application.csproj.CopyComplete
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\EmergencyLog.Application.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\ref\EmergencyLog.Application.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Application\obj\Debug\net6.0\EmergencyLog.Application.pdb

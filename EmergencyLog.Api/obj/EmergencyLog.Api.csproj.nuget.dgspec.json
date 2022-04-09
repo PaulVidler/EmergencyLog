@@ -84,15 +84,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {
               "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj": {
                 "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj"
@@ -113,8 +113,8 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "MediatR.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
