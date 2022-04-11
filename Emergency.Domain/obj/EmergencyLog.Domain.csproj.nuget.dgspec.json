@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj": {}
+    "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\Emergency.Domain\\EmergencyLog.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj": {
+    "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\Emergency.Domain\\EmergencyLog.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\Emergency.Domain\\EmergencyLog.Domain.csproj",
         "projectName": "EmergencyLog.Domain",
-        "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj",
-        "packagesPath": "C:\\Users\\relia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\Emergency.Domain\\EmergencyLog.Domain.csproj",
+        "packagesPath": "C:\\Users\\Paul Vidler\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\Emergency.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\relia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Paul Vidler\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -45,6 +39,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

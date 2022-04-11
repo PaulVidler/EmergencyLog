@@ -18,6 +18,7 @@ namespace EmergencyLog.Domain.Entities
         EmergencyContact? EmergencyContact { get; set; }
         Address Address { get; set; }
         ICollection<Attendance>? Attendances { get; set; }
+        Organisation Organisation { get; set; }
     }
 
     public class Client : Entity
@@ -31,5 +32,6 @@ namespace EmergencyLog.Domain.Entities
         public EmergencyContact? EmergencyContact { get; set; }
         public virtual Address Address { get; set; }
         public virtual ICollection<Attendance>? Attendances { get; set; }
+        public virtual Organisation? Organisation { get; set; }
     }
 }

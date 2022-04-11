@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace EmergencyLog.Domain.Entities
 {
-    internal class Organisation
+    public class Organisation
     {
-        // related to entity
-        // will link a property to a client and a client to an organisation
-        // need a nullable nav prop in client
-        // need an extension on address class, maybe a "property" class that has an address child
-        // property class will have description, fire alarms safety, inspection, due lease, fuck knows what else....
+        public Guid Id { get; set; }
+        public string OrganisationName { get; set; }
+        public string Logo { get; set; } // url for logo upload
+        public ICollection<Client> Clients { get; set; }
+        public virtual Client PrimaryContact { get; set; }
+        public virtual Client? SecondaryContact { get; set; }
+        public virtual Address Address { get; set; }
     }
 }

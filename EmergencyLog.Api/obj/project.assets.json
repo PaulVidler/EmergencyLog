@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "AutoMapper/11.0.0": {
+      "AutoMapper/11.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.7.0"
@@ -882,6 +882,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "AutoMapper": "11.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "11.0.0",
           "EmergencyLog.Domain": "1.0.0",
           "EmergencyLog.Persistence": "1.0.0",
@@ -897,6 +898,9 @@
       "EmergencyLog.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "AutoMapper": "11.0.1"
+        },
         "compile": {
           "bin/placeholder/EmergencyLog.Domain.dll": {}
         },
@@ -921,15 +925,15 @@
     }
   },
   "libraries": {
-    "AutoMapper/11.0.0": {
-      "sha512": "+596AnKykYCk9RxXCEF4GYuapSebQtFVvIA1oVG1rrRkCLAC7AkWehJ0brCfYUbdDW3v1H/p0W3hob7JoXGjMw==",
+    "AutoMapper/11.0.1": {
+      "sha512": "WIadGC1pIwbnyTubvI577p3F++Bsj9q2Q3OaAc1I0QS+JhupN1xkdrPBhI9bPIeg63zM81tZplUNYkqU1HE5jQ==",
       "type": "package",
-      "path": "automapper/11.0.0",
+      "path": "automapper/11.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "README.md",
-        "automapper.11.0.0.nupkg.sha512",
+        "automapper.11.0.1.nupkg.sha512",
         "automapper.nuspec",
         "icon.png",
         "lib/netstandard2.1/AutoMapper.dll",
@@ -2371,28 +2375,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\relia\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Paul Vidler\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Api\\EmergencyLog.Api.csproj",
+      "projectUniqueName": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Api.csproj",
       "projectName": "EmergencyLog.Api",
-      "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Api\\EmergencyLog.Api.csproj",
-      "packagesPath": "C:\\Users\\relia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Api\\obj\\",
+      "projectPath": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Api.csproj",
+      "packagesPath": "C:\\Users\\Paul Vidler\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\relia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\Paul Vidler\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -2405,14 +2401,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj": {
-              "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj"
+            "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\Emergency.Domain\\EmergencyLog.Domain.csproj": {
+              "projectPath": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\Emergency.Domain\\EmergencyLog.Domain.csproj"
             },
-            "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Application\\EmergencyLog.Application.csproj": {
-              "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Application\\EmergencyLog.Application.csproj"
+            "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\EmergencyLog.Application\\EmergencyLog.Application.csproj": {
+              "projectPath": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\EmergencyLog.Application\\EmergencyLog.Application.csproj"
             },
-            "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj": {
-              "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj"
+            "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj": {
+              "projectPath": "C:\\Users\\Paul Vidler\\source\\repos\\EmergencyLog\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj"
             }
           }
         }
@@ -2476,7 +2472,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
