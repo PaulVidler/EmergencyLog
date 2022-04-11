@@ -10,7 +10,7 @@ namespace EmergencyLog.Application.Addresses
     {
         public class Command : IRequest
         {
-            public Domain.Address Address { get; set; }
+            public Domain.Entities.Address Address { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>

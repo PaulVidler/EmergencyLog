@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmergencyLog.Domain;
+using EmergencyLog.Domain.Entities;
 
 namespace EmergencyLog.Application.Core
 {

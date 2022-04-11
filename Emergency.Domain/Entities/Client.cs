@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EmergencyLog.Domain
+namespace EmergencyLog.Domain.Entities
 {
     public interface IClient
     {
@@ -20,26 +20,16 @@ namespace EmergencyLog.Domain
         ICollection<Attendance>? Attendances { get; set; }
     }
 
-    public class Client : Entity, IClient
+    public class Client : Entity
     {
         
         public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string Surname { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        public string Email { get; set; }
         public string? ImageSmall { get; set; }
         public string? ImageLarge { get; set; }
-        public string? Phone { get; set; }
-        public string Mobile { get; set; }
-
-        // navigation properties
-        //public Entity Entity { get; set; }
-        //public Guid EntityId { get; set; }
+        public string Role { get; set; }
+        public string Title { get; set; }
         public EmergencyContact? EmergencyContact { get; set; }
-        //public Guid EmergencyContactId { get; set; }
         public virtual Address Address { get; set; }
-        // public Guid AddressId { get; set; }
         public virtual ICollection<Attendance>? Attendances { get; set; }
     }
 }

@@ -14,8 +14,8 @@ namespace EmergencyLog.Application.Attendance
 {
     public class List
     {
-        public class Query : IRequest<List<Domain.Attendance>> { }
-        public class Handler : IRequestHandler<Query, List<Domain.Attendance>>
+        public class Query : IRequest<List<Domain.Entities.Attendance>> { }
+        public class Handler : IRequestHandler<Query, List<Domain.Entities.Attendance>>
         {
             private DataContext _context;
 
@@ -24,7 +24,7 @@ namespace EmergencyLog.Application.Attendance
                 _context = context;
             }
 
-            public async Task<List<Domain.Attendance>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<Domain.Entities.Attendance>> Handle(Query request, CancellationToken cancellationToken)
             {
                 return await _context.Attendances.ToListAsync();
             }

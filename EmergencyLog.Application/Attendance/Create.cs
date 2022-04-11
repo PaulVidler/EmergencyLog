@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using EmergencyLog.Domain;
+using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using MediatR;
 
@@ -14,7 +14,7 @@ namespace EmergencyLog.Application.Attendance
     {
         public class Command : IRequest
         {
-            public Domain.Attendance Attendance { get; set; }
+            public Domain.Entities.Attendance Attendance { get; set; }
         }
 
         public class Handler : IRequestHandler<Attendance.Create.Command>

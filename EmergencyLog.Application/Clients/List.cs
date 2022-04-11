@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using EmergencyLog.Domain;
+using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

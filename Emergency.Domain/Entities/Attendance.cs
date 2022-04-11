@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EmergencyLog.Domain
+namespace EmergencyLog.Domain.Entities
 {
     public interface IAttendance
     {
@@ -14,16 +14,11 @@ namespace EmergencyLog.Domain
 
     public class Attendance : IAttendance
     {
-        // [Key]
         public Guid Id { get; set; }
         public DateTime TimeIn { get; set; }
         public DateTime? TimeOut { get; set; }
         public bool OnSite { get; set; }
         public bool EntryComplete { get; set; }
-
-        // nav props
-        //[ForeignKey("EntityForeignKey")]
         public virtual Client Client { get; set; }
-        // public Guid ClientId { get; set; }
     }
 }

@@ -11,13 +11,13 @@ namespace EmergencyLog.Application.EmergencyContacts
 {
     public class Details
     {
-        public class Query : IRequest<Domain.EmergencyContact>
+        public class Query : IRequest<Domain.Entities.EmergencyContact>
         {
             public Guid Id { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Domain.EmergencyContact>
+        public class Handler : IRequestHandler<Query, Domain.Entities.EmergencyContact>
         {
             private readonly DataContext _context;
 
@@ -26,7 +26,7 @@ namespace EmergencyLog.Application.EmergencyContacts
                 _context = context;
             }
 
-            public async Task<Domain.EmergencyContact> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Domain.Entities.EmergencyContact> Handle(Query request, CancellationToken cancellationToken)
             {
                 return await _context.EmergencyContacts.FindAsync(request.Id);
             }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EmergencyLog.Domain
+namespace EmergencyLog.Domain.Entities
 {
 
     public interface IAddress
@@ -11,20 +11,17 @@ namespace EmergencyLog.Domain
         string Suburb { get; set; }
         string Postcode { get; set; }
         string Country { get; set; }
+        public Guid EntityId { get; set; }
     }
 
     public class Address : IAddress
     {
-        //[Key]
         public Guid Id { get; set; }
         public string StreetNumber { get; set; }
         public string Street { get; set; }
         public string Suburb { get; set; }
         public string Postcode { get; set; }
         public string Country { get; set; }
-
-        // navigation property
-        public virtual Entity Entity { get; set; }
         public Guid EntityId { get; set; }
 
     }

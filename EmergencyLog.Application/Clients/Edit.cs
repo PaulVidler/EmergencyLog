@@ -4,6 +4,7 @@ using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Domain.Entities;
 
 namespace EmergencyLog.Application.Clients
 {

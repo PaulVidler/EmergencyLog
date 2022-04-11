@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using EmergencyLog.Domain;
+using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using MediatR;
 
@@ -12,13 +12,13 @@ namespace EmergencyLog.Application.Attendance
 {
     public class Details
     {
-        public class Query : IRequest<Domain.Attendance>
+        public class Query : IRequest<Domain.Entities.Attendance>
         {
             public Guid Id { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Domain.Attendance>
+        public class Handler : IRequestHandler<Query, Domain.Entities.Attendance>
         {
             private readonly DataContext _context;
 
@@ -27,7 +27,7 @@ namespace EmergencyLog.Application.Attendance
                 _context = context;
             }
 
-            public async Task<Domain.Attendance> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Domain.Entities.Attendance> Handle(Query request, CancellationToken cancellationToken)
             {
                 return await _context.Attendances.FindAsync(request.Id);
             }

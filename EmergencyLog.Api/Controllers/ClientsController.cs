@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EmergencyLog.Domain;
+using EmergencyLog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using List = EmergencyLog.Application.Clients.List;
 using EmergencyLog.Application.Clients;
+using EmergencyLog.Domain.Entities;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -33,7 +34,7 @@ namespace EmergencyLog.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostClient(Client client)
         {
-            return Ok(await Mediator.Send(new Create.Command{Client = client}));
+            return Ok(await Mediator.Send(new Create.Command{ Client = client}));
         }
 
         [HttpPut("{id}")]

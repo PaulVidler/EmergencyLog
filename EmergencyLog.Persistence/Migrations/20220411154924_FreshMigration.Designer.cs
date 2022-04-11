@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmergencyLog.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220411082246_FreshMigration")]
+    [Migration("20220411154924_FreshMigration")]
     partial class FreshMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,9 +45,6 @@ namespace EmergencyLog.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EntityId")
-                        .IsUnique();
-
                     b.ToTable("Addresses");
                 });
 
@@ -79,17 +76,67 @@ namespace EmergencyLog.Persistence.Migrations
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("EmergencyLog.Domain.Entity", b =>
+            modelBuilder.Entity("EmergencyLog.Domain.Client", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageLarge")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageSmall")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("EmergencyLog.Domain.EmergencyContact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("AddressId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -104,54 +151,20 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("RelationshipType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Surname")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Entity");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Entity");
-                });
-
-            modelBuilder.Entity("EmergencyLog.Domain.Client", b =>
-                {
-                    b.HasBaseType("EmergencyLog.Domain.Entity");
-
-                    b.Property<string>("ImageLarge")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ImageSmall")
-                        .HasColumnType("TEXT");
-
-                    b.HasDiscriminator().HasValue("Client");
-                });
-
-            modelBuilder.Entity("EmergencyLog.Domain.EmergencyContact", b =>
-                {
-                    b.HasBaseType("EmergencyLog.Domain.Entity");
-
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("RelationshipType")
-                        .HasColumnType("INTEGER");
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("ClientId")
                         .IsUnique();
 
-                    b.HasDiscriminator().HasValue("EmergencyContact");
-                });
-
-            modelBuilder.Entity("EmergencyLog.Domain.Address", b =>
-                {
-                    b.HasOne("EmergencyLog.Domain.Entity", "Entity")
-                        .WithOne("Address")
-                        .HasForeignKey("EmergencyLog.Domain.Address", "EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Entity");
+                    b.ToTable("EmergencyContacts");
                 });
 
             modelBuilder.Entity("EmergencyLog.Domain.Attendance", b =>
@@ -163,20 +176,32 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("EmergencyLog.Domain.Client", b =>
+                {
+                    b.HasOne("EmergencyLog.Domain.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+                });
+
             modelBuilder.Entity("EmergencyLog.Domain.EmergencyContact", b =>
                 {
+                    b.HasOne("EmergencyLog.Domain.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
                     b.HasOne("EmergencyLog.Domain.Client", "Client")
                         .WithOne("EmergencyContact")
                         .HasForeignKey("EmergencyLog.Domain.EmergencyContact", "ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("EmergencyLog.Domain.Entity", b =>
-                {
                     b.Navigation("Address");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("EmergencyLog.Domain.Client", b =>

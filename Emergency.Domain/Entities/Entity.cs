@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EmergencyLog.Domain
+namespace EmergencyLog.Domain.Entities
 {
     public interface IEntity
     {
@@ -19,7 +19,6 @@ namespace EmergencyLog.Domain
 
     public abstract class Entity : IEntity
     {
-        //[Key]
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
@@ -30,6 +29,5 @@ namespace EmergencyLog.Domain
 
         // navigation props
         public virtual Address Address { get; set; }
-        // public Guid AddressId { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace EmergencyLog.Application.Attendance
     {
         public class Command : IRequest
         {
-            public Domain.Attendance Attendance { get; set; }
+            public Domain.Entities.Attendance Attendance { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>

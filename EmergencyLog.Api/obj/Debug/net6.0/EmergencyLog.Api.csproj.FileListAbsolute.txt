@@ -1,9 +1,3 @@
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.AssemblyInfoInputs.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.AssemblyInfo.cs
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.csproj.CoreCompileInputs.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.csproj.AssemblyReference.cache
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\appsettings.json
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\EmergencyLog.Api.exe
@@ -73,6 +67,13 @@ C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\D
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\EmergencyLog.Domain.pdb
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\EmergencyLog.Application.pdb
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\EmergencyLog.Persistence.pdb
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.csproj.AssemblyReference.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.AssemblyInfoInputs.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.AssemblyInfo.cs
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.csproj.CoreCompileInputs.cache
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\scopedcss\bundle\EmergencyLog.Api.styles.css
@@ -81,4 +82,3 @@ C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\D
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\ref\EmergencyLog.Api.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.pdb
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.genruntimeconfig.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.MvcApplicationPartsAssemblyInfo.cs

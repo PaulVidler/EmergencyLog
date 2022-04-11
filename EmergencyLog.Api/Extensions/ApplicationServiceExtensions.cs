@@ -30,6 +30,29 @@ namespace EmergencyLog.Api.Extensions
             });
 
             services.AddMediatR(typeof(Application.Addresses.List.Handler).Assembly); // the assembly being referenced in the List.Handler class is the arg here
+            services.AddMediatR(typeof(Application.Addresses.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Addresses.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Addresses.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Addresses.Edit.Handler).Assembly);
+
+            services.AddMediatR(typeof(Application.Attendance.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Attendance.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Attendance.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Attendance.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Attendance.Edit.Handler).Assembly);
+
+            services.AddMediatR(typeof(Application.Clients.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Clients.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Clients.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Clients.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Clients.Edit.Handler).Assembly);
+
+            services.AddMediatR(typeof(Application.EmergencyContacts.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.EmergencyContacts.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.EmergencyContacts.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.EmergencyContacts.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.EmergencyContacts.Edit.Handler).Assembly);
+
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             return services;

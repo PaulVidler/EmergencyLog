@@ -11,12 +11,12 @@ namespace EmergencyLog.Application.Clients
 {
     public class Details
     {
-        public class Query : IRequest<Domain.Client>
+        public class Query : IRequest<Domain.Entities.Client>
         {
             public Guid Guid { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Domain.Client>
+        public class Handler : IRequestHandler<Query, Domain.Entities.Client>
         {
             private readonly DataContext _context;
 
@@ -25,9 +25,9 @@ namespace EmergencyLog.Application.Clients
                 _context = context;
             }
 
-            public async Task<Domain.Client> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Domain.Entities.Client> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Clients.FindAsync(request.Guid);
+                return await _context.Clients.FindAsync(request.Guid); 
             }
         }
     }
