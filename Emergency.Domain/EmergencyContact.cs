@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace EmergencyLog.Domain
 {
@@ -23,7 +18,8 @@ namespace EmergencyLog.Domain
 
     public interface IEmergencyContact
     {
-        int EntityRelationshipId { get; set; }
+        public Client Client { get; set; }
+        //public Guid ClientId { get; set; }
         RelationshipType RelationshipType { get; set; }
         string FirstName { get; set; }
         string Surname { get; set; }
@@ -36,12 +32,10 @@ namespace EmergencyLog.Domain
 
     public class EmergencyContact: Entity, IEmergencyContact
     {
-        
-        public EmergencyContact()
-        {
-        }
-        
-        public int EntityRelationshipId { get; set; }
         public RelationshipType RelationshipType { get; set; }
+
+        // navigation property
+        public Client Client { get; set; }
+        public Guid ClientId { get; set; }
     }
 }

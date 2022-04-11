@@ -1,40 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace EmergencyLog.Domain
 {
 
     public interface IAddress
     {
-        public Guid Guid { get; set; }
+        public Guid Id { get; set; }
         string StreetNumber { get; set; }
         string Street { get; set; }
         string Suburb { get; set; }
         string Postcode { get; set; }
         string Country { get; set; }
-        int EntityRelationId { get; set; }
     }
 
     public class Address : IAddress
     {
-        
-        public Address()
-        {
-        }
-
-        [Key]
-        public Guid Guid { get; set; }
+        //[Key]
+        public Guid Id { get; set; }
         public string StreetNumber { get; set; }
         public string Street { get; set; }
         public string Suburb { get; set; }
         public string Postcode { get; set; }
         public string Country { get; set; }
-        public int EntityRelationId { get; set; }
+
+        // navigation property
+        public virtual Entity Entity { get; set; }
+        public Guid EntityId { get; set; }
 
     }
 }

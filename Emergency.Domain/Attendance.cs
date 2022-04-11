@@ -1,23 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmergencyLog.Domain
 {
-    public class Attendance
+    public interface IAttendance
     {
-        [Key]
-        public Guid Guid { get; set; }
+        Guid Id { get; set; }
+        DateTime TimeIn { get; set; }
+        DateTime? TimeOut { get; set; }
+        bool OnSite { get; set; }
+        bool EntryComplete { get; set; }
+        Client Client { get; set; }
+    }
+
+    public class Attendance : IAttendance
+    {
+        // [Key]
+        public Guid Id { get; set; }
         public DateTime TimeIn { get; set; }
         public DateTime? TimeOut { get; set; }
-        public Guid EntityForeignKey { get; set; }
-        [ForeignKey("EntityForeignKey")]
-        public Entity Entity { get; set; }
         public bool OnSite { get; set; }
         public bool EntryComplete { get; set; }
+
+        // nav props
+        //[ForeignKey("EntityForeignKey")]
+        public virtual Client Client { get; set; }
+        // public Guid ClientId { get; set; }
     }
 }

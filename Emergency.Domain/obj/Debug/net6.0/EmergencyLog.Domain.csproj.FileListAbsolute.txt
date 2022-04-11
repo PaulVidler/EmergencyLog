@@ -9,3 +9,4 @@ C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\D
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\ref\EmergencyLog.Domain.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.pdb
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.csproj.AssemblyReference.cache

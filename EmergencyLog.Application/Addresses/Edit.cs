@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Addresses
 {
@@ -30,7 +26,7 @@ namespace EmergencyLog.Application.Addresses
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var address = await _context.Addresses.FindAsync(request.Address.Guid);
+                var address = await _context.Addresses.FindAsync(request.Address.Id);
 
                 // this line below has been replaced by automapper line _mapper.Map.....
                 // Address.Title = request.Address.Title ?? Address.Title; // if this is null, then just set it existing title

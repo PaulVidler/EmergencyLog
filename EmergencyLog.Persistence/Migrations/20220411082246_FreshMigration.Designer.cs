@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmergencyLog.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220409040213_Migration2ChangedToGuidPK")]
-    partial class Migration2ChangedToGuidPK
+    [Migration("20220411082246_FreshMigration")]
+    partial class FreshMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,15 +21,15 @@ namespace EmergencyLog.Persistence.Migrations
 
             modelBuilder.Entity("EmergencyLog.Domain.Address", b =>
                 {
-                    b.Property<Guid>("Guid")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("EntityRelationId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Postcode")
                         .HasColumnType("TEXT");
@@ -43,25 +43,25 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Property<string>("Suburb")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Guid");
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("EmergencyLog.Domain.Attendance", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("EntityGuid")
+                    b.Property<Guid?>("ClientId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("EntryComplete")
                         .HasColumnType("INTEGER");
-
-                    b.Property<Guid>("Guid")
-                        .HasColumnType("TEXT");
 
                     b.Property<bool>("OnSite")
                         .HasColumnType("INTEGER");
@@ -74,67 +74,15 @@ namespace EmergencyLog.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EntityGuid");
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("EmergencyLog.Domain.Client", b =>
-                {
-                    b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("AddressGuid")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("EmergencyContactGuid")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ImageLarge")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ImageSmall")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Mobile")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Guid");
-
-                    b.HasIndex("AddressGuid");
-
-                    b.HasIndex("EmergencyContactGuid");
-
-                    b.ToTable("Clients");
-                });
-
             modelBuilder.Entity("EmergencyLog.Domain.Entity", b =>
                 {
-                    b.Property<Guid>("Guid")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("AddressGuid")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DateOfBirth")
@@ -159,61 +107,83 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Guid");
-
-                    b.HasIndex("AddressGuid");
+                    b.HasKey("Id");
 
                     b.ToTable("Entity");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Entity");
                 });
 
+            modelBuilder.Entity("EmergencyLog.Domain.Client", b =>
+                {
+                    b.HasBaseType("EmergencyLog.Domain.Entity");
+
+                    b.Property<string>("ImageLarge")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageSmall")
+                        .HasColumnType("TEXT");
+
+                    b.HasDiscriminator().HasValue("Client");
+                });
+
             modelBuilder.Entity("EmergencyLog.Domain.EmergencyContact", b =>
                 {
                     b.HasBaseType("EmergencyLog.Domain.Entity");
 
-                    b.Property<int>("EntityRelationshipId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("RelationshipType")
                         .HasColumnType("INTEGER");
 
+                    b.HasIndex("ClientId")
+                        .IsUnique();
+
                     b.HasDiscriminator().HasValue("EmergencyContact");
                 });
 
-            modelBuilder.Entity("EmergencyLog.Domain.Attendance", b =>
+            modelBuilder.Entity("EmergencyLog.Domain.Address", b =>
                 {
                     b.HasOne("EmergencyLog.Domain.Entity", "Entity")
-                        .WithMany()
-                        .HasForeignKey("EntityGuid");
+                        .WithOne("Address")
+                        .HasForeignKey("EmergencyLog.Domain.Address", "EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Entity");
                 });
 
-            modelBuilder.Entity("EmergencyLog.Domain.Client", b =>
+            modelBuilder.Entity("EmergencyLog.Domain.Attendance", b =>
                 {
-                    b.HasOne("EmergencyLog.Domain.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressGuid")
+                    b.HasOne("EmergencyLog.Domain.Client", "Client")
+                        .WithMany("Attendances")
+                        .HasForeignKey("ClientId");
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("EmergencyLog.Domain.EmergencyContact", b =>
+                {
+                    b.HasOne("EmergencyLog.Domain.Client", "Client")
+                        .WithOne("EmergencyContact")
+                        .HasForeignKey("EmergencyLog.Domain.EmergencyContact", "ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EmergencyLog.Domain.EmergencyContact", "EmergencyContact")
-                        .WithMany()
-                        .HasForeignKey("EmergencyContactGuid");
-
-                    b.Navigation("Address");
-
-                    b.Navigation("EmergencyContact");
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("EmergencyLog.Domain.Entity", b =>
                 {
-                    b.HasOne("EmergencyLog.Domain.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressGuid");
-
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("EmergencyLog.Domain.Client", b =>
+                {
+                    b.Navigation("Attendances");
+
+                    b.Navigation("EmergencyContact");
                 });
 #pragma warning restore 612, 618
         }

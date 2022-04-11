@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Attendance
 {
@@ -30,7 +26,7 @@ namespace EmergencyLog.Application.Attendance
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var attendance = await _context.Attendances.FindAsync(request.Attendance.Guid);
+                var attendance = await _context.Attendances.FindAsync(request.Attendance.Id);
 
                 // this line below has been replaced by automapper line _mapper.Map.....
                 // Attendance.Title = request.Attendance.Title ?? Attendance.Title; // if this is null, then just set it existing title

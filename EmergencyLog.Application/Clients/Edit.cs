@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using EmergencyLog.Domain;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Clients
 {
@@ -31,7 +27,7 @@ namespace EmergencyLog.Application.Clients
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var client = await _context.Clients.FindAsync(request.Client.Guid);
+                var client = await _context.Clients.FindAsync(request.Client.Id);
 
                 // this line below has been replaced by automapper line _mapper.Map.....
                 // Client.Title = request.Client.Title ?? Client.Title; // if this is null, then just set it existing title
