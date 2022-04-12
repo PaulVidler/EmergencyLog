@@ -1,17 +1,8 @@
 ﻿using System;
+using EmergencyLog.Domain.Entities.Interfaces;
 
 namespace EmergencyLog.Domain.Entities
 {
-    public interface IAttendance
-    {
-        Guid Id { get; set; }
-        DateTime TimeIn { get; set; }
-        DateTime? TimeOut { get; set; }
-        bool OnSite { get; set; }
-        bool EntryComplete { get; set; }
-        Client Client { get; set; }
-    }
-
     public class Attendance : IAttendance
     {
         public Guid Id { get; set; }

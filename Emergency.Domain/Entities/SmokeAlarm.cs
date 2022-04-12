@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EmergencyLog.Domain.Entities.Interfaces;
 
 namespace EmergencyLog.Domain.Entities
 {
-    public interface IFireSafetyEquipment
-    {
-        Guid Id { get; set; }
-        string EquipmentType { get; set; }
-        string Description { get; set; }
-        DateTime LastServiced { get; set; }
-        DateTime NextService { get; set; }
-        Organisation ServicedBy { get; set; }
-    }
-
     public class SmokeAlarm : IFireSafetyEquipment
     {
         public Guid Id { get; set; }
@@ -23,6 +14,7 @@ namespace EmergencyLog.Domain.Entities
         public string Description { get; set; }
         public DateTime LastServiced { get; set; }
         public DateTime NextService { get; set; }
-        public Organisation ServicedBy { get; set; }
+        public virtual Organisation ServicedBy { get; set; }
+        public virtual Property Property { get; set; }
     }
 }

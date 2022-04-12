@@ -42,7 +42,7 @@ namespace EmergencyLog.Api.Extensions
             services.AddMediatR(typeof(Application.Attendance.Edit.Handler).Assembly);
 
             services.AddMediatR(typeof(Application.Clients.List.Handler).Assembly);
-            services.AddMediatR(typeof(Application.Clients.Create.Handler).Assembly);
+            // services.AddMediatR(typeof(Application.Clients.Create.Handler).Assembly);
             services.AddMediatR(typeof(Application.Clients.Delete.Handler).Assembly);
             services.AddMediatR(typeof(Application.Clients.Details.Handler).Assembly);
             services.AddMediatR(typeof(Application.Clients.Edit.Handler).Assembly);
@@ -52,6 +52,36 @@ namespace EmergencyLog.Api.Extensions
             services.AddMediatR(typeof(Application.EmergencyContacts.Delete.Handler).Assembly);
             services.AddMediatR(typeof(Application.EmergencyContacts.Details.Handler).Assembly);
             services.AddMediatR(typeof(Application.EmergencyContacts.Edit.Handler).Assembly);
+
+            services.AddMediatR(typeof(Application.FireExtinguishers.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.FireExtinguishers.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.FireExtinguishers.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.FireExtinguishers.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.FireExtinguishers.Edit.Handler).Assembly);
+
+            services.AddMediatR(typeof(Application.FireHoses.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.FireHoses.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.FireHoses.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.FireHoses.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.FireHoses.Edit.Handler).Assembly);
+
+            services.AddMediatR(typeof(Application.Organisations.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Organisations.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Organisations.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Organisations.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Organisations.Edit.Handler).Assembly);
+
+            services.AddMediatR(typeof(Application.Property.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Property.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Property.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Property.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Property.Edit.Handler).Assembly);
+
+            services.AddMediatR(typeof(Application.SmokeAlarms.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.SmokeAlarms.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.SmokeAlarms.Delete.Handler).Assembly);
+            services.AddMediatR(typeof(Application.SmokeAlarms.Details.Handler).Assembly);
+            services.AddMediatR(typeof(Application.SmokeAlarms.Edit.Handler).Assembly);
 
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 

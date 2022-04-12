@@ -38,10 +38,10 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditAddress(Guid id, Address Address)
+        public async Task<IActionResult> EditAddress(Guid id, Address address)
         {
-            Address.Id = id;
-            return Ok(await Mediator.Send(new Edit.Command { Address = Address }));
+            address.Id = id;
+            return Ok(await Mediator.Send(new Edit.Command { Address = address }));
         }
 
         [HttpDelete("{id}")]

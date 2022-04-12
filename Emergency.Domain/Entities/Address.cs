@@ -1,19 +1,8 @@
 ﻿using System;
+using EmergencyLog.Domain.Entities.Interfaces;
 
 namespace EmergencyLog.Domain.Entities
 {
-
-    public interface IAddress
-    {
-        public Guid Id { get; set; }
-        string StreetNumber { get; set; }
-        string Street { get; set; }
-        string Suburb { get; set; }
-        string Postcode { get; set; }
-        string Country { get; set; }
-        public Guid EntityId { get; set; }
-    }
-
     public class Address : IAddress
     {
         public Guid Id { get; set; }
@@ -22,6 +11,8 @@ namespace EmergencyLog.Domain.Entities
         public string Suburb { get; set; }
         public string Postcode { get; set; }
         public string Country { get; set; }
+        public virtual Client Client { get; set; }
+        public Guid ClientId { get; set; }
         public Guid EntityId { get; set; }
 
     }
