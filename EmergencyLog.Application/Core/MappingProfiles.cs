@@ -18,6 +18,11 @@ namespace EmergencyLog.Application.Core
             CreateMap<Domain.Entities.Attendance, Domain.Entities.Attendance>().ReverseMap();
             CreateMap<Client, Client>().ReverseMap();
             CreateMap<EmergencyContact, EmergencyContact>().ReverseMap();
+            CreateMap<FireExtinguisher, FireExtinguisher>().ReverseMap();
+            CreateMap<FireHose, FireHose>().ReverseMap();
+            CreateMap<Organisation, Organisation>().ReverseMap();
+            CreateMap<Domain.Entities.Property, Domain.Entities.Property>().ReverseMap();
+            CreateMap<SmokeAlarm, SmokeAlarm>().ReverseMap();
         }
     }
 }
