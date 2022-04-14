@@ -6,7 +6,7 @@
  - Install SQLite Browser - https://sqlitebrowser.org/
  - Make sure you've got .NET 6 SDK installed - https://dotnet.microsoft.com/en-us/download
  - Clone repo
- - Go to Tools->Nuget Package Manager-> Package Manager Console: then into the terminal type 'update-database'. This should produce an SQLite file called "EmergencyLog.db" in your EmergencyLog.Api root. Open it in the SQLite Browser for a look.
+ - Go to Tools->Nuget Package Manager-> Package Manager Console: then into the terminal type 'update-database'. This should produce an SQLite file called "EmergencyLog.db" in your EmergencyLog.Api root. Open it in the SQLite Browser for a look. I will be working on a seeder to populate some dummy data in here ready to play with. Not sure when I'll get around to it.
  - Make sure it compliles crtl+shift+B
  - Run it (Big green play button at the top. It should open directly into Swagger where you can querty and test the API. Huge parts of it are probably broken, and it's a WIP.
 
