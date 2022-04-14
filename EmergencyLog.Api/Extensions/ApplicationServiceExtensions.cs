@@ -11,6 +11,8 @@ namespace EmergencyLog.Api.Extensions
 {
     public static class ApplicationServiceExtensions
     {
+        // this class is an extension for startup, where the dependancy injection is happening. Any new services are to be injected here here.
+        
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddSwaggerGen(c =>
@@ -42,7 +44,7 @@ namespace EmergencyLog.Api.Extensions
             services.AddMediatR(typeof(Application.Attendance.Edit.Handler).Assembly);
 
             services.AddMediatR(typeof(Application.Clients.List.Handler).Assembly);
-            // services.AddMediatR(typeof(Application.Clients.Create.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Clients.Create.Handler).Assembly);
             services.AddMediatR(typeof(Application.Clients.Delete.Handler).Assembly);
             services.AddMediatR(typeof(Application.Clients.Details.Handler).Assembly);
             services.AddMediatR(typeof(Application.Clients.Edit.Handler).Assembly);

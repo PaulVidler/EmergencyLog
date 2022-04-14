@@ -29,11 +29,7 @@ namespace EmergencyLog.Application.SmokeAlarms
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var smokeAlarm = await _context.SmokeAlarms.FindAsync(request.SmokeAlarm.Id);
-
-                // this line below has been replaced by automapper line _mapper.Map.....
-                // EmergencyContact.Title = request.EmergencyContact.Title ?? EmergencyContact.Title; // if this is null, then just set it existing title
-
-                // this line below, replaces the line above as a better means of mapping without having to check each property.
+                
                 _mapper.Map(request.SmokeAlarm, smokeAlarm);
 
                 await _context.SaveChangesAsync();

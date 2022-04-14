@@ -31,10 +31,7 @@ namespace EmergencyLog.Application.FireExtinguishers
             {
                 _context.FireExtinguishers.Add(request.FireExtinguisher);
                 await _context.SaveChangesAsync();
-
-                // This value is essentially a void or null value, which allows the API to know
-                // we are finished whatever we are doing in here. This is why we need the return type of 'Task<Unit>' in the signature
-                // A unit is a MediatR struct that represents a void or null value.
+                
                 return Unit.Value;
 
             }
