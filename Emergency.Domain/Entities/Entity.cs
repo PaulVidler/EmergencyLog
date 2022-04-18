@@ -6,6 +6,7 @@ namespace EmergencyLog.Domain.Entities
     public abstract class Entity : IEntity
     {
         public Guid Id { get; set; }
+        public string Title { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public DateTime? DateOfBirth { get; set; }

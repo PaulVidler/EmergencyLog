@@ -21,7 +21,7 @@ namespace EmergencyLog.Domain.Entities
         public RelationshipType RelationshipType { get; set; }
 
         // navigation property
-        public virtual Client Client { get; set; }
+        // public virtual Client Client { get; set; }
         public Guid ClientId { get; set; }
     }
 }

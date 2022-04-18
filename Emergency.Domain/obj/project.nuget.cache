@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "OVMVXIiqIUIdGhawSCTniHhD9h81N9kgYuAcHH10a9iP2aSa7arurOsRnB4R7PTXIKJawZIQCydrpW3H5l/qDQ==",
+  "dgSpecHash": "K+mmURtS+L5V1Sq579nnWpUW4fr8OM9cmVkl47LWdmf6+4+a5HtZF4nUqczXP5NQ+D0EnwI14L1IcQDh3sECUA==",
   "success": true,
   "projectFilePath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Emergency.Domain\\EmergencyLog.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\relia\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
+    "C:\\Users\\relia\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\relia\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512"
   ],
   "logs": []

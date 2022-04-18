@@ -15,6 +15,7 @@ namespace EmergencyLog.Api.Extensions
         
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });

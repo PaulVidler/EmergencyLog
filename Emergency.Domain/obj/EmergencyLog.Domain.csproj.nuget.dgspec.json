@@ -49,6 +49,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[11.0.1, )"
+            },
+            "Bogus": {
+              "target": "Package",
+              "version": "[34.0.2, )"
             }
           },
           "imports": [

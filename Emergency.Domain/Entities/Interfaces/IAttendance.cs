@@ -9,5 +9,5 @@ public interface IAttendance
     DateTime? TimeOut { get; set; }
     bool OnSite { get; set; }
     bool EntryComplete { get; set; }
-    Client Client { get; set; }
+    //Client Client { get; set; }
 }

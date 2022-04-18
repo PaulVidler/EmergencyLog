@@ -11,7 +11,6 @@ namespace EmergencyLog.Domain.Entities
         public string? ImageSmall { get; set; }
         public string? ImageLarge { get; set; }
         public string Role { get; set; }
-        public string Title { get; set; }
         public EmergencyContact? EmergencyContact { get; set; }
         public virtual Address Address { get; set; }
         public virtual ICollection<Attendance>? Attendances { get; set; }

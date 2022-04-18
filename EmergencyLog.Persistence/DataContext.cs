@@ -13,6 +13,7 @@ namespace EmergencyLog.Persistence
     {
         public DataContext(DbContextOptions options) : base(options)
         {
+
         }
 
         public DbSet<Address> Addresses { get; set; }
