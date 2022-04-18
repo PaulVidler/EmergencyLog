@@ -15,6 +15,7 @@ namespace EmergencyLog.Domain.Entities
         public string Mobile { get; set; }
 
         // navigation props
-        public virtual Address Address { get; set; }
+        public abstract Address Address { get; set;  }
+        public Guid AddressId { get; set; }
     }
 }

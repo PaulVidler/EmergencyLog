@@ -10,7 +10,7 @@ namespace EmergencyLog.Domain.Entities
         public DateTime? TimeOut { get; set; }
         public bool OnSite { get; set; }
         public bool EntryComplete { get; set; }
-        // public virtual Client Client { get; set; }
+        public virtual Client Client { get; set; }
         public Guid ClientId { get; set; }
     }
 }

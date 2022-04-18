@@ -10,5 +10,6 @@ public interface IAddress
     string Suburb { get; set; }
     string Postcode { get; set; }
     string Country { get; set; }
-    public Guid EntityId { get; set; }
+    //public Guid ClientId { get; set; }
+    public Client Client { get; set; }
 }

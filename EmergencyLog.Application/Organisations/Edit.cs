@@ -28,7 +28,7 @@ namespace EmergencyLog.Application.Organisations
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var organisation = await _context.Organisations.FindAsync(request.Organisation.Id);
+                var organisation = await _context.Organisations.FindAsync(request.Organisation.OrganisationId);
                 _mapper.Map(request.Organisation, organisation);
 
                 await _context.SaveChangesAsync();

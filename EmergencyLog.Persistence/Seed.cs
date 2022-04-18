@@ -20,98 +20,102 @@ namespace EmergencyLog.Persistence
             _db = db;
         }
 
-        public static void SeedData(DataContext db)
+        public static async Task SeedData(DataContext db)
         {
-            //if (db.Clients.Any()) return;
+            if (db.Clients.Any()) return;
 
-            //var clients = new List<Client>();
-            
-            //for(int i=0; i < 50; i++)
-            //{
+            for (int i = 0; i < 50; i++)
+            {
+                var clientGuid = Guid.NewGuid();
+                var clientAddressGuid = Guid.NewGuid();
+                var emergencyContactGuid = Guid.NewGuid();
+                var emergencyContactAddressGuid = Guid.NewGuid();
 
-            //    var gender = i / 2 == 0 ? "men" : "women";
+                List<Attendance> attendances = new List<Attendance>();
+                for (var x = 1; x < 15; x++)
+                {
+                    var clientAttendance = new Faker<EmergencyLog.Domain.Entities.Attendance>()
+                        .RuleFor(m => m.Id, f => Guid.NewGuid())
+                        .RuleFor(m => m.ClientId, f => clientGuid)
+                        .RuleFor(m => m.EntryComplete, f => true)
+                        .RuleFor(m => m.TimeIn,
+                            f => f.Date.Between(new DateTime(2022, 01, x, 5, 0, 0),
+                                new DateTime(2022, 01, x, 10, 0, 0)))
+                        .RuleFor(m => m.TimeOut,
+                            f => f.Date.Between(new DateTime(2022, 01, x, 10, 0, 0),
+                                new DateTime(2022, 01, x, 19, 0, 0)))
+                        .RuleFor(m => m.OnSite, f => false);
 
-            //    var clientGuid = new Guid();
-            //    var clientAddressGuid = new Guid();
-            //    var emergencyContactGuid = new Guid();
-            //    var emergencyContactAddressGuid = new Guid();
+                    var generateAttendance = clientAttendance.Generate();
 
-            //    Attendance[] attendances = new Attendance[4];
-            //    for (var x = 1; x < 5; x++)
-            //    {
-            //        var rand = new Random();
-            //        var randomHour = rand.Next(3, 9);
-            //        var randomMinute = rand.Next(1, 59);
-            //        var randomMinute2 = rand.Next(1, 59);
-            //        var randomMonth = rand.Next(1, 4);
-            //        var randomDay = rand.Next(10, 28);
+                    attendances.Add(generateAttendance);
+                }
 
-            //        var timeIn = $"2022-0{randomMonth}-{randomDay}T0{randomHour}:{randomMinute}3:08.413Z";
-            //        var timeOut = $"2022-0{randomMonth}-{randomDay}T1{randomHour + randomMonth}:{randomMinute2}3:08.413Z";
+                var emergencyContactAddress = new Faker<EmergencyLog.Domain.Entities.Address>()
+                    .RuleFor(m => m.Id, f => emergencyContactAddressGuid)
+                    .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
+                    .RuleFor(m => m.Street, f => f.Address.StreetName())
+                    .RuleFor(m => m.Suburb, f => f.Address.County())
+                    .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
+                    .RuleFor(m => m.Country, f => f.Address.County());
 
+                var clientAddress = new Faker<EmergencyLog.Domain.Entities.Address>()
+                    .RuleFor(m => m.Id, f => clientAddressGuid)
+                    .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
+                    .RuleFor(m => m.Street, f => f.Address.StreetName())
+                    .RuleFor(m => m.Suburb, f => f.Address.County())
+                    .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
+                    .RuleFor(m => m.Country, f => f.Address.County())
+                    .RuleFor(m => m.Id, f => clientGuid);
 
-            //        var clientAttendance = new Faker<Domain.Entities.Attendance>()
-            //            .RuleFor(m => m.Id, f => new Guid())
-            //            .RuleFor(m => m.ClientId, f => clientGuid)
-            //            .RuleFor(m => m.EntryComplete, f => true)
-            //            .RuleFor(m => m.TimeIn, f => Convert.ToDateTime(timeIn))
-            //            .RuleFor(m => m.TimeOut, f => Convert.ToDateTime(timeOut))
-            //            .RuleFor(m => m.OnSite, f => false);
+                var clientEmergencyContact = new Faker<EmergencyLog.Domain.Entities.EmergencyContact>()
+                    .RuleFor(m => m.Id, f => emergencyContactGuid)
+                    .RuleFor(m => m.RelationshipEntityId, f => clientGuid)
+                    .RuleFor(m => m.Title, f => f.Name.Prefix(f.Person.Gender))
+                    .RuleFor(m => m.RelationshipType, f => f.Random.Enum<RelationshipType>())
+                    .RuleFor(m => m.FirstName, f => f.Name.FirstName(f.Person.Gender))
+                    .RuleFor(m => m.Surname, f => f.Name.LastName(f.Person.Gender))
+                    .RuleFor(m => m.DateOfBirth,
+                        f => f.Date.Between(new DateTime(1950, 01, 01), new DateTime(2015, 1, 1)))
+                    .RuleFor(m => m.Email, (f, m) => f.Internet.Email(m.FirstName, m.Surname))
+                    .RuleFor(m => m.Phone, f => f.Phone.PhoneNumber())
+                    .RuleFor(m => m.Mobile, f => f.Phone.PhoneNumber())
+                    .RuleFor(m => m.Address, f => emergencyContactAddress);
 
-            //        attendances.Append(clientAttendance);
-            //    }
+                var client = new Faker<Client>()
+                    .RuleFor(m => m.FirstName, f => f.Name.FirstName(f.Person.Gender))
+                    .RuleFor(m => m.Surname, f => f.Name.LastName(f.Person.Gender))
+                    .RuleFor(m => m.DateOfBirth,
+                        f => f.Date.Between(new DateTime(1950, 01, 01), new DateTime(2015, 1, 1)))
+                    .RuleFor(m => m.Email, (f, m) => f.Internet.Email(m.FirstName, m.Surname))
+                    .RuleFor(m => m.Phone, f => f.Phone.PhoneNumber())
+                    .RuleFor(m => m.Mobile, f => f.Phone.PhoneNumber())
+                    .RuleFor(m => m.Id, f => clientGuid)
+                    .RuleFor(m => m.ImageLarge, f =>
+                    {
+                        var imgGender = f.Person.Gender == Name.Gender.Female ? "women" : "men";
+                        return $"https://randomuser.me/api/portraits/{imgGender}/{i}.jpg";
+                    })
+                    .RuleFor(m => m.ImageSmall, f =>
+                    {
+                        var imgGender = f.Person.Gender == Name.Gender.Female ? "women" : "men";
+                        return $"https://randomuser.me/api/portraits/thumb/{imgGender}/{i}.jpg";
+                    })
+                    .RuleFor(m => m.Role, f => f.Name.JobTitle())
+                    .RuleFor(m => m.Title, f => f.Name.Prefix(f.Person.Gender))
+                    // .RuleFor(m => m.EmergencyContactId, f => emergencyContactGuid)
+                    .RuleFor(m => m.EmergencyContact, f => clientEmergencyContact)
+                    //.RuleFor(m => m.AddressId, f => clientAddressGuid)
+                    .RuleFor(m => m.Address, f => clientAddress)
+                    .RuleFor(m => m.Attendances, f => attendances);
 
-            //    var emergencyContactAddress = new Faker<Domain.Entities.Address>()
-            //        .RuleFor(m => m.Id, f => emergencyContactAddressGuid)
-            //        .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
-            //        .RuleFor(m => m.Street, f => f.Address.StreetName())
-            //        .RuleFor(m => m.Suburb, f => f.Address.County())
-            //        .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
-            //        .RuleFor(m => m.Country, f => f.Address.County())
-            //        .RuleFor(m => m.ClientId, f => emergencyContactGuid)
-            //        .RuleFor(m => m.EntityId, f => clientGuid);
+                var user = client.Generate();
 
-            //    var clientAddress = new Faker<Domain.Entities.Address>()
-            //        .RuleFor(m => m.Id, f => clientAddressGuid)
-            //        .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
-            //        .RuleFor(m => m.Street, f => f.Address.StreetName())
-            //        .RuleFor(m => m.Suburb, f => f.Address.County())
-            //        .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
-            //        .RuleFor(m => m.Country, f => f.Address.County())
-            //        .RuleFor(m => m.ClientId, f => clientGuid)
-            //        .RuleFor(m => m.EntityId, f => clientGuid);
-
-            //    var client = new Faker<Client>()
-            //        .RuleFor(m => m.FirstName, f => f.Name.FirstName(f.Person.Gender))
-            //        .RuleFor(m => m.Surname, f => f.Name.LastName(f.Person.Gender))
-            //        .RuleFor(m => m.DateOfBirth,
-            //            f => f.Date.Between(new DateTime(1950, 01, 01), new DateTime(2015, 1, 1)))
-            //        .RuleFor(m => m.Email, f => f.Internet.Email())
-            //        .RuleFor(m => m.Phone, f => f.Phone.PhoneNumber())
-            //        .RuleFor(m => m.Mobile, f => f.Phone.PhoneNumber())
-            //        .RuleFor(m => m.Id, f => clientGuid)
-            //        .RuleFor(m => m.ImageLarge, f => $"https://randomuser.me/api/portraits/{gender}/{i}.jpg")
-            //        .RuleFor(m => m.ImageSmall, f => $"https://randomuser.me/api/portraits/thumb/{gender}/{i}.jpg")
-            //        .RuleFor(m => m.Role, f => f.Name.JobTitle())
-            //        .RuleFor(m => m.Title, f => f.Name.Prefix(f.Person.Gender))
-            //        .RuleFor(m => m.EmergencyContact.Id, f => emergencyContactGuid)
-            //        .RuleFor(m => m.EmergencyContact.FirstName, f => f.Name.FirstName(f.Person.Gender))
-            //        .RuleFor(m => m.EmergencyContact.Surname, f => f.Name.LastName(f.Person.Gender))
-            //        .RuleFor(m => m.EmergencyContact.DateOfBirth,
-            //            f => f.Date.Between(new DateTime(1950, 01, 01), new DateTime(2015, 1, 1)))
-            //        .RuleFor(m => m.EmergencyContact.Email, f => f.Internet.Email())
-            //        .RuleFor(m => m.EmergencyContact.Phone, f => f.Phone.PhoneNumber())
-            //        .RuleFor(m => m.EmergencyContact.Mobile, f => f.Phone.PhoneNumber())
-            //        // address starts here
-            //        .RuleFor(m => m.EmergencyContact.Address, f => emergencyContactAddress)
-            //        .RuleFor(m => m.Address, f => clientAddress)
-            //        .RuleFor(m => m.Attendances, f => attendances);
-                
-
-            //    db.Clients.Add(client);
-            //    db.SaveChanges();
+                await db.Clients.AddRangeAsync(user);
+                await db.SaveChangesAsync();
 
             }
         }
-        
+    }
+
 }

@@ -14,7 +14,5 @@ namespace EmergencyLog.Domain.Entities
         public virtual ICollection<FireExtinguisher> FireExtinguishers { get; set; } = null!;
         public virtual ICollection<FireHose> FireHoses { get; set; } = null!;
         public virtual Client PrimaryContact { get; set; }
-        public virtual Client SecondaryContact { get; set; } = null!;
     }
-    
 }
