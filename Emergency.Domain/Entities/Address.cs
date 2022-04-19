@@ -14,5 +14,7 @@ namespace EmergencyLog.Domain.Entities
         public string Country { get; set; }
         // public virtual Guid ClientId { get; set; }
         public virtual Client Client { get; set; }
+
+        // test change to see if reflected in Azure repo
     }
 }
