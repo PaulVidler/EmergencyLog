@@ -15,6 +15,7 @@
 - FluentValidation
 - Auth
 - AutoMapper
+- Auth
 - Front end design and technology decisions. I'm keen on React + Typescript, if only because I'm not that great at either and I'd like to use as a learning experience. Not sure exactly how this fits in with you talking about NextJS?
 - Decide on a component library, probably either MUI https://mui.com/ or Semantic UI https://react.semantic-ui.com/
 - Pagination from API end
