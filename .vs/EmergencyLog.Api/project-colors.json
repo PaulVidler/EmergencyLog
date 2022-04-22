@@ -25,7 +25,17 @@
       "ProjectGuid": "2a6c086e-7aef-4c80-9de7-712692206952",
       "DisplayName": "EmergencyLog.Application",
       "ColorIndex": 4
+    },
+    "1d31b578-b72a-474e-9819-172395dc63f0": {
+      "ProjectGuid": "1d31b578-b72a-474e-9819-172395dc63f0",
+      "DisplayName": "DatabaseSeeder",
+      "ColorIndex": 5
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
-  "NextColorIndex": 5
+  "NextColorIndex": 6
 }

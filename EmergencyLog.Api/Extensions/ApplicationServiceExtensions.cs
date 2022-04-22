@@ -28,6 +28,7 @@ namespace EmergencyLog.Api.Extensions
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
+                    // policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000"); can get/post/put etc from localhost:3000
                     policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
                 });
             });

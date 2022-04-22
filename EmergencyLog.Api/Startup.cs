@@ -54,6 +54,8 @@ namespace EmergencyLog.Api
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy"); // use "CorsPolicy" Defined in ApplicationServiceExtensions
+
             app.UseAuthentication();
             app.UseAuthorization();
 
