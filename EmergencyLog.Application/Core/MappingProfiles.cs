@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 
 namespace EmergencyLog.Application.Core
 {

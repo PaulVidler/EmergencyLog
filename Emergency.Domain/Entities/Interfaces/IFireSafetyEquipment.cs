@@ -1,4 +1,5 @@
 ﻿using System;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 
 namespace EmergencyLog.Domain.Entities.Interfaces;
 
@@ -9,5 +10,5 @@ public interface IFireSafetyEquipment
     string Description { get; set; }
     DateTime LastServiced { get; set; }
     DateTime NextService { get; set; }
-    Organisation ServicedBy { get; set; }
+    ServiceOrganisation ServicedOrganisation { get; set; }
 }

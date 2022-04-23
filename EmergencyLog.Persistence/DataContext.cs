@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmergencyLog.Persistence

@@ -15,6 +15,8 @@ namespace EmergencyLog.Domain.Entities
         public virtual EmergencyContact? EmergencyContact { get; set; }
         public Guid EmergencyContactId { get; set; }
         public virtual ICollection<Attendance>? Attendances { get; set; }
-        //public virtual Organisation? Organisation { get; set; }
+        public virtual Organisation? Organisation { get; set; }
+        public Guid OrganisationId { get; set; }
+
     }
 }

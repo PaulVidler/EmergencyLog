@@ -5,6 +5,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using EmergencyLog.Domain.Entities;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 
 namespace EmergencyLog.Application.FireHoses
 {

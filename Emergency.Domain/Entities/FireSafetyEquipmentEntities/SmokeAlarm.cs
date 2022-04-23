@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EmergencyLog.Domain.Entities.Interfaces;
 
-namespace EmergencyLog.Domain.Entities
+namespace EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities
 {
     public class SmokeAlarm : IFireSafetyEquipment
     {
@@ -14,7 +10,9 @@ namespace EmergencyLog.Domain.Entities
         public string Description { get; set; }
         public DateTime LastServiced { get; set; }
         public DateTime NextService { get; set; }
-        public virtual Organisation ServicedBy { get; set; }
+        public virtual ServiceOrganisation ServicedOrganisation { get; set; }
+        public Guid ServicedOrganisationId { get; set; }
         public virtual Property Property { get; set; }
+        public Guid PropertyId { get; set; }
     }
 }

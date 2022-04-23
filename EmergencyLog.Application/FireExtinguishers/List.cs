@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
