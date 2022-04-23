@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using EmergencyLog.Domain.Entities;
 using Bogus;
 using Bogus.DataSets;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmergencyLog.Persistence
@@ -28,9 +29,45 @@ namespace EmergencyLog.Persistence
             {
                 var organisationGuid = Guid.NewGuid();
 
+                List<Property> properties = new List<Property>();
                 for (int t = 0; t < 3; t++)
                 {
                     var propertyId = Guid.NewGuid();
+
+                    // create 3 x of each smoke alarm, fire alarm, and fire extinguisher here? Then add to property details
+                    List<FireHose> fireHoses = new List<FireHose>();
+                    for (var x = 1; x < 4; x++)
+                    {
+                        var fireHose = new Faker<FireHose>();
+                            //.RuleFor(m => m.Id, f => Guid.NewGuid())
+                            //.RuleFor(m => m.ClientId, f => clientGuid)
+                            //.RuleFor(m => m.EntryComplete, f => true)
+                            //.RuleFor(m => m.TimeIn,
+                            //    f => f.Date.Between(new DateTime(2022, 01, x, 5, 0, 0),
+                            //        new DateTime(2022, 01, x, 10, 0, 0)))
+                            //.RuleFor(m => m.TimeOut,
+                            //    f => f.Date.Between(new DateTime(2022, 01, x, 10, 0, 0),
+                            //        new DateTime(2022, 01, x, 19, 0, 0)))
+                            //.RuleFor(m => m.OnSite, f => false);
+
+                            // need to make firehose, smopke alarm, fireExtinguisher and ServiceOrganisation here. Work it out, ole chap.
+                            // youre trying to create 3 properties, with 3 or so each of the extinguishers/alarms etc, and then attach
+                            // them to the organisation, before creating the users etc below for those organisations
+
+                        FireHose generateFirehose = fireHose.Generate();
+
+                        fireHoses.Add(generateFirehose);
+                    }
+
+
+                    // above code should make firehose x 3 , extinguisher x 3 and whatever else to be seeded into the property, before being added to the organisation, or some shit like that.
+                    var property = new Faker<Property>();
+                    //var property = new Faker<Property>()
+                    //    .RuleFor(m => m.)
+
+                    var generateProperty = property.Generate();
+
+                    properties.Add(generateProperty);
                 }
 
 
