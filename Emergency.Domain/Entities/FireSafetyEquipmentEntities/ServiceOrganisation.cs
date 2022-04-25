@@ -10,9 +10,10 @@ namespace EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities
     {
         public Guid ServiceOrganisationId { get; set; }
         public string ServiceOrganisationName { get; set; }
-        public string Logo { get; set; } // url for logo upload
-        public virtual Client PrimaryContact { get; set; }
-        public Guid PrimaryContactId { get; set; }
+        public string PhoneNumber { get; set; }
+        public string WebsiteUrl { get; set; }
+        public string? Logo { get; set; } // url for logo upload
+        public virtual Client? PrimaryContact { get; set; }
         public virtual Address Address { get; set; }
         public Guid AddressId { get; set; }
     }

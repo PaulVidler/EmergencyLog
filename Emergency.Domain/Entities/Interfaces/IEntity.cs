@@ -13,6 +13,5 @@ public interface IEntity
     public string Mobile { get; set; }
 
     //nav props
-    //public Address Address { get; set; }
-    public Guid AddressId { get; set; }
+    public Address Address { get; set; }
 }

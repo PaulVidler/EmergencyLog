@@ -16,6 +16,5 @@ namespace EmergencyLog.Domain.Entities
 
         // navigation props
         public abstract Address Address { get; set;  }
-        public Guid AddressId { get; set; }
     }
 }

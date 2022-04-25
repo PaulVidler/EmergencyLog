@@ -26,5 +26,6 @@ namespace EmergencyLog.Persistence
         public DbSet<Organisation> Organisations { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<SmokeAlarm> SmokeAlarms { get; set; }
+        public DbSet<ServiceOrganisation> ServiceOrganisations { get; set; }
     }
 }

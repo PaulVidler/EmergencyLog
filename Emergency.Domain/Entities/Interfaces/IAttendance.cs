@@ -10,5 +10,5 @@ public interface IAttendance
     bool OnSite { get; set; }
     bool EntryComplete { get; set; }
     Client Client { get; set; }
-    Guid ClientId { get; set; }
+    //Guid ClientId { get; set; }
 }

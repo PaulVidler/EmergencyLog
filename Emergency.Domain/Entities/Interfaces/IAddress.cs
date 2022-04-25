@@ -1,4 +1,5 @@
 ﻿using System;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 
 namespace EmergencyLog.Domain.Entities.Interfaces;
 
@@ -10,6 +11,4 @@ public interface IAddress
     string Suburb { get; set; }
     string Postcode { get; set; }
     string Country { get; set; }
-    //public Guid ClientId { get; set; }
-    public Client Client { get; set; }
 }

@@ -19,10 +19,9 @@ namespace EmergencyLog.Domain.Entities
     public class EmergencyContact: Entity
     {
         public RelationshipType RelationshipType { get; set; }
-
-        // navigation property for entity this emergency contact is related to
-        // Darrens wife is his emergency contact, so Darrens entity id is put into this field
-        public Guid RelationshipEntityId { get; set; }
+        public Client Client { get; set; } // whomever this emergency contact is related to
+        public Guid ClientId { get; set; }
         public override Address Address { get; set; }
+        public Guid AddressId { get; set; }
     }
 }
