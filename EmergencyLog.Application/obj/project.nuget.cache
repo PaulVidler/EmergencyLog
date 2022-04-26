@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iolhezCJLUrw6SI8POtU+UEj+LyoVIbDLgQS+9FY944COUpCv2nGQd/FE/ChARuY9qWJF+XBTPt35xoamenZRw==",
+  "dgSpecHash": "LvGGgGOHI9vu/zT0CIK7upX5SrxMcNJESgyqhweMo7H6vMUfZJTaYnARgW3Fc6N7A8R3EdzbrpwOP2YiG/JM1w==",
   "success": true,
   "projectFilePath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Application\\EmergencyLog.Application.csproj",
   "expectedPackageFiles": [
@@ -38,6 +38,7 @@
     "C:\\Users\\relia\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\relia\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\relia\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
+    "C:\\Users\\relia\\.nuget\\packages\\system.linq.dynamic.core\\1.2.18\\system.linq.dynamic.core.1.2.18.nupkg.sha512",
     "C:\\Users\\relia\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\relia\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\relia\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",

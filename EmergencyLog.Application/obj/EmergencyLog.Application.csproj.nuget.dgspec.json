@@ -53,6 +53,10 @@
             "Bogus": {
               "target": "Package",
               "version": "[34.0.2, )"
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.2.18, )"
             }
           },
           "imports": [
