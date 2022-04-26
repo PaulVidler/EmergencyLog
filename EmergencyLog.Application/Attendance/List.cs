@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain;
 using EmergencyLog.Persistence;
 using MediatR;
@@ -14,8 +15,8 @@ namespace EmergencyLog.Application.Attendance
 {
     public class List
     {
-        public class Query : IRequest<List<Domain.Entities.Attendance>> { }
-        public class Handler : IRequestHandler<Query, List<Domain.Entities.Attendance>>
+        public class Query : IRequest<PagedList<Domain.Entities.Attendance>> { }
+        public class Handler : IRequestHandler<Query, PagedList<Domain.Entities.Attendance>>
         {
             private DataContext _context;
 
@@ -24,9 +25,11 @@ namespace EmergencyLog.Application.Attendance
                 _context = context;
             }
 
-            public async Task<List<Domain.Entities.Attendance>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<PagedList<Domain.Entities.Attendance>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Attendances.ToListAsync();
+                var attendance =  await _context.Attendances.ToListAsync();
+
+                return Result<PagedList<Domain.Entities.Attendance>>.Success(attendance);
             }
         }
 
