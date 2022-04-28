@@ -1,21 +1,13 @@
-using Microsoft.AspNetCore.Authentication;
+using EmergencyLog.Api.Extensions;
+using EmergencyLog.Api.Middleware;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EmergencyLog.Api.Extensions;
-using Newtonsoft.Json;
 
 namespace EmergencyLog.Api
 {
@@ -34,7 +26,19 @@ namespace EmergencyLog.Api
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(_configuration.GetSection("AzureAd"));
 
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(config =>
+            {
+                config.RegisterValidatorsFromAssemblyContaining<Application.Attendance.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.Addresses.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.Clients.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.EmergencyContacts.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.FireExtinguishers.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.FireHoses.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.Organisations.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.Property.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.SmokeAlarms.Create>();
+            });
+
             // tidy up into extension method call into "ApplicationExtension.cs"
             services.AddApplicationServices(_configuration);
 
@@ -43,6 +47,8 @@ namespace EmergencyLog.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ExceptionMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
