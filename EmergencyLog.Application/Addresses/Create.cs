@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators;
 using EmergencyLog.Domain;
@@ -35,21 +36,31 @@ namespace EmergencyLog.Application.Addresses
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private DataContext _context;
+            private IMapper _mapper;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context, IMapper mapper)
             {
+                _mapper = mapper;
                 _context = context;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                _context.Addresses.Add(request.Address);
+
+                var address = await _context.Addresses.FindAsync(request.Address.Id);
+
+                if (address == null) return null;
+
+                // this line below has been replaced by automapper line _mapper.Map.....
+                // activity.Title = request.Activity.Title ?? activity.Title; // if this is null, then just set it existing title
+
+                // this line below, replaces the line above as a better means of mapping without having to check each property.
+                _mapper.Map(request.Address, address);
+
                 var result = await _context.SaveChangesAsync() > 0;
+
                 if (!result) return Result<Unit>.Failure("Failed to create Address");
 
-                // This value is essentially a void or null value, which allows the API to know
-                // we are finished whatever we are doing in here. This is why we need the return type of 'Task<Unit>' in the signature
-                // A unit is a MediatR struct that represents a void or null value.
                 return Result<Unit>.Success(Unit.Value);
 
             }
