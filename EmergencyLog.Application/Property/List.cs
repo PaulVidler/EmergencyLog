@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
@@ -15,8 +16,8 @@ namespace EmergencyLog.Application.Property
 {
     public class List
     {
-        public class Query : IRequest<List<Domain.Entities.Property>> { }
-        public class Handler : IRequestHandler<Query, List<Domain.Entities.Property>>
+        public class Query : IRequest<Result<List<Domain.Entities.Property>>> { }
+        public class Handler : IRequestHandler<Query, Result<List<Domain.Entities.Property>>>
         {
             private DataContext _context;
 
@@ -25,9 +26,9 @@ namespace EmergencyLog.Application.Property
                 _context = context;
             }
 
-            public async Task<List<Domain.Entities.Property>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Domain.Entities.Property>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Properties.ToListAsync();
+                return Result<List<Domain.Entities.Property>>.Success(await _context.Properties.ToListAsync());
             }
         }
 

@@ -19,34 +19,34 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<List<FireExtinguisher>> GetFireExtinguisher()
+        public async Task<IActionResult> GetFireExtinguisher()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{guid}")]
-        public async Task<FireExtinguisher> GetFireExtinguisher(Guid guid)
+        public async Task<IActionResult> GetFireExtinguisher(Guid guid)
         {
-            return await Mediator.Send(new Details.Query { Id = guid });
+            return HandleResult(await Mediator.Send(new Details.Query { Id = guid }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostFireExtinguisher(FireExtinguisher fireExtinguisher)
         {
-            return Ok(await Mediator.Send(new Create.Command { FireExtinguisher = fireExtinguisher }));
+            return HandleResult(await Mediator.Send(new Create.Command { FireExtinguisher = fireExtinguisher }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditFireExtinguisher(Guid id, FireExtinguisher fireExtinguisher)
         {
             fireExtinguisher.Id = id;
-            return Ok(await Mediator.Send(new Edit.Command { FireExtinguisher = fireExtinguisher }));
+            return HandleResult(await Mediator.Send(new Edit.Command { FireExtinguisher = fireExtinguisher }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFireExtinguisher(Guid id)
         {
-            return Ok(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
     }
 }

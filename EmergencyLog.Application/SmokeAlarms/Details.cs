@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
 using MediatR;
@@ -12,13 +13,13 @@ namespace EmergencyLog.Application.SmokeAlarms
 {
     public class Details
     {
-        public class Query : IRequest<SmokeAlarm>
+        public class Query : IRequest<Result<SmokeAlarm>>
         {
             public Guid Id { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, SmokeAlarm>
+        public class Handler : IRequestHandler<Query, Result<SmokeAlarm>>
         {
             private readonly DataContext _context;
 
@@ -27,9 +28,10 @@ namespace EmergencyLog.Application.SmokeAlarms
                 _context = context;
             }
 
-            public async Task<SmokeAlarm> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<SmokeAlarm>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.SmokeAlarms.FindAsync(request.Id);
+                var smokeAlarm = await _context.SmokeAlarms.FindAsync(request.Id);
+                return Result<SmokeAlarm>.Success(smokeAlarm);
             }
         }
     }

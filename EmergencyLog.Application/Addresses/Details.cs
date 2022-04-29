@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
@@ -14,13 +15,13 @@ namespace EmergencyLog.Application.Addresses
 {
     public class Details
     {
-        public class Query : IRequest<Address>
+        public class Query : IRequest<Result<Address>>
         {
             public Guid Id { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Address>
+        public class Handler : IRequestHandler<Query, Result<Address>>
         {
             private readonly DataContext _context;
 
@@ -29,9 +30,10 @@ namespace EmergencyLog.Application.Addresses
                 _context = context;
             }
 
-            public async Task<Address> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Address>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Addresses.FindAsync(request.Id);
+                var address = await _context.Addresses.FindAsync(request.Id);
+                return Result<Address>.Success(address);
             }
         }
     }
