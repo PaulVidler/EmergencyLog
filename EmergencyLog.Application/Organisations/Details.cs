@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using MediatR;
 
@@ -11,13 +13,13 @@ namespace EmergencyLog.Application.Organisations
 {
     public class Details
     {
-        public class Query : IRequest<Domain.Entities.Organisation>
+        public class Query : IRequest<Result<Organisation>>
         {
             public Guid Id { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Domain.Entities.Organisation>
+        public class Handler : IRequestHandler<Query, Result<Organisation>>
         {
             private readonly DataContext _context;
 
@@ -26,9 +28,10 @@ namespace EmergencyLog.Application.Organisations
                 _context = context;
             }
 
-            public async Task<Domain.Entities.Organisation> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Organisation>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Organisations.FindAsync(request.Id);
+                var organisation = await _context.Organisations.FindAsync(request.Id);
+                return Result<Organisation>.Success(organisation);
             }
         }
     }

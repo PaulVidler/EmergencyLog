@@ -18,34 +18,34 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Organisation>> GetOrganisations()
+        public async Task<IActionResult> GetOrganisations()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{guid}")]
-        public async Task<Organisation> GetOrganisation(Guid guid)
+        public async Task<IActionResult> GetOrganisation(Guid guid)
         {
-            return await Mediator.Send(new Details.Query { Id = guid });
+            return HandleResult(await Mediator.Send(new Details.Query { Id = guid }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostOrganisation(Organisation organisation)
         {
-            return Ok(await Mediator.Send(new Create.Command { Organisation = organisation }));
+            return HandleResult(await Mediator.Send(new Create.Command { Organisation = organisation }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditOrganisation(Guid id, Organisation organisation)
         {
             organisation.OrganisationId = id;
-            return Ok(await Mediator.Send(new Edit.Command { Organisation = organisation }));
+            return HandleResult(await Mediator.Send(new Edit.Command { Organisation = organisation }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrganisation(Guid id)
         {
-            return Ok(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
     }
 }

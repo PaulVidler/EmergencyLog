@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
 using MediatR;
@@ -12,13 +13,13 @@ namespace EmergencyLog.Application.FireExtinguishers
 {
     public class Details
     {
-        public class Query : IRequest<FireExtinguisher>
+        public class Query : IRequest<Result<FireExtinguisher>>
         {
             public Guid Id { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, FireExtinguisher>
+        public class Handler : IRequestHandler<Query, Result<FireExtinguisher>>
         {
             private readonly DataContext _context;
 
@@ -27,9 +28,10 @@ namespace EmergencyLog.Application.FireExtinguishers
                 _context = context;
             }
 
-            public async Task<FireExtinguisher> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<FireExtinguisher>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.FireExtinguishers.FindAsync(request.Id);
+                var fireExtinguisher = await _context.FireExtinguishers.FindAsync(request.Id);
+                return Result<FireExtinguisher>.Success(fireExtinguisher);
             }
         }
     }

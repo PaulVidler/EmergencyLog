@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
@@ -16,8 +17,8 @@ namespace EmergencyLog.Application.FireHoses
 {
     public class List
     {
-        public class Query : IRequest<List<FireHose>> { }
-        public class Handler : IRequestHandler<Query, List<FireHose>>
+        public class Query : IRequest<Result<List<FireHose>>> { }
+        public class Handler : IRequestHandler<Query, Result<List<FireHose>>>
         {
             private DataContext _context;
 
@@ -26,9 +27,9 @@ namespace EmergencyLog.Application.FireHoses
                 _context = context;
             }
 
-            public async Task<List<FireHose>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<FireHose>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.FireHoses.ToListAsync();
+                return Result<List<FireHose>>.Success(await _context.FireHoses.ToListAsync());
             }
         }
 

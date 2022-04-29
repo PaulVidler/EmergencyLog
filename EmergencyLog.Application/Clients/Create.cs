@@ -4,35 +4,58 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Validators;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
+using FluentValidation;
 using MediatR;
 
 namespace EmergencyLog.Application.Clients
 {
     public class Create
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Client Client { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Client).SetValidator(new ClientsValidator());
+            }
+        }
+
+
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private DataContext _context;
+            private IMapper _mapper;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context, IMapper mapper)
             {
+                _mapper = mapper;
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                _context.Clients.Add(request.Client);
-                await _context.SaveChangesAsync();
-                
-                return Unit.Value;
+
+                var client = await _context.Clients.FindAsync(request.Client.Id);
+
+                if (client == null) return null;
+                _mapper.Map(request.Client, client);
+
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if (!result) return Result<Unit>.Failure("Failed to create Client");
+
+                return Result<Unit>.Success(Unit.Value);
 
             }
         }
