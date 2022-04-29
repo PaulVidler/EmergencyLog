@@ -88,3 +88,4 @@ C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\D
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\FluentValidation.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\System.Linq.Dynamic.Core.dll
