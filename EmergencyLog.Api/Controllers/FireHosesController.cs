@@ -19,34 +19,34 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<List<FireHose>> GetFireHoses()
+        public async Task<IActionResult> GetFireHoses()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{guid}")]
-        public async Task<FireHose> GetFireHose(Guid guid)
+        public async Task<IActionResult> GetFireHose(Guid guid)
         {
-            return await Mediator.Send(new Details.Query { Id = guid });
+            return HandleResult(await Mediator.Send(new Details.Query { Id = guid }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostFireHose(FireHose fireHose)
         {
-            return Ok(await Mediator.Send(new Create.Command { FireHose = fireHose }));
+            return HandleResult(await Mediator.Send(new Create.Command { FireHose = fireHose }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditFireHose(Guid id, FireHose fireHose)
         {
             fireHose.Id = id;
-            return Ok(await Mediator.Send(new Edit.Command { FireHose = fireHose }));
+            return HandleResult(await Mediator.Send(new Edit.Command { FireHose = fireHose }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAddress(Guid id)
+        public async Task<IActionResult> DeleteFireHose(Guid id)
         {
-            return Ok(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
     }
 }

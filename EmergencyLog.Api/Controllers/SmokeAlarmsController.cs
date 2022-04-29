@@ -19,34 +19,34 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<List<SmokeAlarm>> GetSmokeAlarms()
+        public async Task<IActionResult> GetSmokeAlarms()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{guid}")]
-        public async Task<SmokeAlarm> GetSmokeAlarm(Guid guid)
+        public async Task<IActionResult> GetSmokeAlarm(Guid guid)
         {
-            return await Mediator.Send(new Details.Query { Id = guid });
+            return HandleResult( await Mediator.Send(new Details.Query { Id = guid }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostAddress(SmokeAlarm smokeAlarm)
         {
-            return Ok(await Mediator.Send(new Create.Command { SmokeAlarm = smokeAlarm }));
+            return HandleResult(await Mediator.Send(new Create.Command { SmokeAlarm = smokeAlarm }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditSmokeAlarm(Guid id, SmokeAlarm smokeAlarm)
         {
             smokeAlarm.Id = id;
-            return Ok(await Mediator.Send(new Edit.Command { SmokeAlarm = smokeAlarm }));
+            return HandleResult(await Mediator.Send(new Edit.Command { SmokeAlarm = smokeAlarm }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSmokeAlarm(Guid id)
         {
-            return Ok(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
     }
 }

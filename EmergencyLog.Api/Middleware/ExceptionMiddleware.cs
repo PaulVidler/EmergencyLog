@@ -22,7 +22,7 @@ namespace EmergencyLog.Api.Middleware
             _next = next;
         }
 
-        public async Task InvokeAsyncMethod(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {

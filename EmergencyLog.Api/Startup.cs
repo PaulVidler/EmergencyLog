@@ -47,11 +47,12 @@ namespace EmergencyLog.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // app.UseMiddleware<ExceptionMiddleware>();
+            // this handles exceptions outside of developer mode and returns a reasonable summary in JSON format for easier handling of the returned information
+            app.UseMiddleware<ExceptionMiddleware>(); 
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage(); // gives a stack trace and thorough error information when run in dev. Not used with the middleware above "app.UseMiddleware<ExceptionMiddleware>();"
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmergencyLog.Api v1"));
             }

@@ -4,18 +4,30 @@ using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Validators;
 using EmergencyLog.Domain.Entities;
+using FluentValidation;
 
 namespace EmergencyLog.Application.Organisations
 {
     public class Edit
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Organisation Organisation { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Organisation).SetValidator(new OrganisationValidator());
+            }
+        }
+
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private DataContext _context;
             private IMapper _mapper;
@@ -26,13 +38,20 @@ namespace EmergencyLog.Application.Organisations
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+
                 var organisation = await _context.Organisations.FindAsync(request.Organisation.OrganisationId);
+
+                if (organisation == null) return null;
+
                 _mapper.Map(request.Organisation, organisation);
 
-                await _context.SaveChangesAsync();
-                return Unit.Value;
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if (!result) return Result<Unit>.Failure("Failed to update Organisation");
+
+                return Result<Unit>.Success(Unit.Value);
 
             }
         }

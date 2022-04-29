@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using EmergencyLog.Application.Clients;
 using EmergencyLog.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 using List = EmergencyLog.Application.Clients.List;
-using EmergencyLog.Application.Clients;
-using EmergencyLog.Domain.Entities;
 
 namespace EmergencyLog.Api.Controllers
 {
