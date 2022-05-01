@@ -16,8 +16,11 @@ namespace EmergencyLog.Application.Clients
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Client>>> { }
-        public class Handler : IRequestHandler<Query, Result<List<Client>>>
+        public class Query : IRequest<Result<PagedList<Client>>>
+        {
+            public PagingParams Params { get; set; }
+        }
+        public class Handler : IRequestHandler<Query, Result<PagedList<Client>>>
         {
             private DataContext _context;
 
@@ -26,9 +29,13 @@ namespace EmergencyLog.Application.Clients
                 _context = context;
             }
 
-            public async Task<Result<List<Client>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<Client>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<Client>>.Success(await _context.Clients.ToListAsync());
+                var query = _context.Clients.OrderBy(d => d.Surname).AsQueryable();
+
+                return Result<PagedList<Client>>.Success(
+                    await PagedList<Client>.CreateAsync(query, request.Params.PageNumber,
+                        request.Params.PageSize));
             }
         }
 

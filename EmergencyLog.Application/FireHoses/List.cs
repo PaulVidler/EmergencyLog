@@ -17,8 +17,11 @@ namespace EmergencyLog.Application.FireHoses
 {
     public class List
     {
-        public class Query : IRequest<Result<List<FireHose>>> { }
-        public class Handler : IRequestHandler<Query, Result<List<FireHose>>>
+        public class Query : IRequest<Result<PagedList<FireHose>>>
+        {
+            public PagingParams Params { get; set; }
+        }
+        public class Handler : IRequestHandler<Query, Result<PagedList<FireHose>>>
         {
             private DataContext _context;
 
@@ -27,9 +30,13 @@ namespace EmergencyLog.Application.FireHoses
                 _context = context;
             }
 
-            public async Task<Result<List<FireHose>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<FireHose>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<FireHose>>.Success(await _context.FireHoses.ToListAsync());
+                var query = _context.FireHoses.OrderBy(d => d.LastServiced).AsQueryable();
+
+                return Result<PagedList<FireHose>>.Success(
+                    await PagedList<FireHose>.CreateAsync(query, request.Params.PageNumber,
+                        request.Params.PageSize));
             }
         }
 

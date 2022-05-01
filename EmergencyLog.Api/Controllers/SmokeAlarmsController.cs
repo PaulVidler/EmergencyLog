@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Application.SmokeAlarms;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
@@ -19,9 +20,9 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetSmokeAlarms()
+        public async Task<IActionResult> GetSmokeAlarms([FromQuery] PagingParams pagingParams)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]

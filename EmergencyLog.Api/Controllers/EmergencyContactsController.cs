@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Application.EmergencyContacts;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
@@ -20,9 +21,9 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEmergencyContacts()
+        public async Task<IActionResult> GetEmergencyContacts([FromQuery] PagingParams pagingParams)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]

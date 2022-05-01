@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EmergencyLog.Application.Attendance;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using MediatR;
@@ -20,9 +21,9 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAttendances()
+        public async Task<IActionResult> GetAttendances([FromQuery] PagingParams pagingParams)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]

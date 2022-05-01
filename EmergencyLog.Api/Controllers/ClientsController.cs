@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Core;
 using List = EmergencyLog.Application.Clients.List;
 
 namespace EmergencyLog.Api.Controllers
@@ -17,9 +18,9 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetClients()
+        public async Task<IActionResult> GetClients([FromQuery] PagingParams pagingParams)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]

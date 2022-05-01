@@ -15,8 +15,11 @@ namespace EmergencyLog.Application.Attendance
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Domain.Entities.Attendance>>> { }
-        public class Handler : IRequestHandler<Query, Result<List<Domain.Entities.Attendance>>>
+        public class Query : IRequest<Result<PagedList<Domain.Entities.Attendance>>>
+        {
+            public PagingParams Params { get; set; }
+        }
+        public class Handler : IRequestHandler<Query, Result<PagedList<Domain.Entities.Attendance>>>
         {
             private DataContext _context;
 
@@ -25,9 +28,13 @@ namespace EmergencyLog.Application.Attendance
                 _context = context;
             }
 
-            public async Task<Result<List<Domain.Entities.Attendance>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<Domain.Entities.Attendance>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<Domain.Entities.Attendance>>.Success(await _context.Attendances.ToListAsync());
+                var query = _context.Attendances.OrderBy(d => d.TimeOut).AsQueryable();
+
+                return Result<PagedList<Domain.Entities.Attendance>>.Success(
+                    await PagedList<Domain.Entities.Attendance>.CreateAsync(query, request.Params.PageNumber,
+                        request.Params.PageSize));
             }
         }
 
