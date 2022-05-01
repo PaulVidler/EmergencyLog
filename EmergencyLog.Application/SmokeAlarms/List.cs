@@ -17,8 +17,11 @@ namespace EmergencyLog.Application.SmokeAlarms
 {
     public class List
     {
-        public class Query : IRequest<Result<List<SmokeAlarm>>> { }
-        public class Handler : IRequestHandler<Query, Result<List<SmokeAlarm>>>
+        public class Query : IRequest<Result<PagedList<SmokeAlarm>>>
+        {
+            public PagingParams Params { get; set; }
+        }
+        public class Handler : IRequestHandler<Query, Result<PagedList<SmokeAlarm>>>
         {
             private DataContext _context;
 
@@ -27,9 +30,13 @@ namespace EmergencyLog.Application.SmokeAlarms
                 _context = context;
             }
 
-            public async Task<Result<List<SmokeAlarm>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<SmokeAlarm>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<SmokeAlarm>>.Success(await _context.SmokeAlarms.ToListAsync());
+                var query = _context.SmokeAlarms.OrderBy(d => d.LastServiced).AsQueryable();
+
+                return Result<PagedList<SmokeAlarm>>.Success(
+                    await PagedList<SmokeAlarm>.CreateAsync(query, request.Params.PageNumber,
+                        request.Params.PageSize));
             }
         }
 

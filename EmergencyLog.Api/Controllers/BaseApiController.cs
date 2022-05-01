@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Api.Extensions;
+using EmergencyLog.Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,22 @@ namespace EmergencyLog.Api.Controllers
             if (result == null) return NotFound();
             if (result.IsSuccess && result.Value != null)
                 return Ok(result.Value);
+            if (result.IsSuccess && result.Value == null)
+                return NotFound();
+            return BadRequest(result.Error);
+        }
+
+        // Paged result handler for List (Get all) methods. Adds Http Header to api response with information for client side
+        protected ActionResult HandlePagedResult<T>(Result<PagedList<T>> result)
+        {
+            if (result == null) return NotFound();
+
+            if (result.IsSuccess && result.Value != null)
+            {
+                Response.AddPaginationHeader(result.Value.CurrentPage, result.Value.PageSize, result.Value.TotalCount, result.Value.TotalPages);
+                return Ok(result.Value);
+            }
+        
             if (result.IsSuccess && result.Value == null)
                 return NotFound();
             return BadRequest(result.Error);

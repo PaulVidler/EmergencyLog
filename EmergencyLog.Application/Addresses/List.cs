@@ -16,8 +16,11 @@ namespace EmergencyLog.Application.Addresses
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Address>>> { }
-        public class Handler : IRequestHandler<Query, Result<List<Address>>>
+        public class Query : IRequest<Result<PagedList<Address>>>
+        {
+            public PagingParams Params { get; set; }
+        }
+        public class Handler : IRequestHandler<Query, Result<PagedList<Address>>>
         {
             private DataContext _context;
 
@@ -26,9 +29,13 @@ namespace EmergencyLog.Application.Addresses
                 _context = context;
             }
 
-            public async Task<Result<List<Address>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<Address>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<Address>>.Success(await _context.Addresses.ToListAsync());
+                var query = _context.Addresses.OrderBy(d => d.Country).AsQueryable();
+
+                return Result<PagedList<Address>>.Success(
+                    await PagedList<Address>.CreateAsync(query, request.Params.PageNumber,
+                        request.Params.PageSize));
             }
         }
 

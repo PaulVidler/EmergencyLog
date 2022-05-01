@@ -32,7 +32,7 @@ namespace EmergencyLog.Application.FireExtinguishers
 
             public async Task<Result<PagedList<FireExtinguisher>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var query = _context.FireExtinguishers.AsQueryable();
+                var query = _context.FireExtinguishers.OrderBy(d => d.LastServiced).AsQueryable();
 
                 return Result<PagedList<FireExtinguisher>>.Success(
                     await PagedList<FireExtinguisher>.CreateAsync(query, request.Params.PageNumber,
