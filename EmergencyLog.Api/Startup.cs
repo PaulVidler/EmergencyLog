@@ -41,6 +41,7 @@ namespace EmergencyLog.Api
 
             // tidy up into extension method call into "ApplicationExtension.cs"
             services.AddApplicationServices(_configuration);
+            services.AddIdentityServices(_configuration);
 
         }
 
@@ -63,7 +64,8 @@ namespace EmergencyLog.Api
 
             app.UseCors("CorsPolicy"); // use "CorsPolicy" Defined in ApplicationServiceExtensions
 
-            app.UseAuthentication();
+            // app.UseAuthentication(); Removed and put into IdentityExtensions file
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
