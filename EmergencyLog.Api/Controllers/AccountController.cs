@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using EmergencyLog.Api.DTOs;
+using EmergencyLog.Api.Services;
 using EmergencyLog.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,11 @@ namespace EmergencyLog.Api.Controllers
     {
         private UserManager<AppUser> _userManager;
         private SignInManager<AppUser> _signInManager;
+        private TokenService _tokenService;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService)
         {
+            _tokenService = tokenService;
             _signInManager = signInManager;
             _userManager = userManager;
         }
@@ -34,7 +37,7 @@ namespace EmergencyLog.Api.Controllers
                 {
                     DisplayName = user.DisplayName,
                     Image = null,
-                    Token = "This will be a token",
+                    Token = _tokenService.CreateToken(user),
                     UserName = user.UserName,
                     OrganisationId = user.OrganisationId,
                 };

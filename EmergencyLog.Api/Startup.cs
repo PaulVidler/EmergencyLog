@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Identity.Web;
 
 namespace EmergencyLog.Api
 {
@@ -23,8 +22,8 @@ namespace EmergencyLog.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(_configuration.GetSection("AzureAd"));
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddMicrosoftIdentityWebApi(_configuration.GetSection("AzureAd"));
 
             services.AddControllers().AddFluentValidation(config =>
             {
@@ -64,7 +63,7 @@ namespace EmergencyLog.Api
 
             app.UseCors("CorsPolicy"); // use "CorsPolicy" Defined in ApplicationServiceExtensions
 
-            // app.UseAuthentication(); Removed and put into IdentityExtensions file
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
