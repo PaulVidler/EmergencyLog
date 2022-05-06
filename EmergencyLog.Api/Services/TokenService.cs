@@ -24,8 +24,10 @@ namespace EmergencyLog.Api.Services
             // sign the token with a new key. This key needs to be 12 chars at least and this development key is NOT
             // secure and when it's time to publish, we will create a random string of text that is more secure.
             // We are only hard coding a simple string in there for now.
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Super secret key"));
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Super-secret-key"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
