@@ -4,12 +4,20 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using EmergencyLog.Domain.Entities.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EmergencyLog.Api.Services
 {
     public class TokenService
     {
+        private IConfiguration _config;
+
+        public TokenService(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public string CreateToken(AppUser user)
         {
             var claims = new List<Claim>
@@ -25,7 +33,7 @@ namespace EmergencyLog.Api.Services
             // secure and when it's time to publish, we will create a random string of text that is more secure.
             // We are only hard coding a simple string in there for now.
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Super-secret-key"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
 

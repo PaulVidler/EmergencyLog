@@ -2,8 +2,10 @@ using EmergencyLog.Api.Extensions;
 using EmergencyLog.Api.Middleware;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,17 +27,16 @@ namespace EmergencyLog.Api
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddMicrosoftIdentityWebApi(_configuration.GetSection("AzureAd"));
 
-            services.AddControllers().AddFluentValidation(config =>
+            services.AddControllers(opt =>
+                {
+                    // this ensures every endpoint in our API requires authentication unless we tell it otherwise
+                    // so we can remove any [Authorize] attrributes on endpoints, and add an [AllowAnonymous] attribute to endpoints like login and new user etc.
+                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                    opt.Filters.Add(new AuthorizeFilter(policy));
+                })
+                .AddFluentValidation(config =>
             {
                 config.RegisterValidatorsFromAssemblyContaining<Application.Attendance.Create>();
-                config.RegisterValidatorsFromAssemblyContaining<Application.Addresses.Create>();
-                config.RegisterValidatorsFromAssemblyContaining<Application.Clients.Create>();
-                config.RegisterValidatorsFromAssemblyContaining<Application.EmergencyContacts.Create>();
-                config.RegisterValidatorsFromAssemblyContaining<Application.FireExtinguishers.Create>();
-                config.RegisterValidatorsFromAssemblyContaining<Application.FireHoses.Create>();
-                config.RegisterValidatorsFromAssemblyContaining<Application.Organisations.Create>();
-                config.RegisterValidatorsFromAssemblyContaining<Application.Property.Create>();
-                config.RegisterValidatorsFromAssemblyContaining<Application.SmokeAlarms.Create>();
             });
 
             // tidy up into extension method call into "ApplicationExtension.cs"

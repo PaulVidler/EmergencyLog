@@ -21,8 +21,7 @@ namespace EmergencyLog.Api.Controllers
         public AddressesController(IMediator mediator) : base(mediator)
         {
         }
-
-        [Authorize]
+        
         [HttpGet]
         public async Task<IActionResult> GetAddresses([FromQuery] PagingParams pagingParams)
         {

@@ -9,5 +9,6 @@ namespace EmergencyLog.Api.DTOs
         public  string Password { get; set; }
         public string UserName { get; set; }
         public Guid OrganisationId { get; set; }
+        // public Guid ClientId { get; set; } = Guid.NewGuid();
     }
 }
