@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using EmergencyLog.Api.DTOs;
 using EmergencyLog.Api.Services;
 using EmergencyLog.Domain.Entities;
@@ -40,14 +41,7 @@ namespace EmergencyLog.Api.Controllers
 
             if (result.Succeeded)
             {
-                return new UserDto
-                {
-                    DisplayName = user.DisplayName,
-                    Image = null,
-                    Token = _tokenService.CreateToken(user),
-                    UserName = user.UserName,
-                    OrganisationId = user.OrganisationId,
-                };
+                return CreateUserObject(user);
             }
 
             return Unauthorized();
@@ -72,25 +66,41 @@ namespace EmergencyLog.Api.Controllers
             {
                 DisplayName = registerDto.DisplayName,
                 Email = registerDto.Email,
-                UserName = registerDto.UserName
+                UserName = registerDto.UserName,
+                OrganisationId = registerDto.OrganisationId
             };
             
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
             if (result.Succeeded)
             {
-                return new UserDto
-                {
-                    DisplayName = user.DisplayName,
-                    Image = null,
-                    Token = _tokenService.CreateToken(user),
-                    UserName = user.UserName
-                };
+                return CreateUserObject(user);
             }
 
             return BadRequest("There is a problem registering this user");
-
-
+            
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            return CreateUserObject(user);
+        }
+
+        // helper method to return UserDto
+        private UserDto CreateUserObject(AppUser user)
+        {
+            return new UserDto
+            {
+                DisplayName = user.DisplayName,
+                Image = null,
+                Token = _tokenService.CreateToken(user),
+                UserName = user.UserName,
+                OrganisationId = user.OrganisationId
+            };
+        }
+
     }
 }
