@@ -26,6 +26,7 @@ namespace EmergencyLog.Api.Services
                 // to the API, so you might only put in the things you might need when a user authenticates to the API
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim("OrganisationId", user.OrganisationId.ToString()),
                 new Claim(ClaimTypes.Email, user.Email)
             };
 
