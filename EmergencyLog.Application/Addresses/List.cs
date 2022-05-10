@@ -22,7 +22,7 @@ namespace EmergencyLog.Application.Addresses
         public class Query : IRequest<Result<PagedList<Address>>>
         {
             public PagingParams Params { get; set; }
-            public Claim Claim { get; set; }
+            public IEnumerable<Claim> Claim { get; set; }
         }
         public class Handler : IRequestHandler<Query, Result<PagedList<Address>>>
         {
@@ -37,9 +37,12 @@ namespace EmergencyLog.Application.Addresses
 
             public async Task<Result<PagedList<Address>>> Handle(Query request, CancellationToken cancellationToken)
             {
+                var orgId = request.Claim.Where(t => t.Type == "OrganisationId").Select(v => v.Value).FirstOrDefault();
 
-                request.Claim.Value; // not sure how to do this. Looks like we can pass a claim or user into the object from the controlelr #32 of List controller.
 
+                // var query = _context.Addresses.OrderBy(d => d.Country).AsQueryable();
+
+                //var query = _context.Addresses.Include()
                 var query = _context.Addresses.OrderBy(d => d.Country).AsQueryable();
 
                 return Result<PagedList<Address>>.Success(
