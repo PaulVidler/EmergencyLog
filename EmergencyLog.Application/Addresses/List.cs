@@ -37,14 +37,10 @@ namespace EmergencyLog.Application.Addresses
 
             public async Task<Result<PagedList<Address>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var orgId = request.Claim.Where(t => t.Type == "OrganisationId").Select(v => v.Value).FirstOrDefault();
-
-
-                // var query = _context.Addresses.OrderBy(d => d.Country).AsQueryable();
-
-                //var query = _context.Addresses.Include()
+                // var orgId = request.Claim.Where(t => t.Type == "OrganisationId").Select(v => v.Value).FirstOrDefault();
+                
                 var query = _context.Addresses.OrderBy(d => d.Country).AsQueryable();
-
+                
                 return Result<PagedList<Address>>.Success(
                     await PagedList<Address>.CreateAsync(query, request.Params.PageNumber,
                         request.Params.PageSize));
