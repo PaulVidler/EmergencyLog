@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using EmergencyLog.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 using Address = EmergencyLog.Domain.Entities.Address;
 
 namespace EmergencyLog.Persistence
@@ -21,7 +23,7 @@ namespace EmergencyLog.Persistence
             _db = db;
         }
 
-        public static async Task SeedData(DataContext db)
+        public static async Task SeedData(DataContext db, UserManager<AppUser> userManager)
         {
             if (db.Clients.Any()) return;
 
@@ -33,6 +35,7 @@ namespace EmergencyLog.Persistence
                 for (var i = 1; i < 11; i++)
                 {
                     var client = CreateClient(organisation, CreateAddress());
+                    
                     var emergencyContact = CreateEmergencyContact(CreateAddress(), client);
                     await db.EmergencyContacts.AddAsync(emergencyContact);
 
@@ -44,6 +47,17 @@ namespace EmergencyLog.Persistence
 
                     await db.Clients.AddAsync(client);
                     await db.SaveChangesAsync();
+
+                    // ------- Create Identity for each user -----------
+
+                    string displayName = client.FirstName + " " + client.Surname;
+                    string userName = client.FirstName + client.Surname;
+
+                    var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.OrganisationId, ClientId = client.Id };
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+
+                    // ------------------------------------------------
+
                 }
 
                 for (var y = 1; y < 5; y++)

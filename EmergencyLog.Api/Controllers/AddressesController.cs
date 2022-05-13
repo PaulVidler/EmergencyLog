@@ -6,6 +6,8 @@ using EmergencyLog.Application.Core;
 using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using List = EmergencyLog.Application.Addresses.List;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +21,13 @@ namespace EmergencyLog.Api.Controllers
         public AddressesController(IMediator mediator) : base(mediator)
         {
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> GetAddresses([FromQuery] PagingParams pagingParams)
         {
+            //System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+            // var user = User;
+
             return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
         }
 
