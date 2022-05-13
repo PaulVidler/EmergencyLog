@@ -22,16 +22,15 @@ namespace EmergencyLog.Application.Addresses
         public class Query : IRequest<Result<PagedList<Address>>>
         {
             public PagingParams Params { get; set; }
-            public IEnumerable<Claim> Claim { get; set; }
         }
         public class Handler : IRequestHandler<Query, Result<PagedList<Address>>>
         {
             private DataContext _context;
-            private UserManager<AppUser> _userManager;
+            // private UserManager<AppUser> _userManager;
 
             public Handler(DataContext context, UserManager<AppUser> userManager)
             {
-                _userManager = userManager;
+                // _userManager = userManager;
                 _context = context;
             }
 

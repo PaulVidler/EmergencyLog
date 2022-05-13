@@ -26,10 +26,9 @@ namespace EmergencyLog.Api.Controllers
         public async Task<IActionResult> GetAddresses([FromQuery] PagingParams pagingParams)
         {
             //System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+            // var user = User;
 
-            var user = User;
-
-            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams, Claim = user.Claims }));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]
