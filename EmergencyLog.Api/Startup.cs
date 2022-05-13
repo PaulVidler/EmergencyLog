@@ -70,6 +70,7 @@ namespace EmergencyLog.Api
 
             app.UseEndpoints(endpoints =>
             {
+                // if you'd like to test auth functionality, comment out the 4 lines below and uncomment the bottom line.
                 if (env.IsDevelopment())
                     endpoints.MapControllers().WithMetadata(new AllowAnonymousAttribute());
                 else
