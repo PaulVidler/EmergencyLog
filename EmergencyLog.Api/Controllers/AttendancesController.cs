@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Attendance;
+﻿using EmergencyLog.Application;
 using EmergencyLog.Application.Core;
-using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using List = EmergencyLog.Application.Attendance.List;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -23,32 +19,32 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAttendances([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<Attendance> { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]
         public async Task<IActionResult> GetAttendance(Guid guid)
         {
-            return HandleResult(await Mediator.Send(new Details.Query { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<Attendance> { Id = guid }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostAttendance(Attendance attendance)
         {
-            return HandleResult(await Mediator.Send(new Create.Command { Attendance = attendance }));
+            return HandleResult(await Mediator.Send(new CreateCommand<Attendance> { GenericType = attendance }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditAttendance(Guid id, Attendance attendance)
         {
             attendance.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command { Attendance = attendance }));
+            return HandleResult(await Mediator.Send(new EditCommand<Attendance> { GenericType = attendance }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAttendance(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new DeleteCommand { Id = id }));
         }
     }
 }

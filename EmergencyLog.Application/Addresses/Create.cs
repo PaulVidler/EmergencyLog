@@ -38,12 +38,7 @@ namespace EmergencyLog.Application.Addresses
         public async Task<Result<Unit>> Handle(CreateCommand<Address> request, CancellationToken cancellationToken)
         {
 
-            var address = await _context.Addresses.FindAsync(request.GenericType.Id);
-
-            if (address == null) return null;
-            
-            _mapper.Map(request.GenericType, address);
-
+            _context.Addresses.Add(request.GenericType);
             var result = await _context.SaveChangesAsync() > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to create Address");

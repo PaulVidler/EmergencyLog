@@ -45,12 +45,7 @@ namespace EmergencyLog.Application.Clients
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-
-                var client = await _context.Clients.FindAsync(request.Client.Id);
-
-                if (client == null) return null;
-                _mapper.Map(request.Client, client);
-
+                _context.Clients.Add(request.Client);
                 var result = await _context.SaveChangesAsync() > 0;
 
                 if (!result) return Result<Unit>.Failure("Failed to create Client");

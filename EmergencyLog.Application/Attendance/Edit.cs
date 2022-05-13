@@ -1,57 +1,48 @@
 ﻿using AutoMapper;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Validators;
 using EmergencyLog.Persistence;
+using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
-using EmergencyLog.Application.Validators;
-using FluentValidation;
 
 namespace EmergencyLog.Application.Attendance
 {
-    public class Edit
+    public class EditCommandValidator : AbstractValidator<EditCommand<Domain.Entities.Attendance>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public EditCommandValidator()
         {
-            public Domain.Entities.Attendance Attendance { get; set; }
+            RuleFor(x => x.GenericType).SetValidator(new AttendanceValidator());
+        }
+    }
+
+    public class Handler : IRequestHandler<EditCommand<Domain.Entities.Attendance>, Result<Unit>>
+    {
+        private DataContext _context;
+        private IMapper _mapper;
+
+        public Handler(DataContext context, IMapper mapper)
+        {
+            _mapper = mapper;
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(EditCommand<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Attendance).SetValidator(new AttendanceValidator());
-            }
-        }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            var attendance = await _context.Attendances.FindAsync(request.GenericType.Id);
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            if (attendance == null) return null;
+            
+            _mapper.Map(request.GenericType, attendance);
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
+            var result = await _context.SaveChangesAsync() > 0;
 
-                var attendance = await _context.Attendances.FindAsync(request.Attendance.Id);
+            if (!result) return Result<Unit>.Failure("Failed to update Attendance");
 
-                if (attendance == null) return null;
-                
-                _mapper.Map(request.Attendance, attendance);
+            return Result<Unit>.Success(Unit.Value);
 
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to update Attendance");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

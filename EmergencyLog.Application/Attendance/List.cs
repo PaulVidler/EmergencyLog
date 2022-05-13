@@ -1,42 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
-using EmergencyLog.Domain;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Attendance
 {
-    public class List
+    public class ListHandler : IRequestHandler<ListQuery<Domain.Entities.Attendance>, Result<PagedList<Domain.Entities.Attendance>>>
     {
-        public class Query : IRequest<Result<PagedList<Domain.Entities.Attendance>>>
+        private DataContext _context;
+
+        public ListHandler(DataContext context)
         {
-            public PagingParams Params { get; set; }
-        }
-        public class Handler : IRequestHandler<Query, Result<PagedList<Domain.Entities.Attendance>>>
-        {
-            private DataContext _context;
-
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
-
-            public async Task<Result<PagedList<Domain.Entities.Attendance>>> Handle(Query request, CancellationToken cancellationToken)
-            {
-                var query = _context.Attendances.OrderBy(d => d.TimeOut).AsQueryable();
-
-                return Result<PagedList<Domain.Entities.Attendance>>.Success(
-                    await PagedList<Domain.Entities.Attendance>.CreateAsync(query, request.Params.PageNumber,
-                        request.Params.PageSize));
-            }
+            _context = context;
         }
 
+        public async Task<Result<PagedList<Domain.Entities.Attendance>>> Handle(ListQuery<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
+        {
+            var query = _context.Attendances.OrderBy(d => d.TimeOut).AsQueryable();
+
+            return Result<PagedList<Domain.Entities.Attendance>>.Success(
+                await PagedList<Domain.Entities.Attendance>.CreateAsync(query, request.Params.PageNumber,
+                    request.Params.PageSize));
+        }
     }
 }

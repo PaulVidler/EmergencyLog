@@ -1,62 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators;
-using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Attendance
 {
-    public class Create
+    public class CreateCommandValidator : AbstractValidator<CreateCommand<Domain.Entities.Attendance>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public CreateCommandValidator()
         {
-            public Domain.Entities.Attendance Attendance { get; set; }
+            RuleFor(x => x.GenericType).SetValidator(new AttendanceValidator());
+        }
+    }
+
+
+    public class CreateHandler : IRequestHandler<CreateCommand<Domain.Entities.Attendance>, Result<Unit>>
+    {
+        private DataContext _context;
+        private IMapper _mapper;
+
+        public CreateHandler(DataContext context, IMapper mapper)
+        {
+            _mapper = mapper;
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(CreateCommand<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Attendance).SetValidator(new AttendanceValidator());
-            }
-        }
+            _context.Attendances.Add(request.GenericType);
+            var result = await _context.SaveChangesAsync() > 0;
 
+            if (!result) return Result<Unit>.Failure("Failed to create Attendance");
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            return Result<Unit>.Success(Unit.Value);
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
-
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
-
-                var attendance = await _context.Attendances.FindAsync(request.Attendance.Id);
-
-                if (attendance == null) return null;
-                 _mapper.Map(request.Attendance, attendance);
-
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to create attendance");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }
