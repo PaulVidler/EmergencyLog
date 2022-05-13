@@ -70,7 +70,12 @@ namespace EmergencyLog.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                if (env.IsDevelopment())
+                    endpoints.MapControllers().WithMetadata(new AllowAnonymousAttribute());
+                else
+                    endpoints.MapControllers();
+
+                // endpoints.MapControllers(); // this line was disabled and replaced with the above if/else to remove auth from debug mode
             });
         }
     }
