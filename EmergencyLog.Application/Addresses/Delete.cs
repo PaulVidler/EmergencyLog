@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+using EmergencyLog.Domain.Entities;
 
 namespace EmergencyLog.Application.Addresses
 {
-    public class DeleteHandler : IRequestHandler<DeleteCommand, Result<Unit>>
+    public class DeleteHandler : IRequestHandler<DeleteCommand<Address>, Result<Unit>>
     {
         private DataContext _context;
 
@@ -19,7 +16,7 @@ namespace EmergencyLog.Application.Addresses
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(DeleteCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(DeleteCommand<Address> request, CancellationToken cancellationToken)
         {
             var address = await _context.Addresses.FindAsync(request.Id);
             if (address == null) return null;

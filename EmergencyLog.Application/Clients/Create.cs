@@ -1,58 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators;
-using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Clients
 {
-    public class Create
+    public class CreateCommandValidator : AbstractValidator<CreateCommand<Client>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public CreateCommandValidator()
         {
-            public Client Client { get; set; }
+            RuleFor(x => x.Type).SetValidator(new ClientsValidator());
+        }
+    }
+
+    public class CreateHandler : IRequestHandler<CreateCommand<Client>, Result<Unit>>
+    {
+        private DataContext _context;
+
+        public CreateHandler(DataContext context)
+        {
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(CreateCommand<Client> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Client).SetValidator(new ClientsValidator());
-            }
-        }
+            _context.Clients.Add(request.Type);
+            var result = await _context.SaveChangesAsync() > 0;
 
+            if (!result) return Result<Unit>.Failure("Failed to create Client");
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            return Result<Unit>.Success(Unit.Value);
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
-
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
-                _context.Clients.Add(request.Client);
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to create Client");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

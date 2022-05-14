@@ -36,7 +36,7 @@ namespace EmergencyLog.Api
                 })
                 .AddFluentValidation(config =>
             {
-                config.RegisterValidatorsFromAssemblyContaining<Application.Attendance.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.Attendance.CreateHandler>();
             });
 
             // tidy up into extension method call into "ApplicationExtension.cs"

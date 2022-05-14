@@ -35,7 +35,7 @@ namespace EmergencyLog.Api.Extensions
                 });
             });
             
-            services.AddMediatR(typeof(Application.Attendance.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Attendance.ListHandler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             return services;

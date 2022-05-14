@@ -1,59 +1,49 @@
 ﻿using AutoMapper;
-using EmergencyLog.Domain;
-using EmergencyLog.Persistence;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators;
 using EmergencyLog.Domain.Entities;
+using EmergencyLog.Persistence;
 using FluentValidation;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Organisations
 {
-    public class Edit
+    public class EditCommandValidator : AbstractValidator<EditCommand<Organisation>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public EditCommandValidator()
         {
-            public Organisation Organisation { get; set; }
+            RuleFor(x => x.Type).SetValidator(new OrganisationValidator());
+        }
+    }
+
+    public class EditHandler : IRequestHandler<EditCommand<Organisation>, Result<Unit>>
+    {
+        private DataContext _context;
+        private IMapper _mapper;
+
+        public EditHandler(DataContext context, IMapper mapper)
+        {
+            _mapper = mapper;
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(EditCommand<Organisation> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Organisation).SetValidator(new OrganisationValidator());
-            }
-        }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            var organisation = await _context.Organisations.FindAsync(request.Type.OrganisationId);
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            if (organisation == null) return null;
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
+            _mapper.Map(request.Type, organisation);
 
-                var organisation = await _context.Organisations.FindAsync(request.Organisation.OrganisationId);
+            var result = await _context.SaveChangesAsync() > 0;
 
-                if (organisation == null) return null;
+            if (!result) return Result<Unit>.Failure("Failed to update Organisation");
 
-                _mapper.Map(request.Organisation, organisation);
+            return Result<Unit>.Success(Unit.Value);
 
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to update Organisation");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

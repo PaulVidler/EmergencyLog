@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using EmergencyLog.Application;
 using EmergencyLog.Application.Core;
-using EmergencyLog.Application.FireHoses;
-using EmergencyLog.Domain.Entities;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -22,32 +19,32 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFireHoses([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<FireHose> { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]
         public async Task<IActionResult> GetFireHose(Guid guid)
         {
-            return HandleResult(await Mediator.Send(new Details.Query { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<FireHose> { Id = guid }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostFireHose(FireHose fireHose)
         {
-            return HandleResult(await Mediator.Send(new Create.Command { FireHose = fireHose }));
+            return HandleResult(await Mediator.Send(new CreateCommand<FireHose> { Type = fireHose }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditFireHose(Guid id, FireHose fireHose)
         {
             fireHose.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command { FireHose = fireHose }));
+            return HandleResult(await Mediator.Send(new EditCommand<FireHose> { Type = fireHose }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFireHose(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new DeleteCommand<FireHose> { Id = id }));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace EmergencyLog.Application.Attendance
     {
         public EditCommandValidator()
         {
-            RuleFor(x => x.GenericType).SetValidator(new AttendanceValidator());
+            RuleFor(x => x.Type).SetValidator(new AttendanceValidator());
         }
     }
 
@@ -31,11 +31,11 @@ namespace EmergencyLog.Application.Attendance
         public async Task<Result<Unit>> Handle(EditCommand<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
         {
 
-            var attendance = await _context.Attendances.FindAsync(request.GenericType.Id);
+            var attendance = await _context.Attendances.FindAsync(request.Type.Id);
 
             if (attendance == null) return null;
             
-            _mapper.Map(request.GenericType, attendance);
+            _mapper.Map(request.Type, attendance);
 
             var result = await _context.SaveChangesAsync() > 0;
 

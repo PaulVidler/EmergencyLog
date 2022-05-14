@@ -1,44 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 
 namespace EmergencyLog.Application.FireHoses
 {
-    public class Delete
+    public class DeleteHandler : IRequestHandler<DeleteCommand<FireHose>, Result<Unit>>
     {
-        public class Command : IRequest<Result<Unit>>
+        private DataContext _context;
+
+        public DeleteHandler(DataContext context)
         {
-            public Guid Id { get; set; }
+            _context = context;
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public async Task<Result<Unit>> Handle(DeleteCommand<FireHose> request, CancellationToken cancellationToken)
         {
-            private DataContext _context;
+            var fireHose = await _context.FireHoses.FindAsync(request.Id);
+            if (fireHose == null) return null;
 
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
+            _context.Remove(fireHose);
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
-                var fireHose = await _context.FireHoses.FindAsync(request.Id);
-                if (fireHose == null) return null;
+            var result = await _context.SaveChangesAsync() > 0;
+            if (!result) return Result<Unit>.Failure("Failed to delete FireHose");
 
-                _context.Remove(fireHose);
+            return Result<Unit>.Success(Unit.Value);
 
-                var result = await _context.SaveChangesAsync() > 0;
-                if (!result) return Result<Unit>.Failure("Failed to delete FireHose");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

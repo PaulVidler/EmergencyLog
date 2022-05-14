@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators;
-using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Addresses
 {
@@ -20,25 +13,23 @@ namespace EmergencyLog.Application.Addresses
     {
         public CreateCommandValidator()
         {
-            RuleFor(x => x.GenericType).SetValidator(new AddressValidator());
+            RuleFor(x => x.Type).SetValidator(new AddressValidator());
         }
     }
-    
+
     public class CreateHandler : IRequestHandler<CreateCommand<Address>, Result<Unit>>
     {
         private DataContext _context;
-        private IMapper _mapper;
 
-        public CreateHandler(DataContext context, IMapper mapper)
+        public CreateHandler(DataContext context)
         {
-            _mapper = mapper;
             _context = context;
         }
 
         public async Task<Result<Unit>> Handle(CreateCommand<Address> request, CancellationToken cancellationToken)
         {
 
-            _context.Addresses.Add(request.GenericType);
+            _context.Addresses.Add(request.Type);
             var result = await _context.SaveChangesAsync() > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to create Address");
@@ -47,5 +38,5 @@ namespace EmergencyLog.Application.Addresses
 
         }
     }
-    
+
 }

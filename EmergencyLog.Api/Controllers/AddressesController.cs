@@ -29,22 +29,22 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAddress(Address Address)
+        public async Task<IActionResult> PostAddress(Address address)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<Address> { GenericType = Address }));
+            return HandleResult(await Mediator.Send(new CreateCommand<Address> { Type = address }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditAddress(Guid id, Address address)
         {
             address.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<Address> { GenericType = address }));
+            return HandleResult(await Mediator.Send(new EditCommand<Address> { Type = address }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(Guid id)
         {
-            return HandleResult(await Mediator.Send(new DeleteCommand { Id = id }));
+            return HandleResult(await Mediator.Send(new DeleteCommand<Address> { Id = id }));
         }
     }
 }

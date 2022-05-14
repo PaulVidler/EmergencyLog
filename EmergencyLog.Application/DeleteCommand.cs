@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using MediatR;
+using System;
 
 namespace EmergencyLog.Application
 {
-    public class DeleteCommand : IRequest<Result<Unit>>
+    public class DeleteCommand<T> : IRequest<Result<Unit>>
     {
         public Guid Id { get; set; }
     }

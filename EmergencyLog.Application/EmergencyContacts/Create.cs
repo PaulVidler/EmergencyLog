@@ -1,62 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators;
-using EmergencyLog.Domain;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.EmergencyContacts
 {
-    public class Create
+    public class CreateCommandValidator : AbstractValidator<CreateCommand<EmergencyContact>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public CreateCommandValidator()
         {
-            public EmergencyContact EmergencyContact { get; set; }
+            RuleFor(x => x.Type).SetValidator(new EmergencyContactValidator());
+        }
+    }
+    
+    public class CreateHandler : IRequestHandler<CreateCommand<EmergencyContact>, Result<Unit>>
+    {
+        private DataContext _context;
+
+        public CreateHandler(DataContext context)
+        {
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(CreateCommand<EmergencyContact> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.EmergencyContact).SetValidator(new EmergencyContactValidator());
-            }
-        }
-        
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            _context.EmergencyContacts.Add(request.Type);
+            var result = await _context.SaveChangesAsync() > 0;
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
+            if (!result) return Result<Unit>.Failure("Failed to create Emergency Contact");
 
-                var emergencyContact = await _context.Attendances.FindAsync(request.EmergencyContact.Id);
+            return Result<Unit>.Success(Unit.Value);
 
-                if (emergencyContact == null) return null;
-                _mapper.Map(request.EmergencyContact, emergencyContact);
-
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to create attendance");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

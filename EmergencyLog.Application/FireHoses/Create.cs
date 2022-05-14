@@ -1,64 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators.FireSafetyHardwareValidators;
-using EmergencyLog.Domain;
-using EmergencyLog.Domain.Entities;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.FireHoses
 {
-    public class Create
+    public class CreateCommandValidator : AbstractValidator<CreateCommand<FireHose>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public CreateCommandValidator()
         {
-            public FireHose FireHose { get; set; }
+            RuleFor(x => x.Type).SetValidator(new FireHoseValidator());
+        }
+    }
+    
+    public class CreateHandler : IRequestHandler<CreateCommand<FireHose>, Result<Unit>>
+    {
+        private DataContext _context;
+
+        public CreateHandler(DataContext context)
+        {
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(CreateCommand<FireHose> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.FireHose).SetValidator(new FireHoseValidator());
-            }
-        }
 
+            _context.FireHoses.Add(request.Type);
+            var result = await _context.SaveChangesAsync() > 0;
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            if (!result) return Result<Unit>.Failure("Failed to create Fire Hose");
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            return Result<Unit>.Success(Unit.Value);
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
-
-                var fireHose = await _context.FireHoses.FindAsync(request.FireHose.Id);
-
-                if (fireHose == null) return null;
-                _mapper.Map(request.FireHose, fireHose);
-
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to create FireHose");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

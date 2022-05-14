@@ -13,7 +13,7 @@ namespace EmergencyLog.Application.Attendance
     {
         public CreateCommandValidator()
         {
-            RuleFor(x => x.GenericType).SetValidator(new AttendanceValidator());
+            RuleFor(x => x.Type).SetValidator(new AttendanceValidator());
         }
     }
 
@@ -31,7 +31,7 @@ namespace EmergencyLog.Application.Attendance
 
         public async Task<Result<Unit>> Handle(CreateCommand<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
         {
-            _context.Attendances.Add(request.GenericType);
+            _context.Attendances.Add(request.Type);
             var result = await _context.SaveChangesAsync() > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to create Attendance");

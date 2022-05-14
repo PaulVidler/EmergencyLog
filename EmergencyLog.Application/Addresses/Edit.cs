@@ -14,7 +14,7 @@ namespace EmergencyLog.Application.Addresses
     {
         public EditCommandValidator()
         {
-            RuleFor(x => x.GenericType).SetValidator(new AddressValidator());
+            RuleFor(x => x.Type).SetValidator(new AddressValidator());
         }
     }
 
@@ -32,14 +32,14 @@ namespace EmergencyLog.Application.Addresses
         public async Task<Result<Unit>> Handle(EditCommand<Address> request, CancellationToken cancellationToken)
         {
 
-            var address = await _context.Addresses.FindAsync(request.GenericType.Id);
+            var address = await _context.Addresses.FindAsync(request.Type.Id);
 
             if (address == null) return null;
             
             // activity.Title = request.Activity.Title ?? activity.Title; // if this is null, then just set it existing title
 
             // this line below, replaces the line above as a better means of mapping without having to check each property.
-            _mapper.Map(request.GenericType, address);
+            _mapper.Map(request.Type, address);
 
             var result = await _context.SaveChangesAsync() > 0;
 

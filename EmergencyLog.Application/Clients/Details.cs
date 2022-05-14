@@ -1,38 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Clients
 {
-    public class Details
+    public class DetailsHandler : IRequestHandler<DetailsQuery<Client>, Result<Client>>
     {
-        public class Query : IRequest<Result<Client>>
-        {
-            public Guid Id { get; set; }
+        private readonly DataContext _context;
 
+        public DetailsHandler(DataContext context)
+        {
+            _context = context;
         }
 
-        public class Handler : IRequestHandler<Query, Result<Client>>
+        public async Task<Result<Client>> Handle(DetailsQuery<Client> request, CancellationToken cancellationToken)
         {
-            private readonly DataContext _context;
-
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
-
-            public async Task<Result<Client>> Handle(Query request, CancellationToken cancellationToken)
-            {
-                var client = await _context.Clients.FindAsync(request.Id);
-                return Result<Client>.Success(client);
-            }
+            var client = await _context.Clients.FindAsync(request.Id);
+            return Result<Client>.Success(client);
         }
     }
 }

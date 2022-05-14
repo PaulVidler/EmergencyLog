@@ -1,9 +1,7 @@
 ﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Domain.Entities;
-using EmergencyLog.Domain.Entities.Identity;
 using EmergencyLog.Persistence;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

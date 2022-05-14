@@ -1,44 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+using EmergencyLog.Domain.Entities;
 
 namespace EmergencyLog.Application.EmergencyContacts
 {
-    public class Delete
+    public class DeleteHandler : IRequestHandler<DeleteCommand<EmergencyContact>, Result<Unit>>
     {
-        public class Command : IRequest<Result<Unit>>
+        private DataContext _context;
+
+        public DeleteHandler(DataContext context)
         {
-            public Guid Id { get; set; }
+            _context = context;
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public async Task<Result<Unit>> Handle(DeleteCommand<EmergencyContact> request, CancellationToken cancellationToken)
         {
-            private DataContext _context;
+            var emergencyContact = await _context.EmergencyContacts.FindAsync(request.Id);
+            if (emergencyContact == null) return null;
 
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
+            _context.Remove(emergencyContact);
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
-                var emergencyContact = await _context.EmergencyContacts.FindAsync(request.Id);
-                if (emergencyContact == null) return null;
+            var result = await _context.SaveChangesAsync() > 0;
+            if (!result) return Result<Unit>.Failure("Failed to delete EmergencyContact");
 
-                _context.Remove(emergencyContact);
+            return Result<Unit>.Success(Unit.Value);
 
-                var result = await _context.SaveChangesAsync() > 0;
-                if (!result) return Result<Unit>.Failure("Failed to delete EmergencyContact");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

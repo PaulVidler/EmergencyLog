@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Attendance
 {
-    public class DeleteHandler : IRequestHandler<DeleteCommand, Result<Unit>>
+    public class DeleteHandler : IRequestHandler<DeleteCommand<Domain.Entities.Attendance>, Result<Unit>>
     {
         private DataContext _context;
 
@@ -15,7 +15,7 @@ namespace EmergencyLog.Application.Attendance
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(DeleteCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(DeleteCommand<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
         {
             var attendance = await _context.Attendances.FindAsync(request.Id);
             if (attendance == null) return null;

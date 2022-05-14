@@ -1,64 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators.FireSafetyHardwareValidators;
-using EmergencyLog.Domain;
-using EmergencyLog.Domain.Entities;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.SmokeAlarms
 {
-    public class Create
+    public class CreateCommandValidator : AbstractValidator<CreateCommand<SmokeAlarm>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public CreateCommandValidator()
         {
-            public SmokeAlarm SmokeAlarm { get; set; }
+            RuleFor(x => x.Type).SetValidator(new SmokeAlarmValidator());
+        }
+    }
+
+
+    public class CreateHandler : IRequestHandler<CreateCommand<SmokeAlarm>, Result<Unit>>
+    {
+        private DataContext _context;
+        private IMapper _mapper;
+
+        public CreateHandler(DataContext context, IMapper mapper)
+        {
+            _mapper = mapper;
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(CreateCommand<SmokeAlarm> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.SmokeAlarm).SetValidator(new SmokeAlarmValidator());
-            }
-        }
 
+            _context.SmokeAlarms.Add(request.Type);
+            var result = await _context.SaveChangesAsync() > 0;
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            if (!result) return Result<Unit>.Failure("Failed to create Smoke Alarm");
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            return Result<Unit>.Success(Unit.Value);
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
-
-                var smokeAlarm = await _context.FireExtinguishers.FindAsync(request.SmokeAlarm.Id);
-
-                if (smokeAlarm == null) return null;
-                _mapper.Map(request.SmokeAlarm, smokeAlarm);
-
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to create SmokeAlarm");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

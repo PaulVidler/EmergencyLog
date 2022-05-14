@@ -1,44 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Property
 {
-    public class Delete
+    public class DeleteHandler : IRequestHandler<DeleteCommand<Domain.Entities.Property>, Result<Unit>>
     {
-        public class Command : IRequest<Result<Unit>>
+        private DataContext _context;
+
+        public DeleteHandler(DataContext context)
         {
-            public Guid Id { get; set; }
+            _context = context;
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public async Task<Result<Unit>> Handle(DeleteCommand<Domain.Entities.Property> request, CancellationToken cancellationToken)
         {
-            private DataContext _context;
+            var property = await _context.Properties.FindAsync(request.Id);
+            if (property == null) return null;
 
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
+            _context.Remove(property);
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
-                var property = await _context.Properties.FindAsync(request.Id);
-                if (property == null) return null;
+            var result = await _context.SaveChangesAsync() > 0;
+            if (!result) return Result<Unit>.Failure("Failed to delete Property");
 
-                _context.Remove(property);
+            return Result<Unit>.Success(Unit.Value);
 
-                var result = await _context.SaveChangesAsync() > 0;
-                if (!result) return Result<Unit>.Failure("Failed to delete Property");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

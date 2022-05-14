@@ -31,20 +31,20 @@ namespace EmergencyLog.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAttendance(Attendance attendance)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<Attendance> { GenericType = attendance }));
+            return HandleResult(await Mediator.Send(new CreateCommand<Attendance> { Type = attendance }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditAttendance(Guid id, Attendance attendance)
         {
             attendance.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<Attendance> { GenericType = attendance }));
+            return HandleResult(await Mediator.Send(new EditCommand<Attendance> { Type = attendance }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAttendance(Guid id)
         {
-            return HandleResult(await Mediator.Send(new DeleteCommand { Id = id }));
+            return HandleResult(await Mediator.Send(new DeleteCommand<Attendance> { Id = id }));
         }
     }
 }

@@ -1,60 +1,49 @@
 ﻿using AutoMapper;
-using EmergencyLog.Domain;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Validators.FireSafetyHardwareValidators;
+using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
+using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
-using EmergencyLog.Application.Validators.FireSafetyHardwareValidators;
-using EmergencyLog.Domain.Entities;
-using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
-using FluentValidation;
 
 namespace EmergencyLog.Application.SmokeAlarms
 {
-    public class Edit
+    public class EditCommandValidator : AbstractValidator<EditCommand<SmokeAlarm>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public EditCommandValidator()
         {
-            public SmokeAlarm SmokeAlarm { get; set; }
+            RuleFor(x => x.Type).SetValidator(new SmokeAlarmValidator());
+        }
+    }
+
+    public class EditHandler : IRequestHandler<EditCommand<SmokeAlarm>, Result<Unit>>
+    {
+        private DataContext _context;
+        private IMapper _mapper;
+
+        public EditHandler(DataContext context, IMapper mapper)
+        {
+            _mapper = mapper;
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(EditCommand<SmokeAlarm> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.SmokeAlarm).SetValidator(new SmokeAlarmValidator());
-            }
-        }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            var smokeAlarm = await _context.SmokeAlarms.FindAsync(request.Type.Id);
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            if (smokeAlarm == null) return null;
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
+            _mapper.Map(request.Type, smokeAlarm);
 
-                var smokeAlarm = await _context.SmokeAlarms.FindAsync(request.SmokeAlarm.Id);
+            var result = await _context.SaveChangesAsync() > 0;
 
-                if (smokeAlarm == null) return null;
+            if (!result) return Result<Unit>.Failure("Failed to update SmokeAlarm");
 
-                _mapper.Map(request.SmokeAlarm, smokeAlarm);
+            return Result<Unit>.Success(Unit.Value);
 
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to update SmokeAlarm");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }
