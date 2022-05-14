@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using EmergencyLog.Application;
 using EmergencyLog.Application.Core;
-using EmergencyLog.Application.Organisations;
 using EmergencyLog.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -21,32 +19,32 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOrganisations([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new List.Query { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<Organisation> { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]
         public async Task<IActionResult> GetOrganisation(Guid guid)
         {
-            return HandleResult(await Mediator.Send(new Details.Query { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<Organisation> { Id = guid }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostOrganisation(Organisation organisation)
         {
-            return HandleResult(await Mediator.Send(new Create.Command { Organisation = organisation }));
+            return HandleResult(await Mediator.Send(new CreateCommand<Organisation> { Type = organisation }));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditOrganisation(Guid id, Organisation organisation)
         {
             organisation.OrganisationId = id;
-            return HandleResult(await Mediator.Send(new Edit.Command { Organisation = organisation }));
+            return HandleResult(await Mediator.Send(new EditCommand<Organisation> { Type = organisation }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrganisation(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new DeleteCommand<Organisation> { Id = id }));
         }
     }
 }

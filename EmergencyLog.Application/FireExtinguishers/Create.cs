@@ -1,64 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators.FireSafetyHardwareValidators;
-using EmergencyLog.Domain;
-using EmergencyLog.Domain.Entities;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.FireExtinguishers
 {
-    public class Create
+    public class CreateCommandValidator : AbstractValidator<CreateCommand<FireExtinguisher>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public CreateCommandValidator()
         {
-            public FireExtinguisher FireExtinguisher { get; set; }
+            RuleFor(x => x.Type).SetValidator(new FireExtinguisherValidator());
+        }
+    }
+
+
+    public class CreateHandler : IRequestHandler<CreateCommand<FireExtinguisher>, Result<Unit>>
+    {
+        private DataContext _context;
+
+        public CreateHandler(DataContext context)
+        {
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(CreateCommand<FireExtinguisher> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.FireExtinguisher).SetValidator(new FireExtinguisherValidator());
-            }
-        }
 
+            _context.FireExtinguishers.Add(request.Type);
+            var result = await _context.SaveChangesAsync() > 0;
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            if (!result) return Result<Unit>.Failure("Failed to create Fire Extinguisher");
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            return Result<Unit>.Success(Unit.Value);
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
-
-                var fireExtinguisher = await _context.FireExtinguishers.FindAsync(request.FireExtinguisher.Id);
-
-                if (fireExtinguisher == null) return null;
-                _mapper.Map(request.FireExtinguisher, fireExtinguisher);
-
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to create FireExtinguisher");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

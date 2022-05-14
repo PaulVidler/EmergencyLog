@@ -1,59 +1,49 @@
 ﻿using AutoMapper;
-using EmergencyLog.Domain;
-using EmergencyLog.Persistence;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using EmergencyLog.Application.Core;
 using EmergencyLog.Application.Validators;
 using EmergencyLog.Domain.Entities;
+using EmergencyLog.Persistence;
 using FluentValidation;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Clients
 {
-    public class Edit
+    public class EditCommandValidator : AbstractValidator<EditCommand<Client>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public EditCommandValidator()
         {
-            public Client Client { get; set; }
+            RuleFor(x => x.Type).SetValidator(new ClientsValidator());
+        }
+    }
+
+    public class EditHandler : IRequestHandler<EditCommand<Client>, Result<Unit>>
+    {
+        private DataContext _context;
+        private IMapper _mapper;
+
+        public EditHandler(DataContext context, IMapper mapper)
+        {
+            _mapper = mapper;
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(EditCommand<Client> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Client).SetValidator(new ClientsValidator());
-            }
-        }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            var client = await _context.Clients.FindAsync(request.Type.Id);
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            if (client == null) return null;
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
+            _mapper.Map(request.Type, client);
 
-                var client = await _context.Clients.FindAsync(request.Client.Id);
+            var result = await _context.SaveChangesAsync() > 0;
 
-                if (client == null) return null;
+            if (!result) return Result<Unit>.Failure("Failed to update Client");
 
-                _mapper.Map(request.Client, client);
+            return Result<Unit>.Success(Unit.Value);
 
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to update Client");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

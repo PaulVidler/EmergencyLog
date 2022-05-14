@@ -1,59 +1,48 @@
 ﻿using AutoMapper;
-using EmergencyLog.Domain;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Validators;
 using EmergencyLog.Persistence;
+using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
-using EmergencyLog.Application.Validators;
-using EmergencyLog.Domain.Entities;
-using FluentValidation;
 
 namespace EmergencyLog.Application.Property
 {
-    public class Edit
+    public class EditCommandValidator : AbstractValidator<EditCommand<Domain.Entities.Property>>
     {
-        public class Command : IRequest<Result<Unit>>
+        public EditCommandValidator()
         {
-            public Domain.Entities.Property Property { get; set; }
+            RuleFor(x => x.Type).SetValidator(new PropertyValidator());
+        }
+    }
+
+    public class EditHandler : IRequestHandler<EditCommand<Domain.Entities.Property>, Result<Unit>>
+    {
+        private DataContext _context;
+        private IMapper _mapper;
+
+        public EditHandler(DataContext context, IMapper mapper)
+        {
+            _mapper = mapper;
+            _context = context;
         }
 
-
-        public class CommandValidator : AbstractValidator<Command>
+        public async Task<Result<Unit>> Handle(EditCommand<Domain.Entities.Property> request, CancellationToken cancellationToken)
         {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Property).SetValidator(new PropertyValidator());
-            }
-        }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
-        {
-            private DataContext _context;
-            private IMapper _mapper;
+            var property = await _context.Properties.FindAsync(request.Type.Id);
 
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
-            }
+            if (property == null) return null;
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
-            {
+            _mapper.Map(request.Type, property);
 
-                var property = await _context.Properties.FindAsync(request.Property.Id);
+            var result = await _context.SaveChangesAsync() > 0;
 
-                if (property == null) return null;
+            if (!result) return Result<Unit>.Failure("Failed to update Property");
 
-                _mapper.Map(request.Property, property);
+            return Result<Unit>.Success(Unit.Value);
 
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to update Property");
-
-                return Result<Unit>.Success(Unit.Value);
-
-            }
         }
     }
 }

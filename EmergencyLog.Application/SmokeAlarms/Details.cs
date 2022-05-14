@@ -1,38 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.SmokeAlarms
 {
-    public class Details
+    public class DetailsHandler : IRequestHandler<DetailsQuery<SmokeAlarm>, Result<SmokeAlarm>>
     {
-        public class Query : IRequest<Result<SmokeAlarm>>
-        {
-            public Guid Id { get; set; }
+        private readonly DataContext _context;
 
+        public DetailsHandler(DataContext context)
+        {
+            _context = context;
         }
 
-        public class Handler : IRequestHandler<Query, Result<SmokeAlarm>>
+        public async Task<Result<SmokeAlarm>> Handle(DetailsQuery<SmokeAlarm> request, CancellationToken cancellationToken)
         {
-            private readonly DataContext _context;
-
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
-
-            public async Task<Result<SmokeAlarm>> Handle(Query request, CancellationToken cancellationToken)
-            {
-                var smokeAlarm = await _context.SmokeAlarms.FindAsync(request.Id);
-                return Result<SmokeAlarm>.Success(smokeAlarm);
-            }
+            var smokeAlarm = await _context.SmokeAlarms.FindAsync(request.Id);
+            return Result<SmokeAlarm>.Success(smokeAlarm);
         }
     }
 }

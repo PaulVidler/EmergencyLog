@@ -1,37 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using EmergencyLog.Application.Core;
+﻿using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmergencyLog.Application.Property
 {
-    public class Details
+    public class DetailsHandler : IRequestHandler<DetailsQuery<Domain.Entities.Property>, Result<Domain.Entities.Property>>
     {
-        public class Query : IRequest<Result<Domain.Entities.Property>>
-        {
-            public Guid Id { get; set; }
+        private readonly DataContext _context;
 
+        public DetailsHandler(DataContext context)
+        {
+            _context = context;
         }
 
-        public class Handler : IRequestHandler<Query, Result<Domain.Entities.Property>>
+        public async Task<Result<Domain.Entities.Property>> Handle(DetailsQuery<Domain.Entities.Property> request, CancellationToken cancellationToken)
         {
-            private readonly DataContext _context;
-
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
-
-            public async Task<Result<Domain.Entities.Property>> Handle(Query request, CancellationToken cancellationToken)
-            {
-                var property = await _context.Properties.FindAsync(request.Id);
-                return Result<Domain.Entities.Property>.Success(property);
-            }
+            var property = await _context.Properties.FindAsync(request.Id);
+            return Result<Domain.Entities.Property>.Success(property);
         }
     }
 }

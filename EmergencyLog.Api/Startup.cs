@@ -36,7 +36,7 @@ namespace EmergencyLog.Api
                 })
                 .AddFluentValidation(config =>
             {
-                config.RegisterValidatorsFromAssemblyContaining<Application.Attendance.Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.Attendance.CreateHandler>();
             });
 
             // tidy up into extension method call into "ApplicationExtension.cs"
@@ -70,6 +70,7 @@ namespace EmergencyLog.Api
 
             app.UseEndpoints(endpoints =>
             {
+                // if you'd like to test auth functionality, comment out the 4 lines below and uncomment the bottom line.
                 if (env.IsDevelopment())
                     endpoints.MapControllers().WithMetadata(new AllowAnonymousAttribute());
                 else

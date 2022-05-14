@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EmergencyLog.Application.Core
+﻿namespace EmergencyLog.Application.Core
 {
     // AppException class is for Exception information to be used in the Exception middleware
     public class AppException
