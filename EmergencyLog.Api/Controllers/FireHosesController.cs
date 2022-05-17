@@ -37,7 +37,7 @@ namespace EmergencyLog.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditFireHose(Guid id, FireHose fireHose)
         {
-            fireHose.Id = id;
+            fireHose.GlobalId = id;
             return HandleResult(await Mediator.Send(new EditCommand<FireHose> { Type = fireHose }));
         }
 

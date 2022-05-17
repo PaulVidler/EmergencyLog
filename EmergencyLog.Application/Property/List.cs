@@ -18,7 +18,7 @@ namespace EmergencyLog.Application.Property
 
         public async Task<Result<PagedList<Domain.Entities.Property>>> Handle(ListQuery<Domain.Entities.Property> request, CancellationToken cancellationToken)
         {
-            var query = _context.Properties.OrderBy(d => d.Address.Country).AsQueryable();
+            var query = _context.Properties.OrderBy(d => d.Country).AsQueryable();
 
             return Result<PagedList<Domain.Entities.Property>>.Success(
                 await PagedList<Domain.Entities.Property>.CreateAsync(query, request.Params.PageNumber,

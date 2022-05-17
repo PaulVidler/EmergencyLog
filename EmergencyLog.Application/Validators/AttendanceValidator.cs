@@ -15,7 +15,7 @@ namespace EmergencyLog.Application.Validators
             RuleFor(x => x.TimeOut).GreaterThan(d => d.TimeIn);
             RuleFor(x => x.OnSite).NotEmpty();
             RuleFor(x => x.EntryComplete).NotEmpty();
-            RuleFor(x => x.ClientId).NotEmpty();
+            RuleFor(x => x.GlobalId).NotEmpty();
 
         }
     }

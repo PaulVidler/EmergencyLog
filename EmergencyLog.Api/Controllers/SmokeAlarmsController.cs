@@ -37,7 +37,7 @@ namespace EmergencyLog.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditSmokeAlarm(Guid id, SmokeAlarm smokeAlarm)
         {
-            smokeAlarm.Id = id;
+            smokeAlarm.GlobalId = id;
             return HandleResult(await Mediator.Send(new EditCommand<SmokeAlarm> { Type = smokeAlarm }));
         }
 

@@ -11,8 +11,6 @@ namespace EmergencyLog.Application.Validators.FireSafetyHardwareValidators
             RuleFor(x => x.Description).NotEmpty().MaximumLength(256);
             RuleFor(x => x.LastServiced).NotEmpty();
             RuleFor(x => x.NextService).NotEmpty();
-            RuleFor(x => x.ServicedOrganisationId).NotEmpty();
-            RuleFor(x => x.PropertyId).NotEmpty();
 
         }
     }

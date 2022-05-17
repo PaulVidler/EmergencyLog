@@ -19,9 +19,7 @@ namespace EmergencyLog.Application.Validators
             //public ICollection<FireHose> FireHoses { get; set; } = null!;
             //public virtual Client PrimaryContact { get; set; }
             //public virtual Organisation Organisation { get; set; }
-
-            // should be some more properties here, entity framework fuckery with foreign keys
-            RuleFor(x => x.AddressId).NotEmpty();
+            
 
         }
     }

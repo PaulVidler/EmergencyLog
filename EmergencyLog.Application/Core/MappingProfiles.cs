@@ -9,7 +9,6 @@ namespace EmergencyLog.Application.Core
         public MappingProfiles()
         {
             // will come back here once DTO's are done
-            CreateMap<Address, Address>().ReverseMap();
             CreateMap<Domain.Entities.Attendance, Domain.Entities.Attendance>().ReverseMap();
             CreateMap<Client, Client>().ReverseMap();
             CreateMap<EmergencyContact, EmergencyContact>().ReverseMap();

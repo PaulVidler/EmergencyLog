@@ -32,7 +32,7 @@ namespace EmergencyLog.Application.Organisations
         public async Task<Result<Unit>> Handle(EditCommand<Organisation> request, CancellationToken cancellationToken)
         {
 
-            var organisation = await _context.Organisations.FindAsync(request.Type.OrganisationId);
+            var organisation = await _context.Organisations.FindAsync(request.Type.GlobalId);
 
             if (organisation == null) return null;
 

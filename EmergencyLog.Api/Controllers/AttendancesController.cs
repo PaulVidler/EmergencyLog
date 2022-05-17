@@ -37,7 +37,7 @@ namespace EmergencyLog.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditAttendance(Guid id, Attendance attendance)
         {
-            attendance.Id = id;
+            attendance.GlobalId = id;
             return HandleResult(await Mediator.Send(new EditCommand<Attendance> { Type = attendance }));
         }
 
