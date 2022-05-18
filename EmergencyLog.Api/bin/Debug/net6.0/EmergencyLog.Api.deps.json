@@ -11,6 +11,7 @@
           "EmergencyLog.Application": "1.0.0",
           "EmergencyLog.Domain": "1.0.0",
           "EmergencyLog.Persistence": "1.0.0",
+          "Infrastructure": "1.0.0",
           "MediatR.Extensions.Microsoft.DependencyInjection": "10.0.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "5.0.13",
           "Microsoft.AspNetCore.Authentication.OpenIdConnect": "5.0.13",
@@ -805,6 +806,14 @@
         "runtime": {
           "EmergencyLog.Persistence.dll": {}
         }
+      },
+      "Infrastructure/1.0.0": {
+        "dependencies": {
+          "EmergencyLog.Application": "1.0.0"
+        },
+        "runtime": {
+          "Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -1357,6 +1366,11 @@
       "sha512": ""
     },
     "EmergencyLog.Persistence/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Infrastructure/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

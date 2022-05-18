@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Interfaces;
 using EmergencyLog.Application.Validators;
 using EmergencyLog.Persistence;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,16 +23,19 @@ namespace EmergencyLog.Application.Attendance
     public class CreateHandler : IRequestHandler<CreateCommand<Domain.Entities.Attendance>, Result<Unit>>
     {
         private DataContext _context;
-        private IMapper _mapper;
+        private readonly IUserAccessor _userAccessor;
 
-        public CreateHandler(DataContext context, IMapper mapper)
+        public CreateHandler(DataContext context, IUserAccessor userAccessor)
         {
-            _mapper = mapper;
             _context = context;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<Unit>> Handle(CreateCommand<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
         {
+            // this is an example of how to use the GetUserName method to fetch user claims. This can be changed to supply the full object for OrgId etc if required.
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUserName());
+            
             _context.Attendances.Add(request.Type);
             var result = await _context.SaveChangesAsync() > 0;
 
