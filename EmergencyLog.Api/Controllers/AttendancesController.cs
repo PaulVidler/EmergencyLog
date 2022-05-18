@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using EmergencyLog.Application.Attendance;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -29,9 +30,22 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAttendance(Attendance attendance)
+        public async Task<IActionResult> PostAttendance(AttendanceDto attendance)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<Attendance> { Type = attendance }));
+            // create entity model here from DTO BEFORE sending to the handler
+            Attendance attendanceEntity = new Attendance()
+            {
+                GlobalId = Guid.NewGuid(),
+                TimeIn = attendance.TimeIn,
+                TimeOut = attendance.TimeOut,
+                OnSite = attendance.OnSite,
+                EntryComplete = attendance.EntryComplete,
+                ClientId = attendance.ClientId
+            };
+
+            return HandleResult(await Mediator.Send(new CreateCommand<Attendance> { Type = attendanceEntity }));
+
+            // return HandleResult(await Mediator.Send(new CreateCommand<AttendanceDto> { Type = attendance }));
         }
 
         [HttpPut("{id}")]
