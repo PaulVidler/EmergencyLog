@@ -18,8 +18,11 @@ namespace Infrastructure.Security
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetUserName()
+        public string GetUser()
         {
+            // this could be changed to supply the whole user object. Will need some experimenting when required.
+            // should be used similar to: var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUser()); where _context is the DataContext injected into the controllers
+
             return _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
     }

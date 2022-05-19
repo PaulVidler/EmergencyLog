@@ -23,15 +23,19 @@ namespace EmergencyLog.Application.Attendance
     public class CreateHandler : IRequestHandler<CreateCommand<Domain.Entities.Attendance>, Result<Unit>>
     {
         private DataContext _context;
+        private readonly IUserAccessor _userAccessor;
 
-        public CreateHandler(DataContext context)
+        public CreateHandler(DataContext context, IUserAccessor userAccessor)
         {
             _context = context;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<Unit>> Handle(CreateCommand<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
         {
-            
+            // this below is example code for getting the current user, using the new interface and GetUser() method
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUser());
+
             _context.Attendances.Add(request.Type);
             var result = await _context.SaveChangesAsync() > 0;
 

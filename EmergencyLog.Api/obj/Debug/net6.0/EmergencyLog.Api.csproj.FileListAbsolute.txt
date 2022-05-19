@@ -94,6 +94,7 @@ C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\D
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\Microsoft.Identity.Web.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+<<<<<<< HEAD
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\EmergencyLog.Api\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\EmergencyLog.Api\bin\Debug\net6.0\appsettings.json
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\EmergencyLog.Api\bin\Debug\net6.0\EmergencyLog.Api.exe
@@ -190,5 +191,7 @@ C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\EmergencyLog.Api\obj\Debug\net
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.pdb
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\EmergencyLog.Api\obj\Debug\net6.0\EmergencyLog.Api.genruntimeconfig.cache
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\EmergencyLog.Api\obj\Debug\net6.0\ref\EmergencyLog.Api.dll
+=======
+>>>>>>> main
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\Infrastructure.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\EmergencyLog.Api\bin\Debug\net6.0\Infrastructure.pdb

@@ -39,6 +39,8 @@ namespace EmergencyLog.Api.Extensions
             
             services.AddMediatR(typeof(Application.Attendance.ListHandler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            // this adds the GetUser() method from Infrastructure into DI
+            services.AddScoped<IUserAccessor, UserAccessor>();
 
             return services;
         }

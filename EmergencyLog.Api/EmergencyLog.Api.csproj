@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Emergency.Domain\EmergencyLog.Domain.csproj" />
     <ProjectReference Include="..\EmergencyLog.Application\EmergencyLog.Application.csproj" />
     <ProjectReference Include="..\EmergencyLog.Persistence\EmergencyLog.Persistence.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
