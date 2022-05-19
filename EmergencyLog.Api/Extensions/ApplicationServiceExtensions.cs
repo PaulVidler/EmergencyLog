@@ -39,7 +39,6 @@ namespace EmergencyLog.Api.Extensions
             
             services.AddMediatR(typeof(Application.Attendance.ListHandler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-            services.AddScoped<IUserAccessor, UserAccessor>();
 
             return services;
         }

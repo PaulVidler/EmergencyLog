@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EmergencyLog.Application.Attendance;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 
@@ -9,7 +10,7 @@ namespace EmergencyLog.Application.Core
         public MappingProfiles()
         {
             // will come back here once DTO's are done
-            CreateMap<Domain.Entities.Attendance, Domain.Entities.Attendance>().ReverseMap();
+            CreateMap<Domain.Entities.Attendance, AttendanceDto>().ReverseMap();
             CreateMap<Client, Client>().ReverseMap();
             CreateMap<EmergencyContact, EmergencyContact>().ReverseMap();
             CreateMap<FireExtinguisher, FireExtinguisher>().ReverseMap();
