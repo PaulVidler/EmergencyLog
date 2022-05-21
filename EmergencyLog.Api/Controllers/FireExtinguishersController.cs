@@ -5,6 +5,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using EmergencyLog.Application.DTOs.FireExtinguisherDtos;
+using EmergencyLog.Application.FireExtinguishers;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -12,8 +15,11 @@ namespace EmergencyLog.Api.Controllers
     [ApiController]
     public class FireExtinguishersController : BaseApiController
     {
-        public FireExtinguishersController(IMediator mediator) : base(mediator)
+        private IMapper _mapper;
+
+        public FireExtinguishersController(IMediator mediator, IMapper mapper) : base(mediator)
         {
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -23,26 +29,27 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet("{guid}")]
-        public async Task<IActionResult> GetFireExtinguisher(Guid guid)
+        public async Task<IActionResult> GetFireExtinguisher(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<FireExtinguisher> { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<FireExtinguisher> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostFireExtinguisher(FireExtinguisher fireExtinguisher)
+        public async Task<IActionResult> PostFireExtinguisher(FireExtinguisherResultDto fireExtinguisher)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<FireExtinguisher> { Type = fireExtinguisher }));
+            var fireExtinguisherEntity = _mapper.Map<FireExtinguisherResultDto, FireExtinguisher>(fireExtinguisher);
+            return HandleResult(await Mediator.Send(new CreateCommand<FireExtinguisher> { Type = fireExtinguisherEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditFireExtinguisher(Guid id, FireExtinguisher fireExtinguisher)
+        public async Task<IActionResult> EditFireExtinguisher(int id, FireExtinguisher fireExtinguisher)
         {
-            fireExtinguisher.GlobalId = id;
+            fireExtinguisher.Id = id;
             return HandleResult(await Mediator.Send(new EditCommand<FireExtinguisher> { Type = fireExtinguisher }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFireExtinguisher(Guid id)
+        public async Task<IActionResult> DeleteFireExtinguisher(int id)
         {
             return HandleResult(await Mediator.Send(new DeleteCommand<FireExtinguisher> { Id = id }));
         }

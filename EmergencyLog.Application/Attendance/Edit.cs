@@ -11,10 +11,10 @@ namespace EmergencyLog.Application.Attendance
 {
     public class EditCommandValidator : AbstractValidator<EditCommand<Domain.Entities.Attendance>>
     {
-        public EditCommandValidator()
-        {
-            RuleFor(x => x.Type).SetValidator(new AttendanceValidator());
-        }
+        //public EditCommandValidator()
+        //{
+        //    RuleFor(x => x.Type).SetValidator(new AttendanceValidator());
+        //}
     }
 
     public class Handler : IRequestHandler<EditCommand<Domain.Entities.Attendance>, Result<Unit>>

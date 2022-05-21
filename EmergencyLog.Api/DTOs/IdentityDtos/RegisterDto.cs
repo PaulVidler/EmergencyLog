@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace EmergencyLog.Api.DTOs
+namespace EmergencyLog.Api.DTOs.IdentityDtos
 {
     public class RegisterDto
     {
@@ -17,6 +17,6 @@ namespace EmergencyLog.Api.DTOs
         [Required]
         public string UserName { get; set; }
         [Required]
-        public Guid OrganisationId { get; set; }
+        public int OrganisationId { get; set; }
     }
 }

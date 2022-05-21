@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using MappingProfiles = EmergencyLog.Application.DTOs.MappingProfiles;
 
 namespace EmergencyLog.Api.Extensions
 {

@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmergencyLog.Domain.Entities
 {
@@ -21,10 +22,9 @@ namespace EmergencyLog.Domain.Entities
         public string? Suburb { get; set; }
         public string? Postcode { get; set; }
         public string? Country { get; set; }
-
         public virtual EmergencyContact EmergencyContact { get; set; }
-        public int? EmergencyContactId { get; set; }
-        public Organisation Organisation { get; set; }
+        public virtual Organisation Organisation { get; set; }
+        public int OrganisationId { get; set; }
 
         public ICollection<Attendance> Attendances { get; set; }
     }

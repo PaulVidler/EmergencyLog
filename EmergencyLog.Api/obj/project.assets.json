@@ -1072,6 +1072,19 @@
           "bin/placeholder/EmergencyLog.Domain.dll": {}
         }
       },
+      "EmergencyLog.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "EmergencyLog.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/EmergencyLog.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EmergencyLog.Infrastructure.dll": {}
+        }
+      },
       "EmergencyLog.Persistence/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -1087,19 +1100,6 @@
         },
         "runtime": {
           "bin/placeholder/EmergencyLog.Persistence.dll": {}
-        }
-      },
-      "Infrastructure/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "EmergencyLog.Application": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Infrastructure.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Infrastructure.dll": {}
         }
       }
     }
@@ -2924,23 +2924,23 @@
       "path": "../Emergency.Domain/EmergencyLog.Domain.csproj",
       "msbuildProject": "../Emergency.Domain/EmergencyLog.Domain.csproj"
     },
+    "EmergencyLog.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../Infrastructure/EmergencyLog.Infrastructure.csproj",
+      "msbuildProject": "../Infrastructure/EmergencyLog.Infrastructure.csproj"
+    },
     "EmergencyLog.Persistence/1.0.0": {
       "type": "project",
       "path": "../EmergencyLog.Persistence/EmergencyLog.Persistence.csproj",
       "msbuildProject": "../EmergencyLog.Persistence/EmergencyLog.Persistence.csproj"
-    },
-    "Infrastructure/1.0.0": {
-      "type": "project",
-      "path": "../Infrastructure/Infrastructure.csproj",
-      "msbuildProject": "../Infrastructure/Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "EmergencyLog.Application >= 1.0.0",
       "EmergencyLog.Domain >= 1.0.0",
+      "EmergencyLog.Infrastructure >= 1.0.0",
       "EmergencyLog.Persistence >= 1.0.0",
-      "Infrastructure >= 1.0.0",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 10.0.1",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.13",
       "Microsoft.AspNetCore.Authentication.OpenIdConnect >= 5.0.13",
@@ -2994,8 +2994,8 @@
             "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj": {
               "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj"
             },
-            "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\Infrastructure.csproj"
+            "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\EmergencyLog.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\EmergencyLog.Infrastructure.csproj"
             }
           }
         }

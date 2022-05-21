@@ -4,6 +4,11 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using EmergencyLog.Application.Attendance;
+using EmergencyLog.Application.DTOs.EmergencyContactDtos;
+using EmergencyLog.Application.EmergencyContacts;
+using EmergencyLog.Domain.Entities;
 using EmergencyContact = EmergencyLog.Domain.Entities.EmergencyContact;
 
 namespace EmergencyLog.Api.Controllers
@@ -12,8 +17,11 @@ namespace EmergencyLog.Api.Controllers
     [ApiController]
     public class EmergencyContactsController : BaseApiController
     {
-        public EmergencyContactsController(IMediator mediator) : base(mediator)
+        private IMapper _mapper;
+
+        public EmergencyContactsController(IMediator mediator, IMapper mapper) : base(mediator)
         {
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -23,26 +31,27 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet("{guid}")]
-        public async Task<IActionResult> GetEmergencyContact(Guid guid)
+        public async Task<IActionResult> GetEmergencyContact(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<EmergencyContact> { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<EmergencyContact> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostEmergencyContact(EmergencyContact emergencyContact)
+        public async Task<IActionResult> PostEmergencyContact(EmergencyContactResultDto emergencyContact)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<EmergencyContact> { Type = emergencyContact }));
+            var emergencyContactEntity = _mapper.Map<EmergencyContactResultDto, EmergencyContact>(emergencyContact);
+            return HandleResult(await Mediator.Send(new CreateCommand<EmergencyContact> { Type = emergencyContactEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditEmergencyContact(Guid id, EmergencyContact emergencyContact)
+        public async Task<IActionResult> EditEmergencyContact(int id, EmergencyContact emergencyContact)
         {
-            emergencyContact.GlobalId = id;
+            emergencyContact.Id = id;
             return HandleResult(await Mediator.Send(new EditCommand<EmergencyContact> { Type = emergencyContact }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmergencyContact(Guid id)
+        public async Task<IActionResult> DeleteEmergencyContact(int id)
         {
             return HandleResult(await Mediator.Send(new DeleteCommand<EmergencyContact> { Id = id }));
         }

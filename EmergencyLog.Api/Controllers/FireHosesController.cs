@@ -5,6 +5,11 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using EmergencyLog.Application.Attendance;
+using EmergencyLog.Application.DTOs.FireHoseDtos;
+using EmergencyLog.Application.FireHoses;
+using EmergencyLog.Domain.Entities;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -12,8 +17,11 @@ namespace EmergencyLog.Api.Controllers
     [ApiController]
     public class FireHosesController : BaseApiController
     {
-        public FireHosesController(IMediator mediator) : base(mediator)
+        private IMapper _mapper;
+
+        public FireHosesController(IMediator mediator, IMapper mapper) : base(mediator)
         {
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -23,26 +31,27 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet("{guid}")]
-        public async Task<IActionResult> GetFireHose(Guid guid)
+        public async Task<IActionResult> GetFireHose(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<FireHose> { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<FireHose> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostFireHose(FireHose fireHose)
+        public async Task<IActionResult> PostFireHose(FireHoseResultDto fireHose)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<FireHose> { Type = fireHose }));
+            var fireHoseEntity = _mapper.Map<FireHoseResultDto, FireHose>(fireHose);
+            return HandleResult(await Mediator.Send(new CreateCommand<FireHose> { Type = fireHoseEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditFireHose(Guid id, FireHose fireHose)
+        public async Task<IActionResult> EditFireHose(int id, FireHose fireHose)
         {
-            fireHose.GlobalId = id;
+            fireHose.Id = id;
             return HandleResult(await Mediator.Send(new EditCommand<FireHose> { Type = fireHose }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFireHose(Guid id)
+        public async Task<IActionResult> DeleteFireHose(int id)
         {
             return HandleResult(await Mediator.Send(new DeleteCommand<FireHose> { Id = id }));
         }

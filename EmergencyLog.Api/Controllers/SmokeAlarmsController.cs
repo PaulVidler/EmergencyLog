@@ -4,7 +4,10 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using EmergencyLog.Application;
+using EmergencyLog.Application.DTOs.SmokeAlarmDtos;
+using EmergencyLog.Application.SmokeAlarms;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -12,8 +15,11 @@ namespace EmergencyLog.Api.Controllers
     [ApiController]
     public class SmokeAlarmsController : BaseApiController
     {
-        public SmokeAlarmsController(IMediator mediator) : base(mediator)
+        private IMapper _mapper;
+
+        public SmokeAlarmsController(IMediator mediator, IMapper mapper) : base(mediator)
         {
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -23,26 +29,27 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet("{guid}")]
-        public async Task<IActionResult> GetSmokeAlarm(Guid guid)
+        public async Task<IActionResult> GetSmokeAlarm(int id)
         {
-            return HandleResult( await Mediator.Send(new DetailsQuery<SmokeAlarm> { Id = guid }));
+            return HandleResult( await Mediator.Send(new DetailsQuery<SmokeAlarm> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAddress(SmokeAlarm smokeAlarm)
+        public async Task<IActionResult> PostAddress(SmokeAlarmResultDto smokeAlarm)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<SmokeAlarm> { Type = smokeAlarm }));
+            var smokeAlarmEntity = _mapper.Map<SmokeAlarmResultDto, SmokeAlarm>(smokeAlarm);
+            return HandleResult(await Mediator.Send(new CreateCommand<SmokeAlarm> { Type = smokeAlarmEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditSmokeAlarm(Guid id, SmokeAlarm smokeAlarm)
+        public async Task<IActionResult> EditSmokeAlarm(int id, SmokeAlarm smokeAlarm)
         {
-            smokeAlarm.GlobalId = id;
+            smokeAlarm.Id = id;
             return HandleResult(await Mediator.Send(new EditCommand<SmokeAlarm> { Type = smokeAlarm }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSmokeAlarm(Guid id)
+        public async Task<IActionResult> DeleteSmokeAlarm(int id)
         {
             return HandleResult(await Mediator.Send(new DeleteCommand<SmokeAlarm> { Id = id }));
         }

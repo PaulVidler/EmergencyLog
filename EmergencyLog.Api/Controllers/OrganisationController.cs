@@ -5,6 +5,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using EmergencyLog.Application.DTOs.OrganisationDtos;
+using EmergencyLog.Application.Organisations;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -12,8 +15,11 @@ namespace EmergencyLog.Api.Controllers
     [ApiController]
     public class OrganisationController : BaseApiController
     {
-        public OrganisationController(IMediator mediator) : base(mediator)
+        private IMapper _mapper;
+
+        public OrganisationController(IMediator mediator, IMapper mapper) : base(mediator)
         {
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -23,26 +29,27 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpGet("{guid}")]
-        public async Task<IActionResult> GetOrganisation(Guid guid)
+        public async Task<IActionResult> GetOrganisation(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<Organisation> { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<Organisation> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostOrganisation(Organisation organisation)
+        public async Task<IActionResult> PostOrganisation(OrganisationResultDto organisation)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<Organisation> { Type = organisation }));
+            var organisationEntity = _mapper.Map<OrganisationResultDto, Organisation>(organisation);
+            return HandleResult(await Mediator.Send(new CreateCommand<Organisation> { Type = organisationEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditOrganisation(Guid id, Organisation organisation)
+        public async Task<IActionResult> EditOrganisation(int id, Organisation organisation)
         {
-            organisation.GlobalId = id;
+            organisation.Id = id;
             return HandleResult(await Mediator.Send(new EditCommand<Organisation> { Type = organisation }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrganisation(Guid id)
+        public async Task<IActionResult> DeleteOrganisation(int id)
         {
             return HandleResult(await Mediator.Send(new DeleteCommand<Organisation> { Id = id }));
         }

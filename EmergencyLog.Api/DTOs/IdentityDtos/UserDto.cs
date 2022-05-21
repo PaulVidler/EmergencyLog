@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EmergencyLog.Api.DTOs
+namespace EmergencyLog.Api.DTOs.IdentityDtos
 {
     public class UserDto
     {
@@ -8,7 +8,7 @@ namespace EmergencyLog.Api.DTOs
         public string Token { get; set; }
         public string UserName { get; set; }
         public string Image { get; set; }
-        public Guid OrganisationId { get; set; }
+        public int OrganisationId { get; set; }
 
     }
 }

@@ -10,7 +10,7 @@ namespace EmergencyLog.Domain.Entities.Identity
     public class AppUser : IdentityUser
     {
         public string DisplayName { get; set; }
-        public Guid OrganisationId { get; set; }
-        public Guid? ClientId { get; set; }
+        public int OrganisationId { get; set; }
+        public int? ClientId { get; set; }
     }
 }

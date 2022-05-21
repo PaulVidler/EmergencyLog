@@ -131,8 +131,8 @@
               "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj": {
                 "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj"
               },
-              "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\EmergencyLog.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\EmergencyLog.Infrastructure.csproj"
               }
             }
           }
@@ -379,12 +379,12 @@
         }
       }
     },
-    "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\EmergencyLog.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\Infrastructure.csproj",
-        "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\EmergencyLog.Infrastructure.csproj",
+        "projectName": "EmergencyLog.Infrastructure",
+        "projectPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\EmergencyLog.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\relia\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\relia\\source\\repos\\EmergencyLog\\EmergencyLog.Api\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
