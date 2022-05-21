@@ -30,12 +30,19 @@ namespace EmergencyLog.Persistence
             {
                 Organisation organisation = CreateOrganisation();
 
+                await db.Organisations.AddAsync(organisation);
+                await db.SaveChangesAsync();
+
                 for (var i = 1; i < 11; i++)
                 {
                     var client = CreateClient(organisation.Id);
 
+                    await db.Clients.AddAsync(client);
+                    await db.SaveChangesAsync();
+
                     var emergencyContact = CreateEmergencyContact(client.Id);
-                    
+
+                    await db.EmergencyContacts.AddAsync(emergencyContact);
 
                     for (var x = 1; x < 31; x++)
                     {
@@ -43,47 +50,109 @@ namespace EmergencyLog.Persistence
                         await db.Attendances.AddAsync(attendance);
                     }
 
-                    await db.Clients.AddAsync(client);
-                    //await db.SaveChangesAsync();
-                    await db.EmergencyContacts.AddAsync(emergencyContact);
-                    //await db.SaveChangesAsync();
-                    // ------- Create Identity for each user -----------
+                        // ------- Create Identity for each user -----------
 
-                    string displayName = client.FirstName + " " + client.Surname;
-                    string userName = client.FirstName + client.Surname;
+                        string displayName = client.FirstName + " " + client.Surname;
+                        string userName = client.FirstName + client.Surname;
 
-                    var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.Id, ClientId = client.Id };
-                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                        // var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.Id, ClientId = client.Id };
+                        var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.Id };
+                        await userManager.CreateAsync(user, "Pa$$w0rd");
 
-                    // ------------------------------------------------
-                    
-                }
-
-                for (var y = 1; y < 5; y++)
-                {
-                    var property = CreateProperty(organisation.Id);
-                    await db.Properties.AddAsync(property);
-                    
-                    Console.WriteLine("");
-                    var serviceOrganisation = CreateServiceOrganisation();
-                    await db.ServiceOrganisations.AddAsync(serviceOrganisation);
-
-                    for (var z = 1; z < 4; z++)
-                    {
-                        var fireExtinguisher = CreateFireExtinguisher(serviceOrganisation.Id, property.Id, z);
-                        await db.FireExtinguishers.AddAsync(fireExtinguisher);
-
-                        var fireHose = CreateFirehose(serviceOrganisation.Id, property.Id, z);
-                        await db.FireHoses.AddAsync(fireHose);
-
-                        var smokeAlarm = CreateSmokeAlarm(serviceOrganisation.Id, property.Id, z);
-                        await db.SmokeAlarms.AddAsync(smokeAlarm);
-                    }
+                        // ------------------------------------------------
                 }
             }
-
             await db.SaveChangesAsync();
+
+            for (var y = 1; y < 11; y++)
+            {
+                var property = CreateProperty(y);
+                await db.Properties.AddAsync(property);
+
+                Console.WriteLine("");
+                var serviceOrganisation = CreateServiceOrganisation();
+                await db.ServiceOrganisations.AddAsync(serviceOrganisation);
+                await db.SaveChangesAsync();
+
+                for (var z = 1; z < 4; z++)
+                {
+                    var fireExtinguisher = CreateFireExtinguisher(y, y, z);
+                    await db.FireExtinguishers.AddAsync(fireExtinguisher);
+
+                    var fireHose = CreateFirehose(y, y, z);
+                    await db.FireHoses.AddAsync(fireHose);
+
+                    var smokeAlarm = CreateSmokeAlarm(y, y, z);
+                    await db.SmokeAlarms.AddAsync(smokeAlarm);
+                    
+                }
+                await db.SaveChangesAsync();
+            }
+
+            
         }
+
+
+        //    for (var a = 1; a < 11; a++) // yeah yeah, nested loops, fuck off....
+        //    {
+        //        Organisation organisation = CreateOrganisation();
+
+        //        for (var i = 1; i < 11; i++)
+        //        {
+        //            var client = CreateClient(organisation.Id);
+
+        //            var emergencyContact = CreateEmergencyContact(client.Id);
+
+
+        //            for (var x = 1; x < 31; x++)
+        //            {
+        //                var attendance = CreateAttendance(client.Id, x);
+        //                await db.Attendances.AddAsync(attendance);
+        //            }
+
+        //            -------Create Identity for each user -----------
+
+        //          string displayName = client.FirstName + " " + client.Surname;
+        //            string userName = client.FirstName + client.Surname;
+
+        //            var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.Id, ClientId = client.Id };
+        //            var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.Id };
+        //            await userManager.CreateAsync(user, "Pa$$w0rd");
+
+        //            ------------------------------------------------
+
+        //           await db.Clients.AddAsync(client);
+        //            await db.SaveChangesAsync();
+        //            await db.EmergencyContacts.AddAsync(emergencyContact);
+        //            await db.SaveChangesAsync();
+
+        //        }
+
+        //        for (var y = 1; y < 5; y++)
+        //        {
+        //            var property = CreateProperty(organisation.Id);
+        //            await db.Properties.AddAsync(property);
+
+        //            Console.WriteLine("");
+        //            var serviceOrganisation = CreateServiceOrganisation();
+        //            await db.ServiceOrganisations.AddAsync(serviceOrganisation);
+
+        //            for (var z = 1; z < 4; z++)
+        //            {
+        //                var fireExtinguisher = CreateFireExtinguisher(serviceOrganisation.Id, property.Id, z);
+        //                await db.FireExtinguishers.AddAsync(fireExtinguisher);
+
+        //                var fireHose = CreateFirehose(serviceOrganisation.Id, property.Id, z);
+        //                await db.FireHoses.AddAsync(fireHose);
+
+        //                var smokeAlarm = CreateSmokeAlarm(serviceOrganisation.Id, property.Id, z);
+        //                await db.SmokeAlarms.AddAsync(smokeAlarm);
+        //            }
+        //        }
+        //    }
+
+        //    await db.SaveChangesAsync();
+        //}
 
         public static Client CreateClient(int organisationId)
         {
