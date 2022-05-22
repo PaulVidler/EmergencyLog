@@ -4,7 +4,6 @@ namespace EmergencyLog.Application.DTOs.FireHoseDtos
 {
     public class FireHoseEditDto
     {
-        public int Id { get; set; }
         public string EquipmentType { get; set; }
         public string Description { get; set; }
         public DateTime? LastServiced { get; set; }

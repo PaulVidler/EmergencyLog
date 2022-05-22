@@ -5,10 +5,13 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using EmergencyLog.Application.DTOs.FireHoseDtos;
 
 namespace EmergencyLog.Application.FireHoses
 {
-    public class ListHandler : IRequestHandler<ListQuery<FireHose>, Result<PagedList<FireHose>>>
+    public class ListHandler : IRequestHandler<ListQuery<FireHoseResultDto>, Result<PagedList<FireHoseResultDto>>>
     {
         private DataContext _context;
 
@@ -17,12 +20,16 @@ namespace EmergencyLog.Application.FireHoses
             _context = context;
         }
 
-        public async Task<Result<PagedList<FireHose>>> Handle(ListQuery<FireHose> request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<FireHoseResultDto>>> Handle(ListQuery<FireHoseResultDto> request, CancellationToken cancellationToken)
         {
-            var query = _context.FireHoses.OrderBy(d => d.LastServiced).AsQueryable();
+            // config to be passed into ProjectTo method below.
+            var configuration = new MapperConfiguration(cfg =>
+                cfg.CreateProjection<FireHose, FireHoseResultDto>());
 
-            return Result<PagedList<FireHose>>.Success(
-                await PagedList<FireHose>.CreateAsync(query, request.Params.PageNumber,
+            var query = _context.FireHoses.Where(d => d.IsDeleted == false).OrderBy(d => d.Id).ProjectTo<FireHoseResultDto>(configuration).AsQueryable();
+
+            return Result<PagedList<FireHoseResultDto>>.Success(
+                await PagedList<FireHoseResultDto>.CreateAsync(query, request.Params.PageNumber,
                     request.Params.PageSize));
         }
     }

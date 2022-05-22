@@ -25,7 +25,7 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOrganisations([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<Organisation> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<OrganisationResultDto> { Params = pagingParams }));
         }
 
         [HttpGet("{guid}")]

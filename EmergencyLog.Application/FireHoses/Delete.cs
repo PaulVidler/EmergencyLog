@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
@@ -21,7 +22,8 @@ namespace EmergencyLog.Application.FireHoses
             var fireHose = await _context.FireHoses.FindAsync(request.Id);
             if (fireHose == null) return null;
 
-            _context.Remove(fireHose);
+            fireHose.IsDeleted = true;
+            fireHose.DateDeleted = DateTime.Now;
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result) return Result<Unit>.Failure("Failed to delete FireHose");

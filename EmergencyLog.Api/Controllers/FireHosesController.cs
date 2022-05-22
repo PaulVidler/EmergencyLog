@@ -4,6 +4,7 @@ using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmergencyLog.Application.Attendance;
@@ -27,27 +28,29 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFireHoses([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<FireHose> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<FireHoseResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetFireHose(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<FireHose> { Id = id }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<FireHoseResultDto> { Id = id }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostFireHose(FireHoseResultDto fireHose)
         {
-            var fireHoseEntity = _mapper.Map<FireHoseResultDto, FireHose>(fireHose);
+            var fireHoseEntity = _mapper.Map<FireHose>(fireHose);
             return HandleResult(await Mediator.Send(new CreateCommand<FireHose> { Type = fireHoseEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditFireHose(int id, FireHose fireHose)
+        public async Task<IActionResult> EditFireHose(int id, FireHoseEditDto fireHose)
         {
-            fireHose.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<FireHose> { Type = fireHose }));
+            var mappedFireHose = _mapper.Map<FireHose>(fireHose);
+            mappedFireHose.Id = id;
+
+            return HandleResult(await Mediator.Send(new EditCommand<FireHose> { Type = mappedFireHose }));
         }
 
         [HttpDelete("{id}")]
