@@ -25,27 +25,29 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFireExtinguishers([FromQuery]PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<FireExtinguisher> {Params = pagingParams}));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<FireExtinguisherResultDto> {Params = pagingParams}));
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetFireExtinguisher(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<FireExtinguisher> { Id = id }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<FireExtinguisherResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostFireExtinguisher(FireExtinguisherResultDto fireExtinguisher)
+        public async Task<IActionResult> PostFireExtinguisher(FireExtinguisherAddDto fireExtinguisher)
         {
-            var fireExtinguisherEntity = _mapper.Map<FireExtinguisherResultDto, FireExtinguisher>(fireExtinguisher);
+            var fireExtinguisherEntity = _mapper.Map<FireExtinguisher>(fireExtinguisher);
             return HandleResult(await Mediator.Send(new CreateCommand<FireExtinguisher> { Type = fireExtinguisherEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditFireExtinguisher(int id, FireExtinguisher fireExtinguisher)
+        public async Task<IActionResult> EditFireExtinguisher(int id, FireExtinguisherEditDto fireExtinguisher)
         {
-            fireExtinguisher.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<FireExtinguisher> { Type = fireExtinguisher }));
+            var mappedFireExtinguisher = _mapper.Map<FireExtinguisher>(fireExtinguisher);
+            mappedFireExtinguisher.Id = id;
+
+            return HandleResult(await Mediator.Send(new EditCommand<FireExtinguisher> { Type = mappedFireExtinguisher }));
         }
 
         [HttpDelete("{id}")]

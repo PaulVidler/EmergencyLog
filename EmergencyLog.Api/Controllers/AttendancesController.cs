@@ -1,13 +1,11 @@
-﻿using EmergencyLog.Application;
+﻿using AutoMapper;
+using EmergencyLog.Application;
 using EmergencyLog.Application.Core;
+using EmergencyLog.Application.DTOs.AttendanceDtos;
 using EmergencyLog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using EmergencyLog.Application.Attendance;
-using EmergencyLog.Application.DTOs.AttendanceDtos;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -25,28 +23,29 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAttendances([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<Attendance> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<AttendanceResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetAttendance(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<Attendance> { Id = id }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<AttendanceResultDto> { Id = id }));
         }
 
         [HttpPost]
         public async Task<IActionResult> PostAttendance(AttendanceAddDto attendance)
         {
-            //var attendanceEntity = _mapper.Map<AttendanceAddDto, Attendance>(attendance);
-
-            return HandleResult(await Mediator.Send(new CreateCommand<AttendanceAddDto> { Type = attendance }));
+            var attendanceEntity = _mapper.Map<Attendance>(attendance);
+            return HandleResult(await Mediator.Send(new CreateCommand<Attendance> { Type = attendanceEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditAttendance(int id, Attendance attendance)
+        public async Task<IActionResult> EditAttendance(int id, AttendanceEditDto attendance)
         {
-            attendance.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<Attendance> { Type = attendance }));
+            var mappedAttendance = _mapper.Map<Attendance>(attendance);
+            mappedAttendance.Id = id;
+
+            return HandleResult(await Mediator.Send(new EditCommand<Attendance> { Type = mappedAttendance }));
         }
 
         [HttpDelete("{id}")]

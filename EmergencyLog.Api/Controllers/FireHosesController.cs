@@ -1,16 +1,11 @@
-﻿using EmergencyLog.Application;
+﻿using AutoMapper;
+using EmergencyLog.Application;
 using EmergencyLog.Application.Core;
+using EmergencyLog.Application.DTOs.FireHoseDtos;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
-using EmergencyLog.Application.Attendance;
-using EmergencyLog.Application.DTOs.FireHoseDtos;
-using EmergencyLog.Application.FireHoses;
-using EmergencyLog.Domain.Entities;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -38,7 +33,7 @@ namespace EmergencyLog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostFireHose(FireHoseResultDto fireHose)
+        public async Task<IActionResult> PostFireHose(FireHoseAddDto fireHose)
         {
             var fireHoseEntity = _mapper.Map<FireHose>(fireHose);
             return HandleResult(await Mediator.Send(new CreateCommand<FireHose> { Type = fireHoseEntity }));

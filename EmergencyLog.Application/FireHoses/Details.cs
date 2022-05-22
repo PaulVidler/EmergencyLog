@@ -1,11 +1,10 @@
-﻿using EmergencyLog.Application.Core;
-using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
+﻿using AutoMapper;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Application.DTOs.FireHoseDtos;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using EmergencyLog.Application.DTOs.FireHoseDtos;
-using AutoMapper;
 
 namespace EmergencyLog.Application.FireHoses
 {
@@ -26,11 +25,11 @@ namespace EmergencyLog.Application.FireHoses
 
             if (fireHose == null)
             {
-                return Result<FireHoseResultDto>.Failure("fire Hose not found");
+                return Result<FireHoseResultDto>.Failure("Fire Hose not found");
             }
             if (fireHose.IsDeleted)
             {
-                return Result<FireHoseResultDto>.Failure("This Fire Hose appears to be deleted in database");
+                return Result<FireHoseResultDto>.Failure("This Fire Hose appears to be deleted in the database");
             }
             
             return Result<FireHoseResultDto>.Success(_mapper.Map<FireHoseResultDto>(fireHose));

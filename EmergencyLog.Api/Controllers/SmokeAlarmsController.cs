@@ -1,13 +1,11 @@
-﻿using EmergencyLog.Application.Core;
+﻿using AutoMapper;
+using EmergencyLog.Application;
+using EmergencyLog.Application.Core;
+using EmergencyLog.Application.DTOs.SmokeAlarmDtos;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using EmergencyLog.Application;
-using EmergencyLog.Application.DTOs.SmokeAlarmDtos;
-using EmergencyLog.Application.SmokeAlarms;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -25,27 +23,29 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSmokeAlarms([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<SmokeAlarm> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<SmokeAlarmResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetSmokeAlarm(int id)
         {
-            return HandleResult( await Mediator.Send(new DetailsQuery<SmokeAlarm> { Id = id }));
+            return HandleResult( await Mediator.Send(new DetailsQuery<SmokeAlarmResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAddress(SmokeAlarmResultDto smokeAlarm)
+        public async Task<IActionResult> PostAddress(SmokeAlarmAddDto smokeAlarm)
         {
-            var smokeAlarmEntity = _mapper.Map<SmokeAlarmResultDto, SmokeAlarm>(smokeAlarm);
+            var smokeAlarmEntity = _mapper.Map<SmokeAlarm>(smokeAlarm);
             return HandleResult(await Mediator.Send(new CreateCommand<SmokeAlarm> { Type = smokeAlarmEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditSmokeAlarm(int id, SmokeAlarm smokeAlarm)
+        public async Task<IActionResult> EditSmokeAlarm(int id, SmokeAlarmEditDto smokeAlarm)
         {
-            smokeAlarm.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<SmokeAlarm> { Type = smokeAlarm }));
+            var mappedSmokeAlarm = _mapper.Map<SmokeAlarm>(smokeAlarm);
+            mappedSmokeAlarm.Id = id;
+            
+            return HandleResult(await Mediator.Send(new EditCommand<SmokeAlarm> { Type = mappedSmokeAlarm }));
         }
 
         [HttpDelete("{id}")]

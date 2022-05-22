@@ -16,8 +16,7 @@ namespace EmergencyLog.Application.Organisations
             RuleFor(x => x.Type).SetValidator(new OrganisationValidator());
         }
     }
-
-
+    
     public class CreateHandler : IRequestHandler<CreateCommand<Organisation>, Result<Unit>>
     {
         private DataContext _context;

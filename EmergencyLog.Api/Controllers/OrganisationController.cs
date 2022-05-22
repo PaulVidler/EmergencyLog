@@ -4,6 +4,7 @@ using EmergencyLog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmergencyLog.Application.DTOs.OrganisationDtos;
@@ -28,24 +29,26 @@ namespace EmergencyLog.Api.Controllers
             return HandlePagedResult(await Mediator.Send(new ListQuery<OrganisationResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetOrganisation(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<Organisation> { Id = id }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<OrganisationResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostOrganisation(OrganisationResultDto organisation)
+        public async Task<IActionResult> PostOrganisation(OrganisationAddDto organisation)
         {
-            var organisationEntity = _mapper.Map<OrganisationResultDto, Organisation>(organisation);
+            var organisationEntity = _mapper.Map<Organisation>(organisation);
             return HandleResult(await Mediator.Send(new CreateCommand<Organisation> { Type = organisationEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditOrganisation(int id, Organisation organisation)
+        public async Task<IActionResult> EditOrganisation(int id, OrganisationEditDto organisation)
         {
-            organisation.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<Organisation> { Type = organisation }));
+            var mappedOrganisation = _mapper.Map<Organisation>(organisation);
+            mappedOrganisation.Id = id;
+            
+            return HandleResult(await Mediator.Send(new EditCommand<Organisation> { Type = mappedOrganisation }));
         }
 
         [HttpDelete("{id}")]

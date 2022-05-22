@@ -28,7 +28,6 @@ namespace EmergencyLog.Application.FireHoses
 
         public async Task<Result<Unit>> Handle(CreateCommand<FireHose> request, CancellationToken cancellationToken)
         {
-
             _context.FireHoses.Add(request.Type);
             var result = await _context.SaveChangesAsync() > 0;
 

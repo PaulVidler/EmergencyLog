@@ -25,27 +25,29 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetClients([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<Client> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<ClientResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetClient(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<Client> { Id = id }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<ClientResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostClient(ClientResultDto client)
+        public async Task<IActionResult> PostClient(ClientAddDto client)
         {
-            var clientEntity = _mapper.Map<ClientResultDto, Client>(client);
+            var clientEntity = _mapper.Map<Client>(client);
             return HandleResult(await Mediator.Send(new CreateCommand<Client> { Type = clientEntity}));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditClient(int id, Client client)
+        public async Task<IActionResult> EditClient(int id, ClientEditDto client)
         {
-            client.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<Client> { Type = client }));
+            var mappedClient = _mapper.Map<Client>(client);
+            mappedClient.Id = id;
+
+            return HandleResult(await Mediator.Send(new EditCommand<Client> { Type = mappedClient }));
         }
 
         [HttpDelete("{id}")]

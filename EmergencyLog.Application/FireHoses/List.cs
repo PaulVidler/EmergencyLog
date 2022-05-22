@@ -26,7 +26,8 @@ namespace EmergencyLog.Application.FireHoses
             var configuration = new MapperConfiguration(cfg =>
                 cfg.CreateProjection<FireHose, FireHoseResultDto>());
 
-            var query = _context.FireHoses.Where(d => d.IsDeleted == false).OrderBy(d => d.Id).ProjectTo<FireHoseResultDto>(configuration).AsQueryable();
+            var query = _context.FireHoses.Where(d => d.IsDeleted == false).OrderBy(d => d.Id)
+                .ProjectTo<FireHoseResultDto>(configuration).AsQueryable();
 
             return Result<PagedList<FireHoseResultDto>>.Success(
                 await PagedList<FireHoseResultDto>.CreateAsync(query, request.Params.PageNumber,

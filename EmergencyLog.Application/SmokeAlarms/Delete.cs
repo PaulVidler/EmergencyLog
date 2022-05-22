@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
@@ -21,7 +22,8 @@ namespace EmergencyLog.Application.SmokeAlarms
             var smokeAlarm = await _context.SmokeAlarms.FindAsync(request.Id);
             if (smokeAlarm == null) return null;
 
-            _context.Remove(smokeAlarm);
+            smokeAlarm.IsDeleted = true;
+            smokeAlarm.DateDeleted = DateTime.Now;
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result) return Result<Unit>.Failure("Failed to delete SmokeAlarm");

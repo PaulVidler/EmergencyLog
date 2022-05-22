@@ -34,7 +34,7 @@ namespace EmergencyLog.Application.Attendance
             var attendance = await _context.Attendances.FindAsync(request.Type.Id);
 
             if (attendance == null) return null;
-            
+
             _mapper.Map(request.Type, attendance);
 
             var result = await _context.SaveChangesAsync() > 0;

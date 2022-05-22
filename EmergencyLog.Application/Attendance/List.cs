@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EmergencyLog.Application.DTOs.AttendanceDtos;
 
 namespace EmergencyLog.Application.Attendance
@@ -12,25 +13,24 @@ namespace EmergencyLog.Application.Attendance
     public class ListHandler : IRequestHandler<ListQuery<AttendanceResultDto>, Result<PagedList<AttendanceResultDto>>>
     {
         private DataContext _context;
-        private IMapper _mapper;
 
-        public ListHandler(DataContext context, IMapper mapper)
+        public ListHandler(DataContext context)
         {
-            _mapper = mapper;
             _context = context;
         }
 
         public async Task<Result<PagedList<AttendanceResultDto>>> Handle(ListQuery<AttendanceResultDto> request, CancellationToken cancellationToken)
         {
-            var query = _context.Attendances.OrderBy(d => d.TimeOut).AsQueryable();
-            
-            return Result<PagedList<AttendanceResultDto>>.Success(
-                await PagedList<AttendanceResultDto>.CreateAsync(_mapper.Map<IQueryable<AttendanceResultDto>>(query), request.Params.PageNumber,
-                    request.Params.PageSize));
+            // config to be passed into ProjectTo method below.
+            var configuration = new MapperConfiguration(cfg =>
+                cfg.CreateProjection<Domain.Entities.Attendance, AttendanceResultDto>());
 
-            //return Result<PagedList<AttendanceResultDto>>.Success(
-            //    await PagedList<AttendanceResultDto>.CreateAsync(query, request.Params.PageNumber,
-            //        request.Params.PageSize));
+            var query = _context.Attendances.Where(d => d.IsDeleted == false).OrderBy(d => d.TimeOut)
+                .ProjectTo<AttendanceResultDto>(configuration).AsQueryable();
+
+            return Result<PagedList<AttendanceResultDto>>.Success(
+                await PagedList<AttendanceResultDto>.CreateAsync(query, request.Params.PageNumber,
+                    request.Params.PageSize));
         }
     }
 }

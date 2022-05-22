@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
@@ -20,7 +21,8 @@ namespace EmergencyLog.Application.Property
             var property = await _context.Properties.FindAsync(request.Id);
             if (property == null) return null;
 
-            _context.Remove(property);
+            property.IsDeleted = true;
+            property.DateDeleted = DateTime.Now;
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result) return Result<Unit>.Failure("Failed to delete Property");

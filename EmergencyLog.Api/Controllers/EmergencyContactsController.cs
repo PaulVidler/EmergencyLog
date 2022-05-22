@@ -27,27 +27,29 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetEmergencyContacts([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<EmergencyContact> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<EmergencyContactResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetEmergencyContact(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<EmergencyContact> { Id = id }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<EmergencyContactResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostEmergencyContact(EmergencyContactResultDto emergencyContact)
+        public async Task<IActionResult> PostEmergencyContact(EmergencyContactAddDto emergencyContact)
         {
-            var emergencyContactEntity = _mapper.Map<EmergencyContactResultDto, EmergencyContact>(emergencyContact);
+            var emergencyContactEntity = _mapper.Map<EmergencyContact>(emergencyContact);
             return HandleResult(await Mediator.Send(new CreateCommand<EmergencyContact> { Type = emergencyContactEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditEmergencyContact(int id, EmergencyContact emergencyContact)
+        public async Task<IActionResult> EditEmergencyContact(int id, EmergencyContactEditDto emergencyContact)
         {
-            emergencyContact.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<EmergencyContact> { Type = emergencyContact }));
+            var mappedEmergencyContact = _mapper.Map<EmergencyContact>(emergencyContact);
+            mappedEmergencyContact.Id = id;
+            
+            return HandleResult(await Mediator.Send(new EditCommand<EmergencyContact> { Type = mappedEmergencyContact }));
         }
 
         [HttpDelete("{id}")]

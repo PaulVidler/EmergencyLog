@@ -9,7 +9,7 @@ using FluentValidation;
 
 namespace EmergencyLog.Application.Validators
 {
-    internal class AttendanceValidator : AbstractValidator<AttendanceAddDto>
+    internal class AttendanceValidator : AbstractValidator<Domain.Entities.Attendance>
     {
         public AttendanceValidator()
         {

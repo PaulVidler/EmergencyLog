@@ -25,27 +25,29 @@ namespace EmergencyLog.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProperties([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<Property> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<PropertyResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetProperty(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<Property> { Id = id }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<PropertyResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostProperty(PropertyResultDto property)
+        public async Task<IActionResult> PostProperty(PropertyAddDto property)
         {
-            var propertyEntity = _mapper.Map<PropertyResultDto, Property>(property);
+            var propertyEntity = _mapper.Map<Property>(property);
             return HandleResult(await Mediator.Send(new CreateCommand<Property> { Type = propertyEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditProperty(int id, Property property)
+        public async Task<IActionResult> EditProperty(int id, PropertyEditDto property)
         {
-            property.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<Property> { Type = property }));
+            var mappedProperty = _mapper.Map<Property>(property);
+            mappedProperty.Id = id;
+            
+            return HandleResult(await Mediator.Send(new EditCommand<Property> { Type = mappedProperty }));
         }
 
         [HttpDelete("{id}")]

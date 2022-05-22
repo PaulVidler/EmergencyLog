@@ -4,7 +4,6 @@ namespace EmergencyLog.Application.DTOs.ClientDtos
 {
     public class ClientEditDto
     {
-        public int Id { get; set; }
         public int EmergencyContactId { get; set; }
         public string Title { get; set; }
         public string FirstName { get; set; }
