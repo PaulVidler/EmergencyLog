@@ -35,7 +35,12 @@ namespace EmergencyLog.Application.Attendance
 
             if (attendance == null) return null;
 
-            _mapper.Map(request.Type, attendance);
+            // _mapper.Map(request.Type, attendance);
+
+            // when it gets to here, it loses a lot of properties from the original entry,
+            // need to work out how to only change the properties that are required, not null out everything else
+
+            _mapper.Map(attendance, request.Type);
 
             var result = await _context.SaveChangesAsync() > 0;
 
