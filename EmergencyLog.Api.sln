@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyLog.Persistence", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyLog.Application", "EmergencyLog.Application\EmergencyLog.Application.csproj", "{2A6C086E-7AEF-4C80-9DE7-712692206952}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{00057A98-4199-469F-9E9A-72492DE4D405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{00057A98-4199-469F-9E9A-72492DE4D405}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmergencyLog.Api.Tests", "EmergencyLog.Api.Tests\EmergencyLog.Api.Tests.csproj", "{3AEF7EF5-3601-4801-9562-36F0BE85E5D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{00057A98-4199-469F-9E9A-72492DE4D405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00057A98-4199-469F-9E9A-72492DE4D405}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00057A98-4199-469F-9E9A-72492DE4D405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AEF7EF5-3601-4801-9562-36F0BE85E5D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AEF7EF5-3601-4801-9562-36F0BE85E5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AEF7EF5-3601-4801-9562-36F0BE85E5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AEF7EF5-3601-4801-9562-36F0BE85E5D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
