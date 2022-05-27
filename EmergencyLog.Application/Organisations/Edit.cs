@@ -7,6 +7,7 @@ using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.DTOs.OrganisationDtos;
 
 namespace EmergencyLog.Application.Organisations
 {
@@ -18,7 +19,7 @@ namespace EmergencyLog.Application.Organisations
         }
     }
 
-    public class EditHandler : IRequestHandler<EditCommand<Organisation>, Result<Unit>>
+    public class EditHandler : IRequestHandler<EditCommand<OrganisationEditDto>, Result<Unit>>
     {
         private DataContext _context;
         private IMapper _mapper;
@@ -29,10 +30,10 @@ namespace EmergencyLog.Application.Organisations
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(EditCommand<Organisation> request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(EditCommand<OrganisationEditDto> request, CancellationToken cancellationToken)
         {
 
-            var organisation = await _context.Organisations.FindAsync(request.Type.GlobalId);
+            var organisation = await _context.Organisations.FindAsync(request.Type.Id);
 
             if (organisation == null) return null;
 

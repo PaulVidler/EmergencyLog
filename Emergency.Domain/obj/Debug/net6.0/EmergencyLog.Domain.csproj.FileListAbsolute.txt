@@ -1,4 +1,5 @@
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.deps.json
+C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.runtimeconfig.json
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\ref\EmergencyLog.Domain.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.pdb
@@ -9,7 +10,6 @@ C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\D
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\ref\EmergencyLog.Domain.dll
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.pdb
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.runtimeconfig.json
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.genruntimeconfig.cache
 C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.csproj.AssemblyReference.cache
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.deps.json

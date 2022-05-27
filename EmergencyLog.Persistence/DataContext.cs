@@ -22,15 +22,15 @@ namespace EmergencyLog.Persistence
         {
             base.OnModelCreating(modelBuilder); // this is required to stop an error with IdentityContext needing this when overriding OnModelCreating
 
-            modelBuilder.Entity<EmergencyContact>()
-                .HasOne(c => c.Client)
-                .WithOne(b => b.EmergencyContact)
-                .HasForeignKey<Client>(b => b.EmergencyContactId);
+            //modelBuilder.Entity<EmergencyContact>()
+            //    .HasOne(c => c.Client)
+            //    .WithOne(b => b.EmergencyContact)
+            //    .HasForeignKey<Client>(b => b.EmergencyContactId);
 
             modelBuilder.Entity<Client>()
                 .HasMany(p => p.Attendances)
                 .WithOne(o => o.Client);
-
+            
             modelBuilder.Entity<Organisation>()
                 .HasMany(p => p.Properties)
                 .WithOne(o => o.Organisation);

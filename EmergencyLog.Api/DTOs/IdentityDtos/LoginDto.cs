@@ -1,6 +1,4 @@
-﻿using EmergencyLog.Domain.Entities;
-
-namespace EmergencyLog.Api.DTOs
+﻿namespace EmergencyLog.Api.DTOs.IdentityDtos
 {
     public class LoginDto
     {

@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
@@ -21,7 +22,8 @@ namespace EmergencyLog.Application.FireExtinguishers
             var fireExtinguisher = await _context.FireExtinguishers.FindAsync(request.Id);
             if (fireExtinguisher == null) return null;
 
-            _context.Remove(fireExtinguisher);
+            fireExtinguisher.IsDeleted = true;
+            fireExtinguisher.DateDeleted = DateTime.Now;
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result) return Result<Unit>.Failure("Failed to delete FireExtinguisher");

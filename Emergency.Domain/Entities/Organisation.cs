@@ -20,7 +20,6 @@ namespace EmergencyLog.Domain.Entities
         public string Suburb { get; set; }
         public string Postcode { get; set; }
         public string Country { get; set; }
-
         public virtual ICollection<Client> Clients { get; set; }
         public virtual ICollection<Property> Properties { get; set; }
     }

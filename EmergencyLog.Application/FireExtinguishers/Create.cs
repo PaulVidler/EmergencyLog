@@ -16,8 +16,7 @@ namespace EmergencyLog.Application.FireExtinguishers
             RuleFor(x => x.Type).SetValidator(new FireExtinguisherValidator());
         }
     }
-
-
+    
     public class CreateHandler : IRequestHandler<CreateCommand<FireExtinguisher>, Result<Unit>>
     {
         private DataContext _context;

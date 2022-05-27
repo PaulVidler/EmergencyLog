@@ -7,6 +7,7 @@ using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.DTOs.FireHoseDtos;
 
 namespace EmergencyLog.Application.FireHoses
 {
@@ -18,7 +19,7 @@ namespace EmergencyLog.Application.FireHoses
         }
     }
 
-    public class EditHandler : IRequestHandler<EditCommand<FireHose>, Result<Unit>>
+    public class EditHandler : IRequestHandler<EditCommand<FireHoseEditDto>, Result<Unit>>
     {
         private DataContext _context;
         private IMapper _mapper;
@@ -29,7 +30,7 @@ namespace EmergencyLog.Application.FireHoses
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(EditCommand<FireHose> request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(EditCommand<FireHoseEditDto> request, CancellationToken cancellationToken)
         {
 
             var fireHose = await _context.FireHoses.FindAsync(request.Type.Id);

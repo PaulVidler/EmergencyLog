@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmergencyLog.Persistence.Migrations
 {
-    public partial class newPaulArun : Migration
+    public partial class entityChanges : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,34 +52,6 @@ namespace EmergencyLog.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmergencyContacts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
-                    Surname = table.Column<string>(type: "TEXT", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
-                    Phone = table.Column<string>(type: "TEXT", nullable: true),
-                    Mobile = table.Column<string>(type: "TEXT", nullable: true),
-                    StreetNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    Street = table.Column<string>(type: "TEXT", nullable: true),
-                    Suburb = table.Column<string>(type: "TEXT", nullable: true),
-                    Postcode = table.Column<string>(type: "TEXT", nullable: true),
-                    Country = table.Column<string>(type: "TEXT", nullable: true),
-                    RelationshipType = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmergencyContacts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Organisations",
                 columns: table => new
                 {
@@ -95,8 +67,7 @@ namespace EmergencyLog.Persistence.Migrations
                     Postcode = table.Column<string>(type: "TEXT", nullable: false),
                     Country = table.Column<string>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -119,8 +90,7 @@ namespace EmergencyLog.Persistence.Migrations
                     Postcode = table.Column<string>(type: "TEXT", nullable: true),
                     Country = table.Column<string>(type: "TEXT", nullable: true),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -254,21 +224,13 @@ namespace EmergencyLog.Persistence.Migrations
                     Suburb = table.Column<string>(type: "TEXT", nullable: true),
                     Postcode = table.Column<string>(type: "TEXT", nullable: true),
                     Country = table.Column<string>(type: "TEXT", nullable: true),
-                    EmergencyContactId = table.Column<int>(type: "INTEGER", nullable: false),
                     OrganisationId = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clients", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Clients_EmergencyContacts_EmergencyContactId",
-                        column: x => x.EmergencyContactId,
-                        principalTable: "EmergencyContacts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Clients_Organisations_OrganisationId",
                         column: x => x.OrganisationId,
@@ -288,10 +250,9 @@ namespace EmergencyLog.Persistence.Migrations
                     Suburb = table.Column<string>(type: "TEXT", nullable: true),
                     Postcode = table.Column<string>(type: "TEXT", nullable: true),
                     Country = table.Column<string>(type: "TEXT", nullable: true),
-                    OrganisationId = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrganisationId = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -300,7 +261,8 @@ namespace EmergencyLog.Persistence.Migrations
                         name: "FK_Properties_Organisations_OrganisationId",
                         column: x => x.OrganisationId,
                         principalTable: "Organisations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,14 +277,47 @@ namespace EmergencyLog.Persistence.Migrations
                     EntryComplete = table.Column<bool>(type: "INTEGER", nullable: false),
                     ClientId = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Attendances", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Attendances_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmergencyContacts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: true),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
+                    Surname = table.Column<string>(type: "TEXT", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    Phone = table.Column<string>(type: "TEXT", nullable: true),
+                    Mobile = table.Column<string>(type: "TEXT", nullable: true),
+                    StreetNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    Street = table.Column<string>(type: "TEXT", nullable: true),
+                    Suburb = table.Column<string>(type: "TEXT", nullable: true),
+                    Postcode = table.Column<string>(type: "TEXT", nullable: true),
+                    Country = table.Column<string>(type: "TEXT", nullable: true),
+                    RelationshipType = table.Column<int>(type: "INTEGER", nullable: false),
+                    ClientId = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmergencyContacts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmergencyContacts_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "Id",
@@ -337,13 +332,12 @@ namespace EmergencyLog.Persistence.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     EquipmentType = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    LastServiced = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastServiced = table.Column<DateTime>(type: "TEXT", nullable: true),
                     NextService = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ServiceOrganisationId = table.Column<int>(type: "INTEGER", nullable: true),
-                    PropertyId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ServiceOrganisationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PropertyId = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -352,12 +346,14 @@ namespace EmergencyLog.Persistence.Migrations
                         name: "FK_FireExtinguishers_Properties_PropertyId",
                         column: x => x.PropertyId,
                         principalTable: "Properties",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FireExtinguishers_ServiceOrganisations_ServiceOrganisationId",
                         column: x => x.ServiceOrganisationId,
                         principalTable: "ServiceOrganisations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -368,13 +364,12 @@ namespace EmergencyLog.Persistence.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     EquipmentType = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    LastServiced = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastServiced = table.Column<DateTime>(type: "TEXT", nullable: true),
                     NextService = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ServiceOrganisationId = table.Column<int>(type: "INTEGER", nullable: true),
-                    PropertyId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ServiceOrganisationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PropertyId = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -383,12 +378,14 @@ namespace EmergencyLog.Persistence.Migrations
                         name: "FK_FireHoses_Properties_PropertyId",
                         column: x => x.PropertyId,
                         principalTable: "Properties",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FireHoses_ServiceOrganisations_ServiceOrganisationId",
                         column: x => x.ServiceOrganisationId,
                         principalTable: "ServiceOrganisations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -399,13 +396,12 @@ namespace EmergencyLog.Persistence.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     EquipmentType = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    LastServiced = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastServiced = table.Column<DateTime>(type: "TEXT", nullable: true),
                     NextService = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ServiceOrganisationId = table.Column<int>(type: "INTEGER", nullable: true),
-                    PropertyId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ServiceOrganisationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PropertyId = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    GlobalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -414,12 +410,14 @@ namespace EmergencyLog.Persistence.Migrations
                         name: "FK_SmokeAlarms_Properties_PropertyId",
                         column: x => x.PropertyId,
                         principalTable: "Properties",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SmokeAlarms_ServiceOrganisations_ServiceOrganisationId",
                         column: x => x.ServiceOrganisationId,
                         principalTable: "ServiceOrganisations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -465,15 +463,15 @@ namespace EmergencyLog.Persistence.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clients_EmergencyContactId",
-                table: "Clients",
-                column: "EmergencyContactId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Clients_OrganisationId",
                 table: "Clients",
                 column: "OrganisationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmergencyContacts_ClientId",
+                table: "EmergencyContacts",
+                column: "ClientId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_FireExtinguishers_PropertyId",
@@ -532,6 +530,9 @@ namespace EmergencyLog.Persistence.Migrations
                 name: "Attendances");
 
             migrationBuilder.DropTable(
+                name: "EmergencyContacts");
+
+            migrationBuilder.DropTable(
                 name: "FireExtinguishers");
 
             migrationBuilder.DropTable(
@@ -554,9 +555,6 @@ namespace EmergencyLog.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "ServiceOrganisations");
-
-            migrationBuilder.DropTable(
-                name: "EmergencyContacts");
 
             migrationBuilder.DropTable(
                 name: "Organisations");

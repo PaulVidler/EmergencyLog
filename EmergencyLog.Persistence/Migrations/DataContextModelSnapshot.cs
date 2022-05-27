@@ -32,9 +32,6 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Property<bool>("EntryComplete")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("GlobalId")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
@@ -73,15 +70,8 @@ namespace EmergencyLog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("EmergencyContactId")
-                        .IsRequired()
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("GlobalId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageLarge")
@@ -128,9 +118,6 @@ namespace EmergencyLog.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmergencyContactId")
-                        .IsUnique();
-
                     b.HasIndex("OrganisationId");
 
                     b.ToTable("Clients");
@@ -140,6 +127,9 @@ namespace EmergencyLog.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Country")
@@ -155,9 +145,6 @@ namespace EmergencyLog.Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("GlobalId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
@@ -192,6 +179,9 @@ namespace EmergencyLog.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClientId")
+                        .IsUnique();
+
                     b.ToTable("EmergencyContacts");
                 });
 
@@ -210,22 +200,19 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Property<string>("EquipmentType")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("GlobalId")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("LastServiced")
+                    b.Property<DateTime?>("LastServiced")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("NextService")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PropertyId")
+                    b.Property<int>("PropertyId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ServiceOrganisationId")
+                    b.Property<int>("ServiceOrganisationId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -252,22 +239,19 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Property<string>("EquipmentType")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("GlobalId")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("LastServiced")
+                    b.Property<DateTime?>("LastServiced")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("NextService")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PropertyId")
+                    b.Property<int>("PropertyId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ServiceOrganisationId")
+                    b.Property<int>("ServiceOrganisationId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -289,9 +273,6 @@ namespace EmergencyLog.Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DateDeleted")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("GlobalId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
@@ -341,22 +322,19 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Property<string>("EquipmentType")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("GlobalId")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("LastServiced")
+                    b.Property<DateTime?>("LastServiced")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("NextService")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PropertyId")
+                    b.Property<int>("PropertyId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ServiceOrganisationId")
+                    b.Property<int>("ServiceOrganisationId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -375,9 +353,6 @@ namespace EmergencyLog.Persistence.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
-
-                    b.Property<Guid?>("ClientId")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -407,8 +382,8 @@ namespace EmergencyLog.Persistence.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("OrganisationId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("OrganisationId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("TEXT");
@@ -452,9 +427,6 @@ namespace EmergencyLog.Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DateDeleted")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("GlobalId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
@@ -508,13 +480,10 @@ namespace EmergencyLog.Persistence.Migrations
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("GlobalId")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("OrganisationId")
+                    b.Property<int>("OrganisationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Postcode")
@@ -677,32 +646,39 @@ namespace EmergencyLog.Persistence.Migrations
 
             modelBuilder.Entity("EmergencyLog.Domain.Entities.Client", b =>
                 {
-                    b.HasOne("EmergencyLog.Domain.Entities.EmergencyContact", "EmergencyContact")
-                        .WithOne("Client")
-                        .HasForeignKey("EmergencyLog.Domain.Entities.Client", "EmergencyContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EmergencyLog.Domain.Entities.Organisation", "Organisation")
                         .WithMany("Clients")
                         .HasForeignKey("OrganisationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EmergencyContact");
-
                     b.Navigation("Organisation");
+                });
+
+            modelBuilder.Entity("EmergencyLog.Domain.Entities.EmergencyContact", b =>
+                {
+                    b.HasOne("EmergencyLog.Domain.Entities.Client", "Client")
+                        .WithOne("EmergencyContact")
+                        .HasForeignKey("EmergencyLog.Domain.Entities.EmergencyContact", "ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities.FireExtinguisher", b =>
                 {
                     b.HasOne("EmergencyLog.Domain.Entities.Property", "Property")
                         .WithMany("FireExtinguishers")
-                        .HasForeignKey("PropertyId");
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities.ServiceOrganisation", "ServiceOrganisation")
                         .WithMany("FireExtinguishers")
-                        .HasForeignKey("ServiceOrganisationId");
+                        .HasForeignKey("ServiceOrganisationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Property");
 
@@ -713,11 +689,15 @@ namespace EmergencyLog.Persistence.Migrations
                 {
                     b.HasOne("EmergencyLog.Domain.Entities.Property", "Property")
                         .WithMany("FireHoses")
-                        .HasForeignKey("PropertyId");
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities.ServiceOrganisation", "ServiceOrganisation")
                         .WithMany("FireHoses")
-                        .HasForeignKey("ServiceOrganisationId");
+                        .HasForeignKey("ServiceOrganisationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Property");
 
@@ -728,11 +708,15 @@ namespace EmergencyLog.Persistence.Migrations
                 {
                     b.HasOne("EmergencyLog.Domain.Entities.Property", "Property")
                         .WithMany("SmokeAlarms")
-                        .HasForeignKey("PropertyId");
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities.ServiceOrganisation", "ServiceOrganisation")
                         .WithMany("SmokeAlarms")
-                        .HasForeignKey("ServiceOrganisationId");
+                        .HasForeignKey("ServiceOrganisationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Property");
 
@@ -743,7 +727,9 @@ namespace EmergencyLog.Persistence.Migrations
                 {
                     b.HasOne("EmergencyLog.Domain.Entities.Organisation", "Organisation")
                         .WithMany("Properties")
-                        .HasForeignKey("OrganisationId");
+                        .HasForeignKey("OrganisationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Organisation");
                 });
@@ -802,11 +788,9 @@ namespace EmergencyLog.Persistence.Migrations
             modelBuilder.Entity("EmergencyLog.Domain.Entities.Client", b =>
                 {
                     b.Navigation("Attendances");
-                });
 
-            modelBuilder.Entity("EmergencyLog.Domain.Entities.EmergencyContact", b =>
-                {
-                    b.Navigation("Client");
+                    b.Navigation("EmergencyContact")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities.ServiceOrganisation", b =>

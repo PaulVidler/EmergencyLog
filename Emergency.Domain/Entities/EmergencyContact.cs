@@ -31,7 +31,7 @@ namespace EmergencyLog.Domain.Entities
         public string Postcode { get; set; }
         public string Country { get; set; }
         public RelationshipType RelationshipType { get; set; }
-
         public Client Client { get; set; }
+        public int ClientId { get; set; }
     }
 }

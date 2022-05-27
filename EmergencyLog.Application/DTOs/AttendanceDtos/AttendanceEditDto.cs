@@ -1,15 +1,13 @@
 ﻿using System;
-using EmergencyLog.Domain.Entities;
 
-namespace EmergencyLog.Application.Attendance
+namespace EmergencyLog.Application.DTOs.AttendanceDtos
 {
-    public class AttendanceDto
+    public class AttendanceEditDto
     {
-        public Guid GlobalId { get; set; }
+        public int Id { get; set; }
         public DateTime TimeIn { get; set; }
         public DateTime? TimeOut { get; set; }
         public bool OnSite { get; set; }
         public bool EntryComplete { get; set; }
-        public int ClientId { get; set; }
     }
 }

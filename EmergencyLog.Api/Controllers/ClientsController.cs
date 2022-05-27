@@ -5,6 +5,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using EmergencyLog.Application.Clients;
+using EmergencyLog.Application.DTOs.ClientDtos;
 
 namespace EmergencyLog.Api.Controllers
 {
@@ -12,37 +15,41 @@ namespace EmergencyLog.Api.Controllers
     [ApiController]
     public class ClientsController : BaseApiController
     {
-        public ClientsController(IMediator mediator) : base(mediator)
+        private IMapper _mapper;
+
+        public ClientsController(IMediator mediator, IMapper mapper) : base(mediator)
         {
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetClients([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<Client> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<ClientResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
-        public async Task<IActionResult> GetClient(Guid guid)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetClient(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<Client> { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<ClientResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostClient(Client client)
+        public async Task<IActionResult> PostClient(ClientAddDto client)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<Client> { Type = client}));
+            Client clientEntity = new Client();
+            clientEntity = _mapper.Map(client, clientEntity);
+            return HandleResult(await Mediator.Send(new CreateCommand<Client> { Type = clientEntity}));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditClient(Guid id, Client client)
+        public async Task<IActionResult> EditClient(int id, ClientEditDto client)
         {
-            client.GlobalId = id;
-            return HandleResult(await Mediator.Send(new EditCommand<Client> { Type = client }));
+            return HandleResult(await Mediator.Send(new EditCommand<ClientEditDto> { Type = client }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClient(Guid id)
+        public async Task<IActionResult> DeleteClient(int id)
         {
             return HandleResult(await Mediator.Send(new DeleteCommand<Client> { Id = id }));
         }

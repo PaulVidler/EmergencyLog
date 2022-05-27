@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
@@ -21,7 +22,8 @@ namespace EmergencyLog.Application.Organisations
             var organisation = await _context.Organisations.FindAsync(request.Id);
             if (organisation == null) return null;
 
-            _context.Remove(organisation);
+            organisation.IsDeleted = true;
+            organisation.DateDeleted = DateTime.Now;
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result) return Result<Unit>.Failure("Failed to delete Organisation");

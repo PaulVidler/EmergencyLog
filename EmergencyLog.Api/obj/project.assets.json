@@ -1072,6 +1072,19 @@
           "bin/placeholder/EmergencyLog.Domain.dll": {}
         }
       },
+      "EmergencyLog.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "EmergencyLog.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/EmergencyLog.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EmergencyLog.Infrastructure.dll": {}
+        }
+      },
       "EmergencyLog.Persistence/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -2911,6 +2924,11 @@
       "path": "../Emergency.Domain/EmergencyLog.Domain.csproj",
       "msbuildProject": "../Emergency.Domain/EmergencyLog.Domain.csproj"
     },
+    "EmergencyLog.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../Infrastructure/EmergencyLog.Infrastructure.csproj",
+      "msbuildProject": "../Infrastructure/EmergencyLog.Infrastructure.csproj"
+    },
     "EmergencyLog.Persistence/1.0.0": {
       "type": "project",
       "path": "../EmergencyLog.Persistence/EmergencyLog.Persistence.csproj",
@@ -2921,6 +2939,7 @@
     "net6.0": [
       "EmergencyLog.Application >= 1.0.0",
       "EmergencyLog.Domain >= 1.0.0",
+      "EmergencyLog.Infrastructure >= 1.0.0",
       "EmergencyLog.Persistence >= 1.0.0",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 10.0.1",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.13",
@@ -2971,6 +2990,9 @@
             },
             "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj": {
               "projectPath": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj"
+            },
+            "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\EmergencyLog.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\EmergencyLog.Infrastructure.csproj"
             }
           }
         }
