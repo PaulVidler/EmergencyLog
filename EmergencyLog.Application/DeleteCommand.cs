@@ -6,6 +6,6 @@ namespace EmergencyLog.Application
 {
     public class DeleteCommand<T> : IRequest<Result<Unit>>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }

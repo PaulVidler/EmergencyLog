@@ -22,11 +22,9 @@ namespace EmergencyLog.Application.SmokeAlarms
     public class CreateHandler : IRequestHandler<CreateCommand<SmokeAlarm>, Result<Unit>>
     {
         private DataContext _context;
-        private IMapper _mapper;
 
-        public CreateHandler(DataContext context, IMapper mapper)
+        public CreateHandler(DataContext context)
         {
-            _mapper = mapper;
             _context = context;
         }
 

@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.DTOs.AttendanceDtos;
 
 namespace EmergencyLog.Application.Attendance
 {
@@ -18,8 +19,7 @@ namespace EmergencyLog.Application.Attendance
             RuleFor(x => x.Type).SetValidator(new AttendanceValidator());
         }
     }
-
-
+    
     public class CreateHandler : IRequestHandler<CreateCommand<Domain.Entities.Attendance>, Result<Unit>>
     {
         private DataContext _context;
@@ -35,7 +35,7 @@ namespace EmergencyLog.Application.Attendance
         {
             // this below is example code for getting the current user, using the new interface and GetUser() method
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUser());
-
+            
             _context.Attendances.Add(request.Type);
             var result = await _context.SaveChangesAsync() > 0;
 

@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities
 {
-    public class ServiceOrganisation
+    public class ServiceOrganisation : Entity
     {
-        public Guid ServiceOrganisationId { get; set; }
         public string ServiceOrganisationName { get; set; }
         public string PhoneNumber { get; set; }
         public string WebsiteUrl { get; set; }
         public string? Logo { get; set; } // url for logo upload
-        public virtual Client? PrimaryContact { get; set; }
-        public virtual Address Address { get; set; }
-        public Guid AddressId { get; set; }
+        public string StreetNumber { get; set; }
+        public string Street { get; set; }
+        public string Suburb { get; set; }
+        public string Postcode { get; set; }
+        public string Country { get; set; }
+
+        public ICollection<FireHose> FireHoses { get; set; }
+        public ICollection<FireExtinguisher> FireExtinguishers { get; set; }
+        public ICollection<SmokeAlarm> SmokeAlarms { get; set; }
     }
 }

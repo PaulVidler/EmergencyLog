@@ -1,9 +1,10 @@
-﻿using EmergencyLog.Application;
+﻿using AutoMapper;
+using EmergencyLog.Application;
 using EmergencyLog.Application.Core;
+using EmergencyLog.Application.DTOs.FireHoseDtos;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace EmergencyLog.Api.Controllers
@@ -12,37 +13,40 @@ namespace EmergencyLog.Api.Controllers
     [ApiController]
     public class FireHosesController : BaseApiController
     {
-        public FireHosesController(IMediator mediator) : base(mediator)
+        private IMapper _mapper;
+
+        public FireHosesController(IMediator mediator, IMapper mapper) : base(mediator)
         {
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetFireHoses([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<FireHose> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<FireHoseResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
-        public async Task<IActionResult> GetFireHose(Guid guid)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetFireHose(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<FireHose> { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<FireHoseResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostFireHose(FireHose fireHose)
+        public async Task<IActionResult> PostFireHose(FireHoseAddDto fireHose)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<FireHose> { Type = fireHose }));
+            var fireHoseEntity = _mapper.Map<FireHose>(fireHose);
+            return HandleResult(await Mediator.Send(new CreateCommand<FireHose> { Type = fireHoseEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditFireHose(Guid id, FireHose fireHose)
+        public async Task<IActionResult> EditFireHose(int id, FireHoseEditDto fireHose)
         {
-            fireHose.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<FireHose> { Type = fireHose }));
+            return HandleResult(await Mediator.Send(new EditCommand<FireHoseEditDto> { Type = fireHose }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFireHose(Guid id)
+        public async Task<IActionResult> DeleteFireHose(int id)
         {
             return HandleResult(await Mediator.Send(new DeleteCommand<FireHose> { Id = id }));
         }

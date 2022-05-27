@@ -7,6 +7,7 @@ using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.DTOs.EmergencyContactDtos;
 
 namespace EmergencyLog.Application.EmergencyContacts
 {
@@ -18,7 +19,7 @@ namespace EmergencyLog.Application.EmergencyContacts
         }
     }
 
-    public class EditHandler : IRequestHandler<EditCommand<EmergencyContact>, Result<Unit>>
+    public class EditHandler : IRequestHandler<EditCommand<EmergencyContactEditDto>, Result<Unit>>
     {
         private DataContext _context;
         private IMapper _mapper;
@@ -29,7 +30,7 @@ namespace EmergencyLog.Application.EmergencyContacts
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(EditCommand<EmergencyContact> request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(EditCommand<EmergencyContactEditDto> request, CancellationToken cancellationToken)
         {
 
             var emergencyContact = await _context.EmergencyContacts.FindAsync(request.Type.Id);
