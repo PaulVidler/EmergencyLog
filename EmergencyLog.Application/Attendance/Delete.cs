@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
@@ -20,7 +21,8 @@ namespace EmergencyLog.Application.Attendance
             var attendance = await _context.Attendances.FindAsync(request.Id);
             if (attendance == null) return null;
 
-            _context.Remove(attendance);
+            attendance.IsDeleted = true;
+            attendance.DateDeleted = DateTime.Now;
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result) return Result<Unit>.Failure("Failed to delete Attendance");

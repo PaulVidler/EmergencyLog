@@ -16,8 +16,6 @@ namespace EmergencyLog.Application.Validators
             RuleFor(x => x.PhoneNumber).NotEmpty().MaximumLength(256);
             RuleFor(x => x.WebsiteUrl).NotEmpty().MaximumLength(256);
             RuleFor(x => x.Logo).NotEmpty().MaximumLength(256);
-            RuleFor(x => x.AddressId).NotEmpty();
-
         }
     }
 }

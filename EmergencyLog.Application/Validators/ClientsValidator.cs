@@ -16,8 +16,6 @@ namespace EmergencyLog.Application.Validators
             RuleFor(x => x.ImageSmall).NotEmpty().MaximumLength(256);
             RuleFor(x => x.Role).NotEmpty().MaximumLength(256);
             RuleFor(x => x.Title).NotEmpty().MaximumLength(256);
-            RuleFor(x => x.AddressId).NotEmpty();
-            RuleFor(x => x.OrganisationId).NotEmpty();
         }
     }
 }

@@ -5,10 +5,13 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using EmergencyLog.Application.DTOs.SmokeAlarmDtos;
 
 namespace EmergencyLog.Application.SmokeAlarms
 {
-    public class ListHandler : IRequestHandler<ListQuery<SmokeAlarm>, Result<PagedList<SmokeAlarm>>>
+    public class ListHandler : IRequestHandler<ListQuery<SmokeAlarmResultDto>, Result<PagedList<SmokeAlarmResultDto>>>
     {
         private DataContext _context;
 
@@ -17,12 +20,17 @@ namespace EmergencyLog.Application.SmokeAlarms
             _context = context;
         }
 
-        public async Task<Result<PagedList<SmokeAlarm>>> Handle(ListQuery<SmokeAlarm> request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<SmokeAlarmResultDto>>> Handle(ListQuery<SmokeAlarmResultDto> request, CancellationToken cancellationToken)
         {
-            var query = _context.SmokeAlarms.OrderBy(d => d.LastServiced).AsQueryable();
+            // config to be passed into ProjectTo method below.
+            var configuration = new MapperConfiguration(cfg =>
+                cfg.CreateProjection<SmokeAlarm, SmokeAlarmResultDto>());
 
-            return Result<PagedList<SmokeAlarm>>.Success(
-                await PagedList<SmokeAlarm>.CreateAsync(query, request.Params.PageNumber,
+            var query = _context.SmokeAlarms.Where(d => d.IsDeleted == false).OrderBy(d => d.LastServiced)
+                .ProjectTo<SmokeAlarmResultDto>(configuration).AsQueryable();
+
+            return Result<PagedList<SmokeAlarmResultDto>>.Success(
+                await PagedList<SmokeAlarmResultDto>.CreateAsync(query, request.Params.PageNumber,
                     request.Params.PageSize));
         }
     }

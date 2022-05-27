@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyLog.Persistence", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyLog.Application", "EmergencyLog.Application\EmergencyLog.Application.csproj", "{2A6C086E-7AEF-4C80-9DE7-712692206952}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{00057A98-4199-469F-9E9A-72492DE4D405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyLog.Infrastructure", "Infrastructure\EmergencyLog.Infrastructure.csproj", "{00057A98-4199-469F-9E9A-72492DE4D405}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

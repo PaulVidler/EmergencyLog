@@ -3,18 +3,16 @@ using EmergencyLog.Domain.Entities.Interfaces;
 
 namespace EmergencyLog.Domain.Entities
 {
-    public abstract class Entity : IEntity
+    public abstract class Entity
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string FirstName { get; set; }
-        public string Surname { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string Mobile { get; set; }
+        protected Entity()
+        {
+            IsDeleted = false;
+        }
 
-        // navigation props
-        public abstract Address Address { get; set;  }
+        public bool IsDeleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
+        public int Id { get; set; }
+        
     }
 }

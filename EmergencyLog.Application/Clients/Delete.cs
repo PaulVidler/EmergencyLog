@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
@@ -21,7 +22,8 @@ namespace EmergencyLog.Application.Clients
             var client = await _context.Clients.FindAsync(request.Id);
             if (client == null) return null;
 
-            _context.Remove(client);
+            client.IsDeleted = true;
+            client.DateDeleted = DateTime.Now;
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result) return Result<Unit>.Failure("Failed to delete client");

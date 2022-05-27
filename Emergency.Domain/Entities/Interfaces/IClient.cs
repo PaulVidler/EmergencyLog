@@ -15,7 +15,6 @@ public interface IClient
     string? Phone { get; set; }
     string Mobile { get; set; }
     EmergencyContact? EmergencyContact { get; set; }
-    Address Address { get; set; }
     ICollection<Attendance>? Attendances { get; set; }
     Organisation Organisation { get; set; }
 }

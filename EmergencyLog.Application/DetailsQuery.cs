@@ -6,6 +6,6 @@ namespace EmergencyLog.Application
 {
     public class DetailsQuery<T> : IRequest<Result<T>>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }

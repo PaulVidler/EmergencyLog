@@ -1,9 +1,10 @@
-﻿using EmergencyLog.Application;
+﻿using AutoMapper;
+using EmergencyLog.Application;
 using EmergencyLog.Application.Core;
+using EmergencyLog.Application.DTOs.AttendanceDtos;
 using EmergencyLog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace EmergencyLog.Api.Controllers
@@ -12,37 +13,40 @@ namespace EmergencyLog.Api.Controllers
     [ApiController]
     public class AttendancesController : BaseApiController
     {
-        public AttendancesController(IMediator mediator) : base(mediator)
+        private IMapper _mapper;
+
+        public AttendancesController(IMediator mediator, IMapper mapper) : base(mediator)
         {
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAttendances([FromQuery] PagingParams pagingParams)
         {
-            return HandlePagedResult(await Mediator.Send(new ListQuery<Attendance> { Params = pagingParams }));
+            return HandlePagedResult(await Mediator.Send(new ListQuery<AttendanceResultDto> { Params = pagingParams }));
         }
 
-        [HttpGet("{guid}")]
-        public async Task<IActionResult> GetAttendance(Guid guid)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAttendance(int id)
         {
-            return HandleResult(await Mediator.Send(new DetailsQuery<Attendance> { Id = guid }));
+            return HandleResult(await Mediator.Send(new DetailsQuery<AttendanceResultDto> { Id = id }));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAttendance(Attendance attendance)
+        public async Task<IActionResult> PostAttendance(AttendanceAddDto attendance)
         {
-            return HandleResult(await Mediator.Send(new CreateCommand<Attendance> { Type = attendance }));
+            var attendanceEntity = _mapper.Map<Attendance>(attendance);
+            return HandleResult(await Mediator.Send(new CreateCommand<Attendance> { Type = attendanceEntity }));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditAttendance(Guid id, Attendance attendance)
+        public async Task<IActionResult> EditAttendance(int id, AttendanceEditDto attendance)
         {
-            attendance.Id = id;
-            return HandleResult(await Mediator.Send(new EditCommand<Attendance> { Type = attendance }));
+            return HandleResult(await Mediator.Send(new EditCommand<AttendanceEditDto> { Type = attendance }));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAttendance(Guid id)
+        public async Task<IActionResult> DeleteAttendance(int id)
         {
             return HandleResult(await Mediator.Send(new DeleteCommand<Attendance> { Id = id }));
         }
