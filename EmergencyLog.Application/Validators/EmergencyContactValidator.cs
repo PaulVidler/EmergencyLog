@@ -16,8 +16,6 @@ namespace EmergencyLog.Application.Validators
             // should be able to define enum in here, not sure what's up......
             // RuleFor(x => x.RelationshipType).NotEmpty().IsEnumName(typeof(RelationshipType));
             RuleFor(x => x.RelationshipType).NotEmpty();
-            RuleFor(x => x.ClientId).NotEmpty();
-            RuleFor(x => x.AddressId).NotEmpty();
 
         }
     }

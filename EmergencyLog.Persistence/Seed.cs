@@ -10,7 +10,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using EmergencyLog.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using Address = EmergencyLog.Domain.Entities.Address;
 
 namespace EmergencyLog.Persistence
 {
@@ -29,75 +28,79 @@ namespace EmergencyLog.Persistence
 
             for (var a = 1; a < 11; a++) // yeah yeah, nested loops, fuck off....
             {
-                Address address = CreateAddress();
-                Organisation organisation = CreateOrganisation(address);
+                Organisation organisation = CreateOrganisation();
+
+                await db.Organisations.AddAsync(organisation);
+                await db.SaveChangesAsync();
 
                 for (var i = 1; i < 11; i++)
                 {
-                    var client = CreateClient(organisation, CreateAddress());
-                    
-                    var emergencyContact = CreateEmergencyContact(CreateAddress(), client);
-                    await db.EmergencyContacts.AddAsync(emergencyContact);
-
-                    for (var x = 1; x < 31; x++)
-                    {
-                        var attendance = CreateAttendance(client, x);
-                        await db.Attendances.AddAsync(attendance);
-                    }
+                    var client = CreateClient(organisation.Id);
 
                     await db.Clients.AddAsync(client);
                     await db.SaveChangesAsync();
 
-                    // ------- Create Identity for each user -----------
+                    var emergencyContact = CreateEmergencyContact(client.Id);
 
-                    string displayName = client.FirstName + " " + client.Surname;
-                    string userName = client.FirstName + client.Surname;
+                    await db.EmergencyContacts.AddAsync(emergencyContact);
 
-                    var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.OrganisationId, ClientId = client.Id };
-                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                    for (var x = 1; x < 31; x++)
+                    {
+                        var attendance = CreateAttendance(client.Id, x);
+                        await db.Attendances.AddAsync(attendance);
+                    }
 
-                    // ------------------------------------------------
+                        // ------- Create Identity for each user -----------
 
+                        string displayName = client.FirstName + " " + client.Surname;
+                        string userName = client.FirstName + client.Surname;
+
+                        // var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.Id, ClientId = client.Id };
+                        var user = new AppUser { DisplayName = displayName, UserName = userName, Email = client.Email, OrganisationId = organisation.Id };
+                        await userManager.CreateAsync(user, "Pa$$w0rd");
+
+                        // ------------------------------------------------
                 }
+            }
+            await db.SaveChangesAsync();
 
-                for (var y = 1; y < 5; y++)
+            for (var y = 1; y < 11; y++)
+            {
+                for (int i = 1; i < 5; i++)
                 {
-                    var primaryContactClient = await db.Clients.OrderBy(x => x.Address).FirstOrDefaultAsync();
-                    Console.WriteLine("");
-                    var property = CreateProperty(organisation, CreateAddress(), primaryContactClient);
+                    var property = CreateProperty(y);
                     await db.Properties.AddAsync(property);
 
-                    var primaryServiceOrgClient = await db.Clients.OrderBy(x => x.Title).LastOrDefaultAsync();
                     Console.WriteLine("");
-                    var serviceOrganisation = CreateServiceOrganisation(CreateAddress(), primaryServiceOrgClient);
+                    var serviceOrganisation = CreateServiceOrganisation();
                     await db.ServiceOrganisations.AddAsync(serviceOrganisation);
+                    await db.SaveChangesAsync();
 
                     for (var z = 1; z < 4; z++)
                     {
-                        var fireExtinguisher = CreateFireExtinguisher(serviceOrganisation.ServiceOrganisationId, property.Id, z);
+                        var fireExtinguisher = CreateFireExtinguisher(i, y, z);
                         await db.FireExtinguishers.AddAsync(fireExtinguisher);
 
-                        var fireHose = CreateFirehose(serviceOrganisation.ServiceOrganisationId, property.Id, z);
+                        var fireHose = CreateFirehose(i, y, z);
                         await db.FireHoses.AddAsync(fireHose);
 
-                        var smokeAlarm = CreateSmokeAlarm(serviceOrganisation.ServiceOrganisationId, property.Id, z);
+                        var smokeAlarm = CreateSmokeAlarm(i, y, z);
                         await db.SmokeAlarms.AddAsync(smokeAlarm);
                     }
                 }
+                
+                await db.SaveChangesAsync();
             }
-            
-            await db.SaveChangesAsync();
-        }
 
-        public static Client CreateClient(Organisation organisation, Address address)
+            
+        }
+        
+        public static Client CreateClient(int organisationId)
         {
             Random random = Random.Shared;
             int i = random.Next(1, 100);
 
             var client = new Faker<Client>()
-                .RuleFor(m => m.Id, f => Guid.NewGuid())
-                // .RuleFor(m => m.Address, f => address)
-                .RuleFor(m => m.Address, f => address)
                 .RuleFor(m => m.DateOfBirth,
                     f => f.Date.Between(new DateTime(1950, 01, 01), new DateTime(2015, 1, 1)))
                 .RuleFor(m => m.Email, (f, m) => f.Internet.Email(m.FirstName, m.Surname))
@@ -113,20 +116,24 @@ namespace EmergencyLog.Persistence
                     return $"https://randomuser.me/api/portraits/thumb/{imgGender}/{i}.jpg";
                 })
                 .RuleFor(m => m.Mobile, f => f.Phone.PhoneNumber())
-                .RuleFor(m => m.Organisation, f => organisation)
+                .RuleFor(m => m.OrganisationId, f => organisationId)
                 .RuleFor(m => m.Phone, f => f.Phone.PhoneNumber())
                 .RuleFor(m => m.Role, f => f.Name.JobTitle())
                 .RuleFor(m => m.Surname, f => f.Name.LastName(f.Person.Gender))
-                .RuleFor(m => m.Title, f => f.Name.Prefix(f.Person.Gender));
+                .RuleFor(m => m.Title, f => f.Name.Prefix(f.Person.Gender))
+                .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
+                .RuleFor(m => m.Street, f => f.Address.StreetName())
+                .RuleFor(m => m.Suburb, f => f.Address.County())
+                .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
+                .RuleFor(m => m.Country, f => f.Address.County());
 
             return client.Generate();
         }
 
-        public static Attendance CreateAttendance(Client client, int x)
+        public static Attendance CreateAttendance(int clientId, int x)
         {
             var clientAttendance = new Faker<Attendance>()
-                .RuleFor(m => m.Id, f => Guid.NewGuid())
-                .RuleFor(m => m.Client, f => client)
+                .RuleFor(m => m.ClientId, f => clientId)
                 .RuleFor(m => m.EntryComplete, f => true)
                 .RuleFor(m => m.TimeIn,
                     f => f.Date.Between(new DateTime(2022, 01, x, 5, 0, 0),
@@ -139,14 +146,10 @@ namespace EmergencyLog.Persistence
             return clientAttendance.Generate();
         }
 
-        public static EmergencyContact CreateEmergencyContact(Address address, Client client)
+        public static EmergencyContact CreateEmergencyContact(int clientId)
         {
             var clientEmergencyContact = new Faker<EmergencyContact>()
-                .RuleFor(m => m.Id, f => Guid.NewGuid())
-                //.RuleFor(m => m.AddressId, f =>  address.Id)
-                //.RuleFor(m => m.ClientId, f => client.Id)
-                .RuleFor(m => m.Address, f => address)
-                .RuleFor(m => m.Client, f => client)
+                .RuleFor(m => m.ClientId, f => clientId)
                 .RuleFor(m => m.Title, f => f.Name.Prefix(f.Person.Gender))
                 .RuleFor(m => m.RelationshipType, f => f.Random.Enum<RelationshipType>())
                 .RuleFor(m => m.FirstName, f => f.Name.FirstName(f.Person.Gender))
@@ -155,52 +158,43 @@ namespace EmergencyLog.Persistence
                     f => f.Date.Between(new DateTime(1950, 01, 01), new DateTime(2015, 1, 1)))
                 .RuleFor(m => m.Email, (f, m) => f.Internet.Email(m.FirstName, m.Surname))
                 .RuleFor(m => m.Phone, f => f.Phone.PhoneNumber())
-                .RuleFor(m => m.Mobile, f => f.Phone.PhoneNumber());
-
-            return clientEmergencyContact.Generate();
-        }
-        
-        public static Address CreateAddress()
-        {
-            var addressId = Guid.NewGuid();
-
-            var address = new Faker<Domain.Entities.Address>()
-                .RuleFor(m => m.Id, f => addressId)
+                .RuleFor(m => m.Mobile, f => f.Phone.PhoneNumber())
                 .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
                 .RuleFor(m => m.Street, f => f.Address.StreetName())
                 .RuleFor(m => m.Suburb, f => f.Address.County())
                 .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
                 .RuleFor(m => m.Country, f => f.Address.County());
 
-            return address.Generate();
-
+            return clientEmergencyContact.Generate();
         }
-        
-        public static Organisation CreateOrganisation(Address address)
+
+        public static Organisation CreateOrganisation()
         {
-            var organisationId = Guid.NewGuid();
 
             var organisation = new Faker<Organisation>()
-                .RuleFor(m => m.OrganisationId, f => organisationId)
-                .RuleFor(m => m.Address, f => address)
-                //.RuleFor(m => m.AddressId, f => address.Id)
                 .RuleFor(m => m.Logo, f => f.Image.LoremFlickrUrl())
                 .RuleFor(m => m.OrganisationName, f => f.Company.CompanyName())
                 .RuleFor(m => m.PhoneNumber, f => f.Phone.PhoneNumber())
-                .RuleFor(m => m.WebsiteUrl, f => f.Internet.DomainName());
+                .RuleFor(m => m.WebsiteUrl, f => f.Internet.DomainName())
+                .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
+                .RuleFor(m => m.Street, f => f.Address.StreetName())
+                .RuleFor(m => m.Suburb, f => f.Address.County())
+                .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
+                .RuleFor(m => m.Country, f => f.Address.County());
 
             return organisation.Generate();
         }
 
-        public static ServiceOrganisation CreateServiceOrganisation(Address address, Client client)
+        public static ServiceOrganisation CreateServiceOrganisation()
         {
-            Guid serviceOrganisationGuid = Guid.NewGuid();
 
             var serviceOrganisation = new Faker<ServiceOrganisation>()
-                .RuleFor(m => m.ServiceOrganisationId, f => serviceOrganisationGuid)
-                .RuleFor(m => m.Address, f => address)
+                .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
+                .RuleFor(m => m.Street, f => f.Address.StreetName())
+                .RuleFor(m => m.Suburb, f => f.Address.County())
+                .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
+                .RuleFor(m => m.Country, f => f.Address.County())
                 .RuleFor(m => m.Logo, f => f.Image.LoremFlickrUrl())
-                .RuleFor(m => m.PrimaryContact, f => client)
                 .RuleFor(m => m.ServiceOrganisationName, f => f.Company.CompanyName())
                 .RuleFor(m => m.PhoneNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(m => m.WebsiteUrl, f => f.Internet.DomainName());
@@ -208,25 +202,22 @@ namespace EmergencyLog.Persistence
             return serviceOrganisation.Generate();
         }
 
-        public static Property CreateProperty(Organisation organisation, Address address, Client client)
+        public static Property CreateProperty(int organisationId)
         {
-            var propertyId = Guid.NewGuid();
-
             var property = new Faker<Property>()
-                .RuleFor(m => m.Id, f => propertyId)
-                .RuleFor(m => m.Address, f => address)
-                .RuleFor(m => m.Organisation, f => organisation)
-                .RuleFor(m => m.PrimaryContact, f => client);
+                .RuleFor(m => m.OrganisationId, f => organisationId)
+                .RuleFor(m => m.StreetNumber, f => f.Random.Number(1, 5000).ToString())
+                .RuleFor(m => m.Street, f => f.Address.StreetName())
+                .RuleFor(m => m.Suburb, f => f.Address.County())
+                .RuleFor(m => m.Postcode, f => f.Address.ZipCode())
+                .RuleFor(m => m.Country, f => f.Address.County());
 
             return property.Generate();
         }
 
-        public static SmokeAlarm CreateSmokeAlarm(Guid serviceOrganisationGuid, Guid propertyId, int x)
+        public static SmokeAlarm CreateSmokeAlarm(int serviceOrganisationId, int propertyId, int x)
         {
-            var smokeAlarmGuid = Guid.NewGuid();
-
             var smokeAlarm = new Faker<SmokeAlarm>()
-                .RuleFor(m => m.Id, f => smokeAlarmGuid)
                 .RuleFor(m => m.EquipmentType, f => "Smoke Alarm")
                 .RuleFor(m => m.Description, f => "Photoelectric type. All purpose")
                 .RuleFor(m => m.LastServiced,
@@ -235,18 +226,15 @@ namespace EmergencyLog.Persistence
                 .RuleFor(m => m.NextService,
                     f => f.Date.Between(new DateTime(2022, x, 01, 5, 0, 0),
                         new DateTime(2022, x, 01, 10, 0, 0)))
-                .RuleFor(m => m.ServicedOrganisationId, f => serviceOrganisationGuid)
+                .RuleFor(m => m.ServiceOrganisationId, f => serviceOrganisationId)
                 .RuleFor(m => m.PropertyId, f => propertyId);
 
             return smokeAlarm.Generate();
         }
 
-        public static FireHose CreateFirehose(Guid serviceOrganisationId, Guid propertyId, int x)
+        public static FireHose CreateFirehose(int serviceOrganisationId, int propertyId, int x)
         {
-            var fireHoseGuid = Guid.NewGuid();
-
             var fireHose = new Faker<FireHose>()
-                .RuleFor(m => m.Id, f => fireHoseGuid)
                 .RuleFor(m => m.EquipmentType, f => "25m Fire Hose")
                 .RuleFor(m => m.Description, f => "x litres per minute, high pressure")
                 .RuleFor(m => m.LastServiced,
@@ -255,18 +243,15 @@ namespace EmergencyLog.Persistence
                 .RuleFor(m => m.NextService,
                     f => f.Date.Between(new DateTime(2022, x, 01, 5, 0, 0),
                         new DateTime(2022, x, 01, 10, 0, 0)))
-                .RuleFor(m => m.ServicedOrganisationId, f => serviceOrganisationId)
+                .RuleFor(m => m.ServiceOrganisationId, f => serviceOrganisationId)
                 .RuleFor(m => m.PropertyId, f => propertyId);
 
             return fireHose.Generate();
         }
 
-        public static FireExtinguisher CreateFireExtinguisher(Guid serviceOrganisationId, Guid propertyId, int x)
+        public static FireExtinguisher CreateFireExtinguisher(int serviceOrganisationId, int propertyId, int x)
         {
-            var fireExtinguisherGuid = Guid.NewGuid();
-
             var fireExtinguisher = new Faker<FireExtinguisher>()
-                .RuleFor(m => m.Id, f => fireExtinguisherGuid)
                 .RuleFor(m => m.EquipmentType, f => "Fire Extinguisher")
                 .RuleFor(m => m.Description, f => "Foam type. All purpose")
                 .RuleFor(m => m.LastServiced,
@@ -275,7 +260,7 @@ namespace EmergencyLog.Persistence
                 .RuleFor(m => m.NextService,
                     f => f.Date.Between(new DateTime(2022, x, 01, 5, 0, 0),
                         new DateTime(2022, x, 01, 10, 0, 0)))
-                .RuleFor(m => m.ServicedOrganisationId, f => serviceOrganisationId)
+                .RuleFor(m => m.ServiceOrganisationId, f => serviceOrganisationId)
                 .RuleFor(m => m.PropertyId, f => propertyId);
 
             return fireExtinguisher.Generate();

@@ -4,10 +4,13 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using EmergencyLog.Application.DTOs.PropertyDtos;
 
 namespace EmergencyLog.Application.Property
 {
-    public class ListHandler : IRequestHandler<ListQuery<Domain.Entities.Property>, Result<PagedList<Domain.Entities.Property>>>
+    public class ListHandler : IRequestHandler<ListQuery<PropertyResultDto>, Result<PagedList<PropertyResultDto>>>
     {
         private DataContext _context;
 
@@ -16,12 +19,17 @@ namespace EmergencyLog.Application.Property
             _context = context;
         }
 
-        public async Task<Result<PagedList<Domain.Entities.Property>>> Handle(ListQuery<Domain.Entities.Property> request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<PropertyResultDto>>> Handle(ListQuery<PropertyResultDto> request, CancellationToken cancellationToken)
         {
-            var query = _context.Properties.OrderBy(d => d.Address.Country).AsQueryable();
+            // config to be passed into ProjectTo method below.
+            var configuration = new MapperConfiguration(cfg =>
+                cfg.CreateProjection<Domain.Entities.Property, PropertyResultDto>());
 
-            return Result<PagedList<Domain.Entities.Property>>.Success(
-                await PagedList<Domain.Entities.Property>.CreateAsync(query, request.Params.PageNumber,
+            var query = _context.Properties.Where(d => d.IsDeleted == false).OrderBy(d => d.Country)
+                .ProjectTo<PropertyResultDto>(configuration).AsQueryable();
+
+            return Result<PagedList<PropertyResultDto>>.Success(
+                await PagedList<PropertyResultDto>.CreateAsync(query, request.Params.PageNumber,
                     request.Params.PageSize));
         }
     }

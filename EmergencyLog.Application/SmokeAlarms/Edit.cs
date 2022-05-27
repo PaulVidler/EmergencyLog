@@ -7,6 +7,7 @@ using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.DTOs.SmokeAlarmDtos;
 
 namespace EmergencyLog.Application.SmokeAlarms
 {
@@ -18,7 +19,7 @@ namespace EmergencyLog.Application.SmokeAlarms
         }
     }
 
-    public class EditHandler : IRequestHandler<EditCommand<SmokeAlarm>, Result<Unit>>
+    public class EditHandler : IRequestHandler<EditCommand<SmokeAlarmEditDto>, Result<Unit>>
     {
         private DataContext _context;
         private IMapper _mapper;
@@ -29,7 +30,7 @@ namespace EmergencyLog.Application.SmokeAlarms
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(EditCommand<SmokeAlarm> request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(EditCommand<SmokeAlarmEditDto> request, CancellationToken cancellationToken)
         {
 
             var smokeAlarm = await _context.SmokeAlarms.FindAsync(request.Type.Id);

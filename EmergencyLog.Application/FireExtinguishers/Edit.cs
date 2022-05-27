@@ -7,6 +7,7 @@ using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.DTOs.FireExtinguisherDtos;
 
 namespace EmergencyLog.Application.FireExtinguishers
 {
@@ -18,7 +19,7 @@ namespace EmergencyLog.Application.FireExtinguishers
         }
     }
 
-    public class EditHandler : IRequestHandler<EditCommand<FireExtinguisher>, Result<Unit>>
+    public class EditHandler : IRequestHandler<EditCommand<FireExtinguisherEditDto>, Result<Unit>>
     {
         private DataContext _context;
         private IMapper _mapper;
@@ -29,7 +30,7 @@ namespace EmergencyLog.Application.FireExtinguishers
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(EditCommand<FireExtinguisher> request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(EditCommand<FireExtinguisherEditDto> request, CancellationToken cancellationToken)
         {
 
             var fireExtinguisher = await _context.FireExtinguishers.FindAsync(request.Type.Id);

@@ -1,5 +1,4 @@
-﻿using EmergencyLog.Api.DTOs;
-using EmergencyLog.Api.Services;
+﻿using EmergencyLog.Api.Services;
 using EmergencyLog.Domain.Entities.Identity;
 using EmergencyLog.Persistence;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using EmergencyLog.Api.DTOs.IdentityDtos;
 
 namespace EmergencyLog.Api.Controllers
 {

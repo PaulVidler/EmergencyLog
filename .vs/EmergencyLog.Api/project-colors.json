@@ -45,7 +45,12 @@
       "ProjectGuid": "b0358ba9-5cd8-411e-b31a-4e255e3177ce",
       "DisplayName": "Infrastructure",
       "ColorIndex": 7
+    },
+    "00057a98-4199-469f-9e9a-72492de4d405": {
+      "ProjectGuid": "00057a98-4199-469f-9e9a-72492de4d405",
+      "DisplayName": "Infrastructure",
+      "ColorIndex": 8
     }
   },
-  "NextColorIndex": 8
+  "NextColorIndex": 9
 }

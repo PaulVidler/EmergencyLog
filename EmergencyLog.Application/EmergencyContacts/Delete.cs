@@ -1,4 +1,5 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
@@ -21,7 +22,8 @@ namespace EmergencyLog.Application.EmergencyContacts
             var emergencyContact = await _context.EmergencyContacts.FindAsync(request.Id);
             if (emergencyContact == null) return null;
 
-            _context.Remove(emergencyContact);
+            emergencyContact.IsDeleted = true;
+            emergencyContact.DateDeleted = DateTime.Now;
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result) return Result<Unit>.Failure("Failed to delete EmergencyContact");

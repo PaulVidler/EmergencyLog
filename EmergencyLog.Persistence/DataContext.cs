@@ -18,8 +18,53 @@ namespace EmergencyLog.Persistence
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder); // this is required to stop an error with IdentityContext needing this when overriding OnModelCreating
 
-        public DbSet<Address> Addresses { get; set; }
+            //modelBuilder.Entity<EmergencyContact>()
+            //    .HasOne(c => c.Client)
+            //    .WithOne(b => b.EmergencyContact)
+            //    .HasForeignKey<Client>(b => b.EmergencyContactId);
+
+            modelBuilder.Entity<Client>()
+                .HasMany(p => p.Attendances)
+                .WithOne(o => o.Client);
+            
+            modelBuilder.Entity<Organisation>()
+                .HasMany(p => p.Properties)
+                .WithOne(o => o.Organisation);
+
+            modelBuilder.Entity<Organisation>()
+                .HasMany(p => p.Clients)
+                .WithOne(o => o.Organisation)
+                .IsRequired();
+
+            modelBuilder.Entity<Property>()
+                .HasMany(s => s.FireExtinguishers)
+                .WithOne(p => p.Property);
+
+            modelBuilder.Entity<Property>()
+                .HasMany(s => s.FireHoses)
+                .WithOne(p => p.Property);
+
+            modelBuilder.Entity<Property>()
+                .HasMany(s => s.SmokeAlarms)
+                .WithOne(p => p.Property);
+
+            modelBuilder.Entity<ServiceOrganisation>()
+                .HasMany(s => s.SmokeAlarms)
+                .WithOne(p => p.ServiceOrganisation);
+
+            modelBuilder.Entity<ServiceOrganisation>()
+                .HasMany(s => s.FireExtinguishers)
+                .WithOne(p => p.ServiceOrganisation);
+
+            modelBuilder.Entity<ServiceOrganisation>()
+                .HasMany(s => s.FireHoses)
+                .WithOne(p => p.ServiceOrganisation);
+        }
+
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<EmergencyContact> EmergencyContacts { get; set; }

@@ -127,8 +127,8 @@
               "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj": {
                 "projectPath": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\EmergencyLog.Persistence\\EmergencyLog.Persistence.csproj"
               },
-              "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\EmergencyLog.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\EmergencyLog.Infrastructure.csproj"
               }
             }
           }
@@ -371,12 +371,12 @@
         }
       }
     },
-    "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\EmergencyLog.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\Infrastructure.csproj",
-        "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\EmergencyLog.Infrastructure.csproj",
+        "projectName": "EmergencyLog.Infrastructure",
+        "projectPath": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\EmergencyLog.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\PaulVidler\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\PaulVidler\\Documents\\GitHub\\EmergencyLog\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",

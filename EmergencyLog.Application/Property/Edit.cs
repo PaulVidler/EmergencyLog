@@ -6,6 +6,7 @@ using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EmergencyLog.Application.DTOs.PropertyDtos;
 
 namespace EmergencyLog.Application.Property
 {
@@ -17,7 +18,7 @@ namespace EmergencyLog.Application.Property
         }
     }
 
-    public class EditHandler : IRequestHandler<EditCommand<Domain.Entities.Property>, Result<Unit>>
+    public class EditHandler : IRequestHandler<EditCommand<PropertyEditDto>, Result<Unit>>
     {
         private DataContext _context;
         private IMapper _mapper;
@@ -28,7 +29,7 @@ namespace EmergencyLog.Application.Property
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(EditCommand<Domain.Entities.Property> request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(EditCommand<PropertyEditDto> request, CancellationToken cancellationToken)
         {
 
             var property = await _context.Properties.FindAsync(request.Type.Id);

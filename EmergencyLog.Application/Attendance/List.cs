@@ -4,10 +4,13 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using EmergencyLog.Application.DTOs.AttendanceDtos;
 
 namespace EmergencyLog.Application.Attendance
 {
-    public class ListHandler : IRequestHandler<ListQuery<Domain.Entities.Attendance>, Result<PagedList<Domain.Entities.Attendance>>>
+    public class ListHandler : IRequestHandler<ListQuery<AttendanceResultDto>, Result<PagedList<AttendanceResultDto>>>
     {
         private DataContext _context;
 
@@ -16,12 +19,17 @@ namespace EmergencyLog.Application.Attendance
             _context = context;
         }
 
-        public async Task<Result<PagedList<Domain.Entities.Attendance>>> Handle(ListQuery<Domain.Entities.Attendance> request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<AttendanceResultDto>>> Handle(ListQuery<AttendanceResultDto> request, CancellationToken cancellationToken)
         {
-            var query = _context.Attendances.OrderBy(d => d.TimeOut).AsQueryable();
+            // config to be passed into ProjectTo method below.
+            var configuration = new MapperConfiguration(cfg =>
+                cfg.CreateProjection<Domain.Entities.Attendance, AttendanceResultDto>());
 
-            return Result<PagedList<Domain.Entities.Attendance>>.Success(
-                await PagedList<Domain.Entities.Attendance>.CreateAsync(query, request.Params.PageNumber,
+            var query = _context.Attendances.Where(d => d.IsDeleted == false).OrderBy(d => d.TimeOut)
+                .ProjectTo<AttendanceResultDto>(configuration).AsQueryable();
+
+            return Result<PagedList<AttendanceResultDto>>.Success(
+                await PagedList<AttendanceResultDto>.CreateAsync(query, request.Params.PageNumber,
                     request.Params.PageSize));
         }
     }
