@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.deps.json
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.runtimeconfig.json
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\ref\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.pdb
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.AssemblyInfoInputs.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.AssemblyInfo.cs
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.csproj.CoreCompileInputs.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\ref\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.pdb
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.genruntimeconfig.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.csproj.AssemblyReference.cache
-=======
->>>>>>> 298471b889546a87adbfcac69a6e9267ceb56f9a
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.deps.json
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.runtimeconfig.json
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.dll
@@ -29,17 +12,3 @@ C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\Emergency.Domain\obj\Debug\net
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.pdb
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.genruntimeconfig.cache
 C:\Users\PaulVidler\Documents\GitHub\EmergencyLog\Emergency.Domain\obj\Debug\net6.0\ref\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.deps.json
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.runtimeconfig.json
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\ref\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\bin\Debug\net6.0\EmergencyLog.Domain.pdb
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.AssemblyInfoInputs.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.AssemblyInfo.cs
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.csproj.CoreCompileInputs.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\ref\EmergencyLog.Domain.dll
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.pdb
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.genruntimeconfig.cache
-C:\Users\relia\source\repos\EmergencyLog\EmergencyLog.Api\Emergency.Domain\obj\Debug\net6.0\EmergencyLog.Domain.csproj.AssemblyReference.cache

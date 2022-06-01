@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using EmergencyLog.Application.DTOs.OrganisationDtos;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Newtonsoft.Json;
@@ -12,42 +13,51 @@ using Xunit;
 
 namespace EmergencyLog.Api.Tests
 {
-    public class OrganisationIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+    public class OrganisationIntegrationTests // : IClassFixture<WebApplicationFactory<Program>>
     {
 
-    private readonly WebApplicationFactory<Program> _factory;
-    public OrganisationIntegrationTests(WebApplicationFactory<Program> factory)
-    {
-        _factory = factory;
-    }
+    //private readonly WebApplicationFactory<Program> _factory;
+    //public OrganisationIntegrationTests(WebApplicationFactory<Program> factory)
+    //{
+    //    _factory = factory;
+    //}
 
     [Fact]
-    public async Task post_invoice_should_return_200()
+    public async Task post_organisation_should_return_200()
     {
-        var client = _factory.CreateClient();
+        // var client = _factory.CreateClient();
 
-        //var request = new CreateInvoiceRequest()
-        //{
-        //    InvoiceDate = new DateTime(2022, 5, 3),
-        //    InvoiceNumber = "324",
-        //    ApprovedByClient = true,
-        //    Notes = "Test",
-        //    Client = new Responses.ClientDto { Id = 1 },
-        //    ServiceProvider = new Responses.ServiceProviderDto { Id = 1 },
-        //    InvoiceLineItems = new List<InvoiceLineItemDto>()
-        //        { new InvoiceLineItemDto() { ServiceDeliveryStartDate = new DateTime(2022, 3, 3), ServiceDeliveryEndDate = new DateTime(2022, 5, 5) } }
-        //};
+            //var request = new OrganisationAddDto()
+            //{
+            //    OrganisationName = "TestOrg",
+            //    PhoneNumber = "TestPhoneNumber",
+            //    WebsiteUrl = "TestWebsiteUrl",
+            //    Logo = "LogoTest",
+            //    StreetNumber = "StreetTest",
+            //    Street = "StreetTest",
+            //    Suburb = "SuburbTest",
+            //    Postcode = "PostcodeTest",
+            //    Country = "CountyTest"
+            //};
 
+            var webFactory = new WebApplicationFactory<Program>();
+            var httpClient = webFactory.CreateDefaultClient();
 
-        //var json = JsonConvert.SerializeObject(request);
+            var response = await httpClient.GetAsync("api/Organisation");
 
-        //var response = await client.PostAsync("Invoice", new StringContent(json, Encoding.UTF8, "application/json"));
+            var stringResult = await response.Content.ReadAsStringAsync();
 
-        //var responseobject = await response.Content.ReadAsStringAsync();
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
 
-        //Assert.True(response.StatusCode == HttpStatusCode.OK);
+            //var json = JsonConvert.SerializeObject(request);
 
-    }
+            //var response = await client.PostAsync("api/Organisation", new StringContent(json, Encoding.UTF8, "application/json"));
+
+            //var responseobject = await response.Content.ReadAsStringAsync();
+
+            //Assert.True(response.StatusCode == HttpStatusCode.OK);
+
+        }
 
 
 
