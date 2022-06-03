@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EmergencyLog.Domain;
-using EmergencyLog.Domain.Entities;
+﻿using EmergencyLog.Domain.Entities;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
