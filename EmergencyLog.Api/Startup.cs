@@ -37,7 +37,11 @@ namespace EmergencyLog.Api
                 .AddFluentValidation(config =>
             {
                 config.RegisterValidatorsFromAssemblyContaining<Application.Attendance.CreateHandler>();
-            });
+            })
+                // this line below stops an error with nested/cyclic objects in the response
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
 
             // tidy up into extension method call into "ApplicationExtension.cs"
             services.AddApplicationServices(_configuration);
