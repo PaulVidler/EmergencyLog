@@ -1,10 +1,12 @@
-﻿using EmergencyLog.Application.Core;
+﻿using System.Linq;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmergencyLog.Application.DTOs.AttendanceDtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmergencyLog.Application.Attendance
 {
@@ -21,7 +23,8 @@ namespace EmergencyLog.Application.Attendance
 
         public async Task<Result<AttendanceResultDto>> Handle(DetailsQuery<AttendanceResultDto> request, CancellationToken cancellationToken)
         {
-            var attendance = await _context.Attendances.FindAsync(request.Id);
+            // var attendance = await _context.Attendances.FindAsync(request.Id); 
+            var attendance = await _context.Attendances.Include(x => x.Client).Where(x => x.Id == request.Id).FirstOrDefaultAsync();
 
             if (attendance == null)
             {
