@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using EmergencyLog.Api.Services;
 using EmergencyLog.Domain.Entities.Identity;
 using EmergencyLog.Persistence;
@@ -34,6 +35,8 @@ namespace EmergencyLog.Api.Extensions
                         IssuerSigningKey = key,
                         ValidateIssuer = false, // these 2 are set to false, probably not what we'd do in production. Look into this.
                         ValidateAudience = false,
+                        ValidateLifetime = true, // check lifetime of token, lifetime is set in TokenService -> "Expires = DateTime.UtcNow.AddMinutes(1)"
+                        ClockSkew = TimeSpan.Zero // token wil usualy be available for use to 5 minutes after expiry by default, this is making this expire on time
                     };
                 });
             services.AddScoped<TokenService>(); // token service is available when we inject into the controller and will be scoped to the lifetime of the http request to the API

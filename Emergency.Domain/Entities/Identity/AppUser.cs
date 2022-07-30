@@ -12,5 +12,6 @@ namespace EmergencyLog.Domain.Entities.Identity
         public string DisplayName { get; set; }
         public int OrganisationId { get; set; }
         //public int? ClientId { get; set; }
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }

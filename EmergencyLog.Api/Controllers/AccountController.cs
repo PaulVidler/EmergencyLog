@@ -1,4 +1,6 @@
-﻿using EmergencyLog.Api.Services;
+﻿using System;
+using System.Linq;
+using EmergencyLog.Api.Services;
 using EmergencyLog.Domain.Entities.Identity;
 using EmergencyLog.Persistence;
 using Microsoft.AspNetCore.Authorization;
@@ -8,10 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EmergencyLog.Api.DTOs.IdentityDtos;
+using Microsoft.AspNetCore.Http;
 
 namespace EmergencyLog.Api.Controllers
 {
-    [AllowAnonymous]
+    
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -29,6 +32,7 @@ namespace EmergencyLog.Api.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -40,12 +44,14 @@ namespace EmergencyLog.Api.Controllers
 
             if (result.Succeeded)
             {
+                await SetRefreshtoken(user);
                 return CreateUserObject(user);
             }
 
             return Unauthorized();
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
@@ -71,12 +77,11 @@ namespace EmergencyLog.Api.Controllers
             
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-            if (result.Succeeded)
-            {
-                return CreateUserObject(user);
-            }
 
-            return BadRequest("There is a problem registering this user");
+            if (!result.Succeeded) return BadRequest("There is a problem registering this user");
+
+            await SetRefreshtoken(user);
+            return CreateUserObject(user);
             
         }
 
@@ -85,9 +90,49 @@ namespace EmergencyLog.Api.Controllers
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            
+            await SetRefreshtoken(user);
             return CreateUserObject(user);
         }
 
+        [Authorize]
+        [HttpPost("refreshToken")]
+        public async Task<ActionResult<UserDto>> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            var user = await _userManager.Users
+                .Include(r => r.RefreshTokens)
+                .FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
+
+            if (user == null) return Unauthorized();
+
+            var oldToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken);
+
+            if (oldToken != null && !oldToken.IsActive) return Unauthorized();
+
+            if(oldToken != null) oldToken.Revoked = DateTime.UtcNow; // this was deleted accidentally?
+
+            return CreateUserObject(user);
+        }
+        
+        private async Task SetRefreshtoken(AppUser user)
+        {
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            user.RefreshTokens.Add(refreshToken);
+
+            await _userManager.UpdateAsync(user);
+
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true, // means our token is not accessible by javascript
+                Expires = DateTime.UtcNow.AddDays(7),
+            };
+
+            // adds the refresh token to the response object
+            Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
+        }
+        
         // helper method to return UserDto
         private UserDto CreateUserObject(AppUser user)
         {

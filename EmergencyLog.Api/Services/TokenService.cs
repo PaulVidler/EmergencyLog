@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using EmergencyLog.Domain.Entities.Identity;
 using Microsoft.Extensions.Configuration;
@@ -41,8 +42,7 @@ namespace EmergencyLog.Api.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now
-                    .AddDays(15), // Token expires in 15 days from time of creation. We will create a Refresh token for auto refreshing in the future.
+                Expires = DateTime.UtcNow.AddMinutes(1), // Token expires in x days/minutes from time of creation. 
                 SigningCredentials = creds
             };
 
@@ -52,5 +52,15 @@ namespace EmergencyLog.Api.Services
             return tokenHandler.WriteToken(token);
 
         }
+
+        // create RefreshToken method
+        public RefreshToken GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return new RefreshToken {Token = Convert.ToBase64String(randomNumber)};
+        }
+
     }
 }

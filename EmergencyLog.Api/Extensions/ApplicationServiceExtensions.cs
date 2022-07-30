@@ -16,7 +16,7 @@ namespace EmergencyLog.Api.Extensions
 {
     public static class ApplicationServiceExtensions
     {
-        // this class is an extension for startup, where the dependancy injection is happening. Any new services are to be injected here here.
+        // this class is an extension for startup, where the dependency injection is happening. Any new services are to be injected here here.
         
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
