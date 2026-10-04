@@ -1,4 +1,4 @@
-﻿using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain.Entities.FireSafetyEquipmentEntities;
 using EmergencyLog.Persistence;
 using MediatR;
@@ -13,21 +13,22 @@ namespace EmergencyLog.Application.FireExtinguishers
 {
     public class ListHandler : IRequestHandler<ListQuery<FireExtinguisherResultDto>, Result<PagedList<FireExtinguisherResultDto>>>
     {
-        private DataContext _context;
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public ListHandler(DataContext context)
+        public ListHandler(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<Result<PagedList<FireExtinguisherResultDto>>> Handle(ListQuery<FireExtinguisherResultDto> request, CancellationToken cancellationToken)
         {
-            // config to be passed into ProjectTo method below.
-            var configuration = new MapperConfiguration(cfg =>
-                cfg.CreateProjection<FireExtinguisher, FireExtinguisherResultDto>());
-
-            var query = _context.FireExtinguishers.Where(d => d.IsDeleted == false).OrderBy(d => d.LastServiced)
-                .ProjectTo<FireExtinguisherResultDto>(configuration).AsQueryable();
+            var query = _context.FireExtinguishers
+                .Where(d => d.IsDeleted == false)
+                .OrderBy(d => d.LastServiced)
+                .ProjectTo<FireExtinguisherResultDto>(_mapper.ConfigurationProvider)
+                .AsQueryable();
 
             return Result<PagedList<FireExtinguisherResultDto>>.Success(
                 await PagedList<FireExtinguisherResultDto>.CreateAsync(query, request.Params.PageNumber,

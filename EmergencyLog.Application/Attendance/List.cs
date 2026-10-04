@@ -1,4 +1,4 @@
-﻿using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Linq;
@@ -12,21 +12,22 @@ namespace EmergencyLog.Application.Attendance
 {
     public class ListHandler : IRequestHandler<ListQuery<AttendanceResultDto>, Result<PagedList<AttendanceResultDto>>>
     {
-        private DataContext _context;
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public ListHandler(DataContext context)
+        public ListHandler(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<Result<PagedList<AttendanceResultDto>>> Handle(ListQuery<AttendanceResultDto> request, CancellationToken cancellationToken)
         {
-            // config to be passed into ProjectTo method below.
-            var configuration = new MapperConfiguration(cfg =>
-                cfg.CreateProjection<Domain.Entities.Attendance, AttendanceResultDto>());
-
-            var query = _context.Attendances.Where(d => d.IsDeleted == false).OrderBy(d => d.TimeOut)
-                .ProjectTo<AttendanceResultDto>(configuration).AsQueryable();
+            var query = _context.Attendances
+                .Where(d => d.IsDeleted == false)
+                .OrderBy(d => d.TimeOut)
+                .ProjectTo<AttendanceResultDto>(_mapper.ConfigurationProvider)
+                .AsQueryable();
 
             return Result<PagedList<AttendanceResultDto>>.Success(
                 await PagedList<AttendanceResultDto>.CreateAsync(query, request.Params.PageNumber,

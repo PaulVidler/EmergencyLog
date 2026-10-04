@@ -1,4 +1,4 @@
-﻿using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Domain.Entities;
 using EmergencyLog.Persistence;
 using MediatR;
@@ -13,21 +13,22 @@ namespace EmergencyLog.Application.Organisations
 {
     public class ListHandler : IRequestHandler<ListQuery<OrganisationResultDto>, Result<PagedList<OrganisationResultDto>>>
     {
-        private DataContext _context;
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public ListHandler(DataContext context)
+        public ListHandler(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<Result<PagedList<OrganisationResultDto>>> Handle(ListQuery<OrganisationResultDto> request, CancellationToken cancellationToken)
         {
-            // config to be passed into ProjectTo method below.
-            var configuration = new MapperConfiguration(cfg =>
-                cfg.CreateProjection<Organisation, OrganisationResultDto>());
-
-            var query = _context.Organisations.Where(d => d.IsDeleted == false).OrderBy(d => d.OrganisationName)
-                .ProjectTo<OrganisationResultDto>(configuration).AsQueryable();
+            var query = _context.Organisations
+                .Where(d => d.IsDeleted == false)
+                .OrderBy(d => d.OrganisationName)
+                .ProjectTo<OrganisationResultDto>(_mapper.ConfigurationProvider)
+                .AsQueryable();
 
             return Result<PagedList<OrganisationResultDto>>.Success(
                 await PagedList<OrganisationResultDto>.CreateAsync(query, request.Params.PageNumber,
