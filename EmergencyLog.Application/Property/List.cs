@@ -1,4 +1,4 @@
-﻿using EmergencyLog.Application.Core;
+using EmergencyLog.Application.Core;
 using EmergencyLog.Persistence;
 using MediatR;
 using System.Linq;
@@ -12,21 +12,22 @@ namespace EmergencyLog.Application.Property
 {
     public class ListHandler : IRequestHandler<ListQuery<PropertyResultDto>, Result<PagedList<PropertyResultDto>>>
     {
-        private DataContext _context;
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public ListHandler(DataContext context)
+        public ListHandler(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<Result<PagedList<PropertyResultDto>>> Handle(ListQuery<PropertyResultDto> request, CancellationToken cancellationToken)
         {
-            // config to be passed into ProjectTo method below.
-            var configuration = new MapperConfiguration(cfg =>
-                cfg.CreateProjection<Domain.Entities.Property, PropertyResultDto>());
-
-            var query = _context.Properties.Where(d => d.IsDeleted == false).OrderBy(d => d.Country)
-                .ProjectTo<PropertyResultDto>(configuration).AsQueryable();
+            var query = _context.Properties
+                .Where(d => d.IsDeleted == false)
+                .OrderBy(d => d.Country)
+                .ProjectTo<PropertyResultDto>(_mapper.ConfigurationProvider)
+                .AsQueryable();
 
             return Result<PagedList<PropertyResultDto>>.Success(
                 await PagedList<PropertyResultDto>.CreateAsync(query, request.Params.PageNumber,
