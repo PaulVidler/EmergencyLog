@@ -10,6 +10,7 @@
  - Make sure it compliles crtl+shift+B
  - Run it (Big green play button at the top. It should open directly into Swagger where you can querty and test the API. Huge parts of it are probably broken, and it's a WIP.
 
+youll need this: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 
 ## To do
 - FluentValidation
